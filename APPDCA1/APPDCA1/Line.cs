@@ -9,8 +9,8 @@ namespace APPDCA1
 {
     public class Line
     {
-        string LineCd;
-        List<Station> StationLine = new List<Station>();
+        private string LineCd;
+        private List<Station> StationLine = new List<Station>();
 
         public Line(string LineCd)
         {

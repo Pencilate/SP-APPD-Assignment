@@ -8,8 +8,8 @@ namespace APPDCA1
 {
     class Station
     {
-        string StationName;
-        bool isInterchange = false;
+        private string StationName;
+        private bool isInterchange = false;
 
         private List<string> StationCode = new List<string>();
 

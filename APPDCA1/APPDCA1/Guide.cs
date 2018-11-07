@@ -8,7 +8,7 @@ namespace APPDCA1
 {
     class Guide
     {
-        static List<Line> MRT = new List<Line>();
+        private static List<Line> MRT = new List<Line>();
 
         public static void Main(string[] args)
         {
