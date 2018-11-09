@@ -76,6 +76,32 @@ namespace APPDCA1
             return ResultStation;
         }
 
+        public static void FindRoute(Station station)
+        {
+
+        }
+        
+        public static void DisplayRoute(string StationCd)
+        {
+            string InputLineCd = StationCd.Substring(0, 2);
+            int LineIndex = -1;
+            for (int index = 0; index < MRT.Count; index++)
+            {
+                if (InputLineCd.Equals(MRT[index].LineCd))
+                {
+                    LineIndex = index;
+                    break;
+                }
+            }
+
+            for(int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
+            {
+
+            }
+
+        }
+
+
 
 
 
