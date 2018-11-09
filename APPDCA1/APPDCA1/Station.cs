@@ -6,45 +6,37 @@ using System.Threading.Tasks;
 
 namespace APPDCA1
 {
-    class Station
+    public class Station
     {
-        private string StationName;
+        private string stationName;
         private bool isInterchange = false;
 
-        private List<string> StationCode = new List<string>();
+        private List<string> stationCode = new List<string>();
 
-        public Station(string StationCd, string StationName)
+        public Station(string stationCd, string stationName)
         {
-            this.StationName = StationName;
-            StationCode.Add(StationCd);
+            this.stationName = stationName;
+            StationCode.Add(stationCd);
         }
 
         public Station() { }
 
-        public void setStationCode(List<string> StationCd)
+        public List<string> StationCode
         {
-            this.StationCode = StationCd;
-        }
-        public List<string> getStationCode()
-        {
-            return StationCode;
-        }
-        public void setStationName(string StationName)
-        {
-            this.StationName = StationName;
-        }
-        public string getStationName()
-        {
-            return StationName;
+            get { return stationCode; }
+            set { this.stationCode = value; }
         }
 
-        public void setStationInterchangeStatus(bool StationInterchange)
+        public string StationName
         {
-            this.isInterchange = StationInterchange;
+            get { return stationName; }
+            set { this.stationName = value; }
         }
-        public bool getStationInterchangeStatus()
+
+        public bool IsInterchange
         {
-            return isInterchange;
+            get { return isInterchange; }
+            set { this.isInterchange = value;}
         }
     }
 }

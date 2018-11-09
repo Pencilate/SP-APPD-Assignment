@@ -9,12 +9,12 @@ namespace APPDCA1
 {
     public class Line
     {
-        private string LineCd;
+        private string lineCd;
         private List<Station> StationLine = new List<Station>();
 
-        public Line(string LineCd)
+        public Line(string lineCd)
         {
-            this.LineCd = LineCd;
+            this.lineCd = lineCd;
         }
         public Line()
         {
@@ -36,13 +36,11 @@ namespace APPDCA1
             return StationLine;
         }
 
-        public void setLineCd(string LineCd)
+        public string LineCd
         {
-            this.LineCd = LineCd;
+            get { return lineCd; }
+            set { this.lineCd = value; }
         }
-        public string getLineCd()
-        {
-            return LineCd;
-        }
+
     }
 }
