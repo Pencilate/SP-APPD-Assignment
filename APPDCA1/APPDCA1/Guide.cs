@@ -189,7 +189,6 @@ namespace APPDCA1
             Console.WriteLine("DisplayingRoute");
             DisplayRoute(("dt23").ToUpper());
 
-            Console.WriteLine(string.Format("{0:P}",4));
 
 
             Console.ReadKey();
