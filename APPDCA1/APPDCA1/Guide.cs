@@ -32,7 +32,7 @@ namespace APPDCA1
             }
             Station ResultStation = new Station();
             //foreach (Station sta in MRT[ResultLineIndex].getStationList())
-            for(int i = 0; i<MRT[ResultLineIndex].getStationList().Count;i++)
+            for (int i = 0; i < MRT[ResultLineIndex].getStationList().Count; i++)
             {
                 bool interchange = MRT[ResultLineIndex].getStationList()[i].IsInterchange;
                 if (MRT[ResultLineIndex].getStationList()[i].IsInterchange)
@@ -62,9 +62,9 @@ namespace APPDCA1
         public static Station SearchByStationName(string searchInput)
         {
             Station ResultStation = new Station();
-            for (int i =0; i < MRT.Count; i++)
+            for (int i = 0; i < MRT.Count; i++)
             {
-                for (int j=0; j < MRT[i].getStationList().Count; j++)
+                for (int j = 0; j < MRT[i].getStationList().Count; j++)
                 {
                     if (searchInput.Equals(MRT[i].getStation(j).StationName))
                     {
@@ -78,15 +78,8 @@ namespace APPDCA1
 
         public static void FindRoute(Station station)
         {
-            //Station searchStation = new Station();
-            //searchStation.StationName = "Serangoon";
-            //string startstation = searchStation.StationName;
-            //foreach (string b in SearchByStationName(startstation);
-            //Station endStation = new Station();
-            //searchStation.StationName = "Buona Vista";
-            //Console.WriteLine(searchStation.StationName);
+
         }
-        
 
         public static void DisplayRoute(string StationCd)
         {
@@ -100,13 +93,53 @@ namespace APPDCA1
                     break;
                 }
             }
-
+            Console.WriteLine("Listing station for {0} Line", InputLineCd);
             for(int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
             {
+                if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
+                {
+                    bool IsStation = false ;
+                    for(int i =0; i< MRT[LineIndex].getStationList()[StationIndex].StationCode.Count;i++)
+                        {
+                        if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(StationCd))
+                        {
+                            IsStation = true;
+                        }
+                        }
 
+                    if (IsStation)
+                    {
+                        Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
+                        {
+                           if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd))){
+                                Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[i], MRT[LineIndex].getStationList()[StationIndex].StationName);
+                                break;
+                            }
+                        }
+                    }
+
+
+
+                }
+                else
+                {
+                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(StationCd))
+                    {
+                        Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[0], MRT[LineIndex].getStationList()[StationIndex].StationName);
+                    }
+                }
             }
 
         }
+
 
 
 
@@ -153,29 +186,14 @@ namespace APPDCA1
             }
             Console.WriteLine(output);
 
+            Console.WriteLine("DisplayingRoute");
+            DisplayRoute(("dt23").ToUpper());
+
+
+
             Console.ReadKey();
         }
 
-        //ignore this 
-        public static void Testing()
-        {
-            Console.Write("enter station name : ");
-            string stationname = Console.ReadLine();
-            foreach (string a in Guide.SearchByStationName(stationname).StationCode)
-            {
-                Console.WriteLine(a);
-            }
-        
-            Console.Write("enter station code :");
-            string stationcode = Console.ReadLine();
-            foreach (char b in SearchByStationCd(stationcode).StationName)
-            {
-                Console.Write(b.ToString());
-            }
 
-
-            
-            
-        }
     }
 }
