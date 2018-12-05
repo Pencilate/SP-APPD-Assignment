@@ -78,9 +78,16 @@ namespace APPDCA1
 
         public static void FindRoute(Station station)
         {
-
+            //Station searchStation = new Station();
+            //searchStation.StationName = "Serangoon";
+            //string startstation = searchStation.StationName;
+            //foreach (string b in SearchByStationName(startstation);
+            //Station endStation = new Station();
+            //searchStation.StationName = "Buona Vista";
+            //Console.WriteLine(searchStation.StationName);
         }
         
+
         public static void DisplayRoute(string StationCd)
         {
             string InputLineCd = StationCd.Substring(0, 2);
@@ -100,7 +107,6 @@ namespace APPDCA1
             }
 
         }
-
 
 
 
@@ -150,6 +156,26 @@ namespace APPDCA1
             Console.ReadKey();
         }
 
+        //ignore this 
+        public static void Testing()
+        {
+            Console.Write("enter station name : ");
+            string stationname = Console.ReadLine();
+            foreach (string a in Guide.SearchByStationName(stationname).StationCode)
+            {
+                Console.WriteLine(a);
+            }
+        
+            Console.Write("enter station code :");
+            string stationcode = Console.ReadLine();
+            foreach (char b in SearchByStationCd(stationcode).StationName)
+            {
+                Console.Write(b.ToString());
+            }
 
+
+            
+            
+        }
     }
 }

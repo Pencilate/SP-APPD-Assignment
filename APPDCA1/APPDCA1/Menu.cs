@@ -11,7 +11,8 @@ namespace APPDCA1
         public static void Main(string[] args)
         {
             Guide.initLineArray();
-            Guide.TestingStationMtd();
+            // Guide.TestingStationMtd();
+            Guide.Testing();
 
 
             Console.ReadKey();
