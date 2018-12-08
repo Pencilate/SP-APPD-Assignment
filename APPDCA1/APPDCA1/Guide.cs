@@ -19,6 +19,7 @@ namespace APPDCA1
 
         public static Station SearchByStationCd(string searchInput)
         {
+            searchInput = searchInput.ToUpper();
             string lineCd = searchInput.Substring(0, 2);
             int ResultLineIndex = -1;
 
@@ -83,6 +84,7 @@ namespace APPDCA1
 
         public static void DisplayRoute(string StationCd)
         {
+            StationCd = StationCd.ToUpper();
             string InputLineCd = StationCd.Substring(0, 2);
             int LineIndex = -1;
             for (int index = 0; index < MRT.Count; index++)
@@ -109,14 +111,14 @@ namespace APPDCA1
 
                     if (IsStation)
                     {
-                        Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
+                        Console.WriteLine("#{0} - {1} - {2}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
                     }
                     else
                     {
                         for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
                         {
                            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd))){
-                                Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[i], MRT[LineIndex].getStationList()[StationIndex].StationName);
+                                Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].getStationList()[StationIndex].StationCode[i], MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
                                 break;
                             }
                         }
@@ -141,6 +143,62 @@ namespace APPDCA1
         }
 
 
+        public static void DisplayFindPath(string StartingStat, string EndingStat)
+        {
+
+            Station StartStat = SearchByStationName(StartingStat);
+            Station EndStat = SearchByStationName(EndingStat);
+
+            bool Sameline = false;
+            string SamelineCd = "";
+            foreach (string ssCd in StartStat.StationCode)
+            {
+                string ssLindCd = ssCd.Substring(0, 2);
+
+                foreach (string esCd in EndStat.StationCode)
+                {
+                    string esLineCd = esCd.Substring(0, 2);
+
+                    if (ssLindCd.Equals(esLineCd))
+                    {
+                        Sameline = true;
+                        SamelineCd = esLineCd;
+                    }
+
+                }
+
+
+            }
+
+            if (Sameline)
+            {
+                int LineIndex = -1;
+                for(int i =0; i< MRT.Count; i++)
+                {
+                    if (MRT[i].LineCd.Equals(SamelineCd))
+                    {
+                        LineIndex = i;
+                    }
+                }
+
+
+
+            }
+            else
+            {
+
+            }
+
+            
+
+
+
+
+        }
+        
+
+
+
 
 
 
@@ -148,6 +206,9 @@ namespace APPDCA1
         public static void TestingStationMtd()
         {
             //for testing
+
+            Console.WriteLine("\r\n ------Testing------ \r\n");
+
             for (int i = 0; i < MRT[4].getStationList().Count; i++)
             {
                 Console.WriteLine(MRT[4].getStationList()[i].StationName);
@@ -186,9 +247,24 @@ namespace APPDCA1
             }
             Console.WriteLine(output);
 
-            Console.WriteLine("DisplayingRoute");
-            DisplayRoute(("dt23").ToUpper());
+            foreach (Station stat in MRT[4].getStationList())
+            {
+                Console.WriteLine(stat.StationName);
+                foreach (string str in stat.StationCode)
+                {
+                    Console.WriteLine(str);
+                }
+            }
 
+
+            Console.WriteLine("DisplayingRoute");
+
+            Station testStat = SearchByStationName("Dhoby Ghaut");
+            foreach (string StationCodeStr in testStat.StationCode)
+            {
+                DisplayRoute(StationCodeStr);
+            }
+;
 
 
             Console.ReadKey();

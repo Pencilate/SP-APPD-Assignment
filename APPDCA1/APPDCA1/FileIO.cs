@@ -114,8 +114,8 @@ namespace APPDCA1
             //              }
             //          }
 
-            Console.WriteLine(MRT[0].getStationList()[0].IsInterchange);
-            Console.WriteLine(MRT[2].getStationList()[3].IsInterchange);
+            //Console.WriteLine(MRT[0].getStationList()[0].IsInterchange);
+            //Console.WriteLine(MRT[2].getStationList()[3].IsInterchange);
 
             return MRT;
         }
