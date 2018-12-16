@@ -77,7 +77,7 @@ namespace APPDCA1
             return ResultStation;
         }
 
-        public static void FindRoute(string LineCd,string End)
+        public static void FindRoute(string LineCd, string End)
         {
             string InputLineCd = LineCd.Substring(0, 2);
             string EndCd = End.Substring(0, 2);
@@ -94,13 +94,18 @@ namespace APPDCA1
 
             string changeStationCode = string.Empty;
             string changeStationName = string.Empty;
-            for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
+            if (InputLineCd.Equals(EndCd))
+                Console.WriteLine("Take the {0} line directly.", InputLineCd);
+            else
             {
-                string output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0];
-                if (output1.Contains(EndCd))
+                for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
                 {
-                    changeStationCode = output1;
-                    Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName,"You should change at:");
+                    string output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0];
+                    if (output1.Contains(EndCd))
+                    {
+                        changeStationCode = output1;
+                        Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName, "You should change at:");
+                    }
                 }
             }
         }
@@ -315,7 +320,7 @@ namespace APPDCA1
 
             Console.WriteLine();
             Console.WriteLine();
-            FindRoute("CC7","DT22");
+            FindRoute("CC8","EW22");
 
             Console.ReadKey();
             
