@@ -76,9 +76,32 @@ namespace APPDCA1
             return ResultStation;
         }
 
-        public static void FindRoute(Station station)
+        public static void FindRoute(string LineCd,string End)
         {
+            string InputLineCd = LineCd.Substring(0, 2);
+            string EndCd = End.Substring(0, 2);
 
+            int LineIndex = -1;
+            for (int index = 0; index < MRT.Count; index++)
+            {
+                if (InputLineCd.Equals(MRT[index].LineCd))
+                {
+                    LineIndex = index;
+                    break;
+                }
+            }
+
+            string changeStationCode = string.Empty;
+            string changeStationName = string.Empty;
+            for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
+            {
+                string output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0];
+                if (output1.Contains(EndCd))
+                {
+                    changeStationCode = output1;
+                    Console.WriteLine("{0} - {1}", changeStationCode, SearchByStationCd(output1).StationName);
+                }
+            }
         }
 
         public static void DisplayRoute(string StationCd)
@@ -193,6 +216,36 @@ namespace APPDCA1
 
             Console.ReadKey();
         }
+
+        public static void Testing()
+        {
+            Console.Write("Enter Station Name : ");
+            string stationname = Console.ReadLine();
+            Station s = new Station();
+            foreach (string a in Guide.SearchByStationName(stationname).StationCode)
+            {
+                Console.WriteLine(a);
+                s.StationCode = SearchByStationName(a).StationCode;
+            }
+
+            Station s2 = new Station();
+            Console.Write("Enter Station Code : ");
+            string c = Console.ReadLine();
+            s2.StationCode = SearchByStationName(c).StationCode;
+            foreach (char b in Guide.SearchByStationCd(c).StationName)
+            {
+                Console.Write(b.ToString());
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+            FindRoute("CC1","NE13");
+
+            Console.ReadKey();
+            
+        }
+
+
 
 
     }
