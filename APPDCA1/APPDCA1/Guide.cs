@@ -100,7 +100,7 @@ namespace APPDCA1
                 if (output1.Contains(EndCd))
                 {
                     changeStationCode = output1;
-                    Console.WriteLine("{0} - {1}", changeStationCode, SearchByStationCd(output1).StationName);
+                    Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName,"You should change at:");
                 }
             }
         }
@@ -315,7 +315,7 @@ namespace APPDCA1
 
             Console.WriteLine();
             Console.WriteLine();
-            FindRoute("CC1","NE13");
+            FindRoute("CC7","DT22");
 
             Console.ReadKey();
             
