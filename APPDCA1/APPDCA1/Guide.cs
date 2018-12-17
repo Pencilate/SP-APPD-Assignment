@@ -21,7 +21,7 @@ namespace APPDCA1
         public static Station SearchByStationCd(string searchInput) //This method scans through the MRT List of Line Objects then the List of Station Objects within it to find the specific station object and return it.
         {
             searchInput = searchInput.ToUpper(); //Makes the input case insensitive
-            string lineCd = searchInput.Substring(0, 2);
+             string lineCd = searchInput.Substring(0, 2);
 
             int ResultLineIndex = GetIndexOfLine(lineCd);
             
@@ -179,14 +179,37 @@ namespace APPDCA1
 
         }
 
+        public static void DisplayFindPath(int lineIndex, int ssIndex, int esIndex)
+        {
+            if (esIndex > ssIndex)
+            {
+                for (int i = ssIndex; i <= esIndex; i++)
+                {
+                    Console.WriteLine("{0} - {1}", "+", MRT[lineIndex].getStationList()[i].StationName);
+                    Console.WriteLine("|");
+                }
+            }
+            else if (ssIndex > esIndex)
+            {
+                for (int i = ssIndex; i >= esIndex; i--)
+                {
+                    Console.WriteLine("{0} - {1}", "+", MRT[lineIndex].getStationList()[i].StationName);
+                    Console.WriteLine("|");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Same station for Start and End");
+            }
+        }
 
-        public static void DisplayFindPath(string StartingStat, string EndingStat)
+        public static void FindPath(string StartingStatCd, string EndingStatCd)
         {
 
-            Station StartStat = SearchByStationName(StartingStat);
-            Station EndStat = SearchByStationName(EndingStat);
+            Station StartStat = SearchByStationCd(StartingStatCd);
+            Station EndStat = SearchByStationCd(EndingStatCd);
 
-            bool Sameline = false;
+            bool sameline = false;
             string SamelineCd = "";
             foreach (string ssCd in StartStat.StationCode)
             {
@@ -198,7 +221,7 @@ namespace APPDCA1
 
                     if (ssLindCd.Equals(esLineCd))
                     {
-                        Sameline = true;
+                        sameline = true;
                         SamelineCd = esLineCd;
                     }
 
@@ -206,31 +229,41 @@ namespace APPDCA1
 
 
             }
-
-            if (Sameline)
+            Console.WriteLine("Sameline?: {0}",sameline);
+            if (sameline == true)
             {
-                int LineIndex = -1;
-                for(int i =0; i< MRT.Count; i++)
+                int lineIndex = GetIndexOfLine(SamelineCd);
+
+                int ssIndex = -1;
+                for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
                 {
-                    if (MRT[i].LineCd.Equals(SamelineCd))
-                    {
-                        LineIndex = i;
+                    if(MRT[lineIndex].getStationList()[i].StationName.Equals(StartStat.StationName)){
+                        ssIndex = i;
+                        break;
+                    }
+                }
+                int esIndex = -1;
+                for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
+                {
+                    if(MRT[lineIndex].getStationList()[i].StationName.Equals(EndStat.StationName)){
+                        esIndex = i;
+                        break;
                     }
                 }
 
-                int ssIndex;
+                DisplayFindPath(lineIndex, ssIndex, esIndex);
 
             }
             else
             {
-
+                Console.WriteLine("Different Line");
             }
 
-            
 
 
 
 
+            Console.WriteLine("End of method");
         }
         
 
@@ -238,8 +271,7 @@ namespace APPDCA1
 
 
 
-
-
+   
         public static void TestingStationMtd()
         {
             //for testing
@@ -302,7 +334,8 @@ namespace APPDCA1
                 DisplayRoute(StationCodeStr);
             }
 ;
-
+            Console.WriteLine("Display path WIP");
+            FindPath("EW21", "EW5");
 
             Console.ReadKey();
         }
