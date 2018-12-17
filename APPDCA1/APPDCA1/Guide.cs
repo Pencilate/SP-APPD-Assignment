@@ -86,8 +86,10 @@ namespace APPDCA1
             return ResultLineIndex;
         }
 
-        public static void FindRoute(string LineCd, string End)
+        public static void FindRoute(Station startStation , Station endStation)
         {
+            string LineCd = startStation.StationCode[0];
+            string End = endStation.StationCode[0];
             string InputLineCd = LineCd.Substring(0, 2);
             string EndCd = End.Substring(0, 2);
 
@@ -115,6 +117,14 @@ namespace APPDCA1
                         changeStationCode = output1;
                         Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName, "You should change at:");
                     }
+                    //if(MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(LineCd))
+                    //{
+                    //    Console.WriteLine("#{0} - {1}", LineCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[0], MRT[LineIndex].getStationList()[StationIndex].StationName);
+                    //}
                 }
             }
         }
@@ -321,17 +331,18 @@ namespace APPDCA1
             Station s2 = new Station();
             Console.Write("Enter Station Code : ");
             string c = Console.ReadLine();
-            s2.StationCode = SearchByStationName(c).StationCode;
             foreach (char b in Guide.SearchByStationCd(c).StationName)
             {
                 Console.Write(b.ToString());
             }
 
+            Station s3 = new Station("NS1", "Jurong East");
+            Station s4 = new Station("EW1","Pasir Ris");
             Console.WriteLine();
             Console.WriteLine();
-            FindRoute("CC8","EW22");
+            FindRoute(s3, s4);
             //Console.WriteLine();
-            //FindRoute("NS1", "EW1"); //Find route cant do this yet
+            //FindRoute("NS1", "EW1"); // Find route cant do this yet
             Console.ReadKey();
             
         }
