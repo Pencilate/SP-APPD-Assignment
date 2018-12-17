@@ -320,7 +320,7 @@ namespace APPDCA1
 
             Console.WriteLine();
             Console.WriteLine();
-            FindRoute("CC8","NE13");
+            FindRoute("CC8","EW22");
 
             Console.ReadKey();
             
