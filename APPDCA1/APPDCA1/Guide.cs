@@ -13,24 +13,18 @@ namespace APPDCA1
         public static void initLineArray()
         {
             string FilePath = "..\\..\\resources\\MRT.txt";
+            //FilePath Points to the MRT.txt file
             MRT = FileIO.textFileReader(FilePath);
 
         }
 
-        public static Station SearchByStationCd(string searchInput)
+        public static Station SearchByStationCd(string searchInput) //This method scans through the MRT List of Line Objects then the List of Station Objects within it to find the specific station object and return it.
         {
-            searchInput = searchInput.ToUpper();
+            searchInput = searchInput.ToUpper(); //Makes the input case insensitive
             string lineCd = searchInput.Substring(0, 2);
-            int ResultLineIndex = -1;
 
-            for (int index = 0; index < MRT.Count; index++)
-            {
-                if (lineCd.Equals(MRT[index].LineCd))
-                {
-                    ResultLineIndex = index;
-                    break;
-                }
-            }
+            int ResultLineIndex = GetIndexOfLine(lineCd);
+            
             Station ResultStation = new Station();
             //foreach (Station sta in MRT[ResultLineIndex].getStationList())
             for (int i = 0; i < MRT[ResultLineIndex].getStationList().Count; i++)
@@ -75,6 +69,21 @@ namespace APPDCA1
                 }
             }
             return ResultStation;
+        }
+
+        public static int GetIndexOfLine(string lineCd)
+        {
+            int ResultLineIndex = -1;
+
+            for (int index = 0; index < MRT.Count; index++)
+            {
+                if (lineCd.Equals(MRT[index].LineCd))
+                {
+                    ResultLineIndex = index;
+                    break;
+                }
+            }
+            return ResultLineIndex;
         }
 
         public static void FindRoute(string LineCd, string End)
@@ -209,7 +218,7 @@ namespace APPDCA1
                     }
                 }
 
-
+                int ssIndex;
 
             }
             else
@@ -321,7 +330,8 @@ namespace APPDCA1
             Console.WriteLine();
             Console.WriteLine();
             FindRoute("CC8","EW22");
-
+            //Console.WriteLine();
+            //FindRoute("NS1", "EW1"); //Find route cant do this yet
             Console.ReadKey();
             
         }
