@@ -181,11 +181,29 @@ namespace APPDCA1
 
         public static void DisplayFindPath(int lineIndex, int ssIndex, int esIndex)
         {
+            string lineCd = MRT[lineIndex].LineCd;
+
             if (esIndex > ssIndex)
             {
                 for (int i = ssIndex; i <= esIndex; i++)
                 {
-                    Console.WriteLine("{0} - {1}", "+", MRT[lineIndex].getStationList()[i].StationName);
+                    string extractedStatCd = "";
+                    if (MRT[lineIndex].getStationList()[i].IsInterchange)
+                    {
+                        foreach (string statCd in MRT[lineIndex].getStationList()[i].StationCode)
+                        {
+                            if (statCd.Contains(lineCd))
+                            {
+                                extractedStatCd = statCd;
+                            }
+                        }
+                       
+                    }
+                    else
+                    {
+                        extractedStatCd = MRT[lineIndex].getStationList()[i].StationCode[0];
+                    }
+                    Console.WriteLine("{0} - {1}", extractedStatCd, MRT[lineIndex].getStationList()[i].StationName);
                     Console.WriteLine("|");
                 }
             }
@@ -193,7 +211,23 @@ namespace APPDCA1
             {
                 for (int i = ssIndex; i >= esIndex; i--)
                 {
-                    Console.WriteLine("{0} - {1}", "+", MRT[lineIndex].getStationList()[i].StationName);
+                    string extractedStatCd = "";
+                    if (MRT[lineIndex].getStationList()[i].IsInterchange)
+                    {
+                        foreach (string statCd in MRT[lineIndex].getStationList()[i].StationCode)
+                        {
+                            if (statCd.Contains(lineCd))
+                            {
+                                extractedStatCd = statCd;
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        extractedStatCd = MRT[lineIndex].getStationList()[i].StationCode[0];
+                    }
+                    Console.WriteLine("{0} - {1}", extractedStatCd, MRT[lineIndex].getStationList()[i].StationName);
                     Console.WriteLine("|");
                 }
             }
@@ -226,10 +260,7 @@ namespace APPDCA1
                     }
 
                 }
-
-
             }
-            Console.WriteLine("Sameline?: {0}",sameline);
             if (sameline == true)
             {
                 int lineIndex = GetIndexOfLine(SamelineCd);
@@ -259,19 +290,168 @@ namespace APPDCA1
                 Console.WriteLine("Different Line");
             }
 
-
-
-
-
-            Console.WriteLine("End of method");
         }
-        
+
+        public static void FindPathV2(string StartingStatCd, string EndingStatCd)
+        {
+            Station StartStat = SearchByStationCd(StartingStatCd);
+            Station EndStat = SearchByStationCd(EndingStatCd);
+
+            List<string[]> statCdPair = new List<string[]>();
+
+            for(int i =0; i < StartStat.StationCode.Count; i++)
+            {
+                for(int j = 0; j < EndStat.StationCode.Count; j++)
+                {
+
+                    string ssLineCd = StartStat.StationCode[i].Substring(0, 2);
+                    string esLineCd = EndStat.StationCode[j].Substring(0, 2);
+                    string[] cdPair = {ssLineCd, esLineCd};
+                    statCdPair.Add(cdPair);
+
+
+                }
+            }
+
+            bool directRoute = false;
+            bool routeAvailable = false;
+            string interchangeName = "";
+            int selectedStatCdPairIndex = -1;
+            for(int i = 0; i < statCdPair.Count; i++)
+            {
+                if ((statCdPair[i])[0].Equals((statCdPair[i])[1]))
+                {
+                    directRoute = true;
+                    routeAvailable = true;
+                    selectedStatCdPairIndex = i;
+                }
+            }
+
+            if (!directRoute)
+            {
+
+                //int lineIndex = GetIndexOfLine(statCdPair[-1][0]);
+
+                //foreach (Station stat in MRT[lineIndex].getStationList())
+                //{
+                //    if (stat.IsInterchange)
+                //    {
+                //        //routeAvailable = true;
+                //        List<string> lineOffered = new List<string>();
+                //        foreach (string statCd in stat.StationCode)
+                //        {
+                //            lineOffered.Add(statCd.Substring(0, 2));
+                //        }
+
+                //        for(int i = 0; i < statCdPair.Count; i++)
+                //        {
+                //            if (lineOffered.Contains((statCdPair[i])[1]))
+                //            {
+                //                if (lineOffered.Contains((statCdPair[i])[2]))
+                //                {
+                //                    routeAvailable = true;
+                //                    selectedStatCdPairIndex = i;
+                //                }
+                //            }
+
+                //        }
+
+                //        if (routeAvailable)
+                //        {
+                //            interchangeName = stat.StationName;
+                //            break;
+                //        }
+
+                //    }
+                //}
+
+                for (int i = 0; i < statCdPair.Count; i++)
+                {
+                    int lineIndex = GetIndexOfLine((statCdPair[i])[0]);
+
+                    foreach (Station stat in MRT[lineIndex].getStationList())
+                    {
+                        if (stat.IsInterchange)
+                        {
+                            List<string> lineOffered = new List<string>();
+                            foreach (string statCd in stat.StationCode)
+                            {
+                                lineOffered.Add(statCd.Substring(0, 2));
+                            }
+
+                            if((lineOffered.Contains(statCdPair[i][0]))&& (lineOffered.Contains(statCdPair[i][1])))
+                            {
+                                routeAvailable = true;
+                                selectedStatCdPairIndex = i;
+                                interchangeName = stat.StationName;
+                                break;
+                            }
+
+
+                        }
+                    }
+
+
+                }
+
+            }
+
+            if (routeAvailable)
+            {
+                if (directRoute)
+                {
+                    int lineIndex = GetIndexOfLine(statCdPair[selectedStatCdPairIndex][0]);
+
+                    int ssIndex = GetStationIndexFromLine(lineIndex, StartStat.StationName);
+                    int esIndex = GetStationIndexFromLine(lineIndex, EndStat.StationName);
+                    Console.WriteLine("Start");
+                    DisplayFindPath(lineIndex, ssIndex, esIndex);
+                    Console.WriteLine("End");
+                }
+                else
+                {
+                    int lineIndex = GetIndexOfLine(statCdPair[selectedStatCdPairIndex][0]);
+
+                    int ssIndex = GetStationIndexFromLine(lineIndex, StartStat.StationName);
+                    int icsArrvIndex = GetStationIndexFromLine(lineIndex, interchangeName);
+                    Console.WriteLine("Start");
+                    DisplayFindPath(lineIndex, ssIndex, icsArrvIndex);
+
+                    lineIndex = GetIndexOfLine(statCdPair[selectedStatCdPairIndex][1]);
+
+                    int icsDeprtIndex = GetStationIndexFromLine(lineIndex, interchangeName);
+                    int esIndex = GetStationIndexFromLine(lineIndex, EndStat.StationName);
+
+                    DisplayFindPath(lineIndex, icsDeprtIndex, esIndex);
+                    Console.WriteLine("End");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No route available");
+            }
 
 
 
+        }
 
 
-   
+        public static int GetStationIndexFromLine(int lineIndex, string StationName)
+        {
+            int index = -1;
+            for (int i = 0; i < MRT[lineIndex].getStationList().Count; i++)
+            {
+                if (MRT[lineIndex].getStationList()[i].StationName.Equals(StationName))
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+
+
+
         public static void TestingStationMtd()
         {
             //for testing
@@ -335,7 +515,7 @@ namespace APPDCA1
             }
 ;
             Console.WriteLine("Display path WIP");
-            FindPath("EW21", "EW5");
+            FindPathV2("NS4","EW3");
 
             Console.ReadKey();
         }
