@@ -105,6 +105,7 @@ namespace APPDCA1
 
             string changeStationCode = string.Empty;
             string changeStationName = string.Empty;
+            bool IntStation = false;
             if (InputLineCd.Equals(EndCd))
                 Console.WriteLine("Take the {0} line directly.", InputLineCd);
             else
@@ -117,14 +118,31 @@ namespace APPDCA1
                         changeStationCode = output1;
                         Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName, "You should change at:");
                     }
-                    //if(MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(LineCd))
-                    //{
-                    //    Console.WriteLine("#{0} - {1}", LineCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[0], MRT[LineIndex].getStationList()[StationIndex].StationName);
-                    //}
+
+                    else if (!output1.Contains(EndCd))
+                    {
+                        for (int StatIndex = 0; StatIndex < MRT[LineIndex].getStationList().Count; StatIndex++)
+                        {
+                            if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
+                            {
+                                for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
+                                {
+                                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(LineCd))
+                                    {
+                                        IntStation = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine("Change to the {0} line at {1} and take it directly.",EndCd,SearchByStationCd(LineCd).StationName);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine(IntStation);
+                        Console.WriteLine("No route found.");
+                    }
                 }
             }
         }
@@ -369,8 +387,8 @@ namespace APPDCA1
                 Console.Write(b.ToString());
             }
 
-            Station s3 = new Station("NS1", "Jurong East");
-            Station s4 = new Station("EW1","Pasir Ris");
+            Station s3 = new Station("CC9", "Jurong East");
+            Station s4 = new Station("NE12","Pasir Ris");
             Console.WriteLine();
             Console.WriteLine();
             FindRoute(s3, s4);
