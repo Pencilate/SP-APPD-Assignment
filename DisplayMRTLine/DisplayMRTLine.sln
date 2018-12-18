@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{B710C558-D05D-42B1-A9D4-22341A1D085A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayMRTLine", "DisplayMRTLine\DisplayMRTLine.csproj", "{E6C02B8D-A261-43EC-B55C-CEE582924E0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B710C558-D05D-42B1-A9D4-22341A1D085A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B710C558-D05D-42B1-A9D4-22341A1D085A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B710C558-D05D-42B1-A9D4-22341A1D085A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B710C558-D05D-42B1-A9D4-22341A1D085A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C02B8D-A261-43EC-B55C-CEE582924E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C02B8D-A261-43EC-B55C-CEE582924E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C02B8D-A261-43EC-B55C-CEE582924E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C02B8D-A261-43EC-B55C-CEE582924E0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B6357008-81C9-4F04-AA8D-A334586BC0FE}
+		SolutionGuid = {EB0B569A-2974-4123-ACA1-A361F7E48970}
 	EndGlobalSection
 EndGlobal

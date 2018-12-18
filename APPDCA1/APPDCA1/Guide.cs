@@ -543,8 +543,8 @@ namespace APPDCA1
             }
 ;
             Console.WriteLine("Display path WIP");
-            FindPathV2("NS4","EW3");
-
+            FindPathV2("NS1","EW1");
+            DisplayRoute("EW4");
             Console.ReadKey();
         }
 
@@ -571,7 +571,7 @@ namespace APPDCA1
             Station s4 = new Station("NE12","Pasir Ris");
             Console.WriteLine();
             Console.WriteLine();
-            FindRoute(s3, s4);
+            //FindRoute(s3, s4);
             //Console.WriteLine();
             //FindRoute("NS1", "EW1"); // Find route cant do this yet
             Console.ReadKey();
