@@ -596,6 +596,7 @@ namespace APPDCA1
                     foreach (string statCd in stat.StationCode)
                     {
                         DisplayRoute(statCd);
+                        Console.WriteLine();
                     }
                     break;
                 case 2:
