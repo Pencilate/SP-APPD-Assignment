@@ -578,7 +578,41 @@ namespace APPDCA1
             
         }
 
+        public static void TestStationRoute()
+        {
+            Console.Clear();
+            Console.WriteLine("Option 1: Find Line of Station");
+            Console.WriteLine("Option 2: Find Route Path ");
+            Console.Write("Please enter your selection: ");
+            int option = int.Parse(Console.ReadLine());
 
+            switch (option)
+            {
+                case 1:
+                    Console.WriteLine("Option 1 Selected:");
+                    Console.Write("Enter the station code:" );
+                    string input = Console.ReadLine();
+                    Station stat = SearchByStationCd(input);
+                    foreach (string statCd in stat.StationCode)
+                    {
+                        DisplayRoute(statCd);
+                        Console.WriteLine();
+                    }
+                    break;
+                case 2:
+                    Console.WriteLine("Option 2 Selected:");
+                    Console.Write("Enter the starting station code:");
+                    string startStatCd = Console.ReadLine();
+                    Console.Write("Enter the ending station code:");
+                    string endStatCd = Console.ReadLine();
+                    FindPathV2(startStatCd, endStatCd);
+                    break;
+            }
+
+
+
+
+        }
 
 
     }
