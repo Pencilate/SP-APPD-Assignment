@@ -12,7 +12,7 @@ namespace APPDCA1
         {
             Guide.initLineArray();
             Guide.TestingStationMtd();
-            //Guide.Testing();
+            Guide.Testing();
 
 
             Console.ReadKey();

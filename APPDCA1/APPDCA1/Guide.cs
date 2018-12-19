@@ -86,66 +86,66 @@ namespace APPDCA1
             return ResultLineIndex;
         }
 
-        public static void FindRoute(Station startStation , Station endStation)
-        {
-            string LineCd = startStation.StationCode[0];
-            string End = endStation.StationCode[0];
-            string InputLineCd = LineCd.Substring(0, 2);
-            string EndCd = End.Substring(0, 2);
+        //public static void FindRoute(Station startStation , Station endStation)
+        //{
+        //    string LineCd = startStation.StationCode[0];
+        //    string End = endStation.StationCode[0];
+        //    string InputLineCd = LineCd.Substring(0, 2);
+        //    string EndCd = End.Substring(0, 2);
 
-            int LineIndex = -1;
-            for (int index = 0; index < MRT.Count; index++)
-            {
-                if (InputLineCd.Equals(MRT[index].LineCd))
-                {
-                    LineIndex = index;
-                    break;
-                }
-            }
+        //    int LineIndex = -1;
+        //    for (int index = 0; index < MRT.Count; index++)
+        //    {
+        //        if (InputLineCd.Equals(MRT[index].LineCd))
+        //        {
+        //            LineIndex = index;
+        //            break;
+        //        }
+        //    }
 
-            string changeStationCode = string.Empty;
-            string changeStationName = string.Empty;
-            bool IntStation = false;
-            if (InputLineCd.Equals(EndCd))
-                Console.WriteLine("Take the {0} line directly.", InputLineCd);
-            else
-            {
-                for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
-                {
-                    string output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0];
-                    if (output1.Contains(EndCd))
-                    {
-                        changeStationCode = output1;
-                        Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName, "You should change at:");
-                    }
+        //    string changeStationCode = string.Empty;
+        //    string changeStationName = string.Empty;
+        //    bool IntStation = false;
+        //    if (InputLineCd.Equals(EndCd))
+        //        Console.WriteLine("Take the {0} line directly.", InputLineCd);
+        //    else
+        //    {
+        //        for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
+        //        {
+        //            string output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0];
+        //            if (output1.Contains(EndCd))
+        //            {
+        //                changeStationCode = output1;
+        //                Console.WriteLine("{2} {0} - {1}", changeStationCode, SearchByStationCd(output1).StationName, "You should change at:");
+        //            }
 
-                    else if (!output1.Contains(EndCd))
-                    {
-                        for (int StatIndex = 0; StatIndex < MRT[LineIndex].getStationList().Count; StatIndex++)
-                        {
-                            if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
-                            {
-                                for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
-                                {
-                                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(LineCd))
-                                    {
-                                        IntStation = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        Console.WriteLine("Change to the {0} line at {1} and take it directly.",EndCd,SearchByStationCd(LineCd).StationName);
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine(IntStation);
-                        Console.WriteLine("No route found.");
-                    }
-                }
-            }
-        }
+        //            else if (!output1.Contains(EndCd))
+        //            {
+        //                for (int StatIndex = 0; StatIndex < MRT[LineIndex].getStationList().Count; StatIndex++)
+        //                {
+        //                    if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
+        //                    {
+        //                        for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
+        //                        {
+        //                            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(LineCd))
+        //                            {
+        //                                IntStation = true;
+        //                                break;
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //                Console.WriteLine("Change to the {0} line at {1} and take it directly.",EndCd,SearchByStationCd(LineCd).StationName);
+        //                break;
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine(IntStation);
+        //                Console.WriteLine("No route found.");
+        //            }
+        //        }
+        //    }
+        //}
 
         public static void DisplayRoute(string StationCd)
         {
@@ -265,60 +265,60 @@ namespace APPDCA1
             }
         }
 
-        public static void FindPath(string StartingStatCd, string EndingStatCd)
-        {
+        //public static void FindPath(string StartingStatCd, string EndingStatCd)
+        //{
 
-            Station StartStat = SearchByStationCd(StartingStatCd);
-            Station EndStat = SearchByStationCd(EndingStatCd);
+        //    Station StartStat = SearchByStationCd(StartingStatCd);
+        //    Station EndStat = SearchByStationCd(EndingStatCd);
 
-            bool sameline = false;
-            string SamelineCd = "";
-            foreach (string ssCd in StartStat.StationCode)
-            {
-                string ssLindCd = ssCd.Substring(0, 2);
+        //    bool sameline = false;
+        //    string SamelineCd = "";
+        //    foreach (string ssCd in StartStat.StationCode)
+        //    {
+        //        string ssLindCd = ssCd.Substring(0, 2);
 
-                foreach (string esCd in EndStat.StationCode)
-                {
-                    string esLineCd = esCd.Substring(0, 2);
+        //        foreach (string esCd in EndStat.StationCode)
+        //        {
+        //            string esLineCd = esCd.Substring(0, 2);
 
-                    if (ssLindCd.Equals(esLineCd))
-                    {
-                        sameline = true;
-                        SamelineCd = esLineCd;
-                    }
+        //            if (ssLindCd.Equals(esLineCd))
+        //            {
+        //                sameline = true;
+        //                SamelineCd = esLineCd;
+        //            }
 
-                }
-            }
-            if (sameline == true)
-            {
-                int lineIndex = GetIndexOfLine(SamelineCd);
+        //        }
+        //    }
+        //    if (sameline == true)
+        //    {
+        //        int lineIndex = GetIndexOfLine(SamelineCd);
 
-                int ssIndex = -1;
-                for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
-                {
-                    if(MRT[lineIndex].getStationList()[i].StationName.Equals(StartStat.StationName)){
-                        ssIndex = i;
-                        break;
-                    }
-                }
-                int esIndex = -1;
-                for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
-                {
-                    if(MRT[lineIndex].getStationList()[i].StationName.Equals(EndStat.StationName)){
-                        esIndex = i;
-                        break;
-                    }
-                }
+        //        int ssIndex = -1;
+        //        for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
+        //        {
+        //            if(MRT[lineIndex].getStationList()[i].StationName.Equals(StartStat.StationName)){
+        //                ssIndex = i;
+        //                break;
+        //            }
+        //        }
+        //        int esIndex = -1;
+        //        for (int i=0; i<MRT[lineIndex].getStationList().Count;i++)
+        //        {
+        //            if(MRT[lineIndex].getStationList()[i].StationName.Equals(EndStat.StationName)){
+        //                esIndex = i;
+        //                break;
+        //            }
+        //        }
 
-                DisplayFindPath(lineIndex, ssIndex, esIndex);
+        //        DisplayFindPath(lineIndex, ssIndex, esIndex);
 
-            }
-            else
-            {
-                Console.WriteLine("Different Line");
-            }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Different Line");
+        //    }
 
-        }
+        //}
 
         public static void FindPathV2(string StartingStatCd, string EndingStatCd)
         {
@@ -541,7 +541,7 @@ namespace APPDCA1
             {
                 DisplayRoute(StationCodeStr);
             }
-;
+
             Console.WriteLine("Display path WIP");
             FindPathV2("NS1","EW1");
             DisplayRoute("EW4");

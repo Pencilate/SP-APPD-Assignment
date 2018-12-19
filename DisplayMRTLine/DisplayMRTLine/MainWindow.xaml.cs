@@ -30,18 +30,23 @@ namespace DisplayMRTLine
         {
             Guide.initLineArray();
             string station = txtStat.Text;
+            string result = string.Empty;
+            Station resultStat = new Station();
             if (radStation.IsChecked == true)
             {
-                station = Guide.SearchByStationName(txtStat.Text).StationCode[0];
+                resultStat.StationCode = Guide.SearchByStationName(station).StationCode;
             }
 
-            txtDisplay.Text = Guide.DisplayRoute(station);
-
-
-            if (chkName.IsChecked == true)
+            
+            
+            foreach (string StationCodeStr in resultStat.StationCode)
             {
-                txtDisplay.Text = Guide.DisplayRoute(txtMRTLine.Text);
+               result += Guide.DisplayRoute(StationCodeStr);
             }
+
+            txtDisplay.Text = result;
+
+
         }
 
         public class Station
