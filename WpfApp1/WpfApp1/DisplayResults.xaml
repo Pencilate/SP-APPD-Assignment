@@ -1,0 +1,16 @@
+﻿<Window x:Class="WpfApp1.DisplayResults"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="DisplayResults" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="txtDisplay" HorizontalAlignment="Left" Height="335" Margin="217,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.CanContentScroll="True"/>
+        <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="45,34,0,0" VerticalAlignment="Top" Width="75" Click="btnHome_Click"/>
+
+    </Grid>
+</Window>

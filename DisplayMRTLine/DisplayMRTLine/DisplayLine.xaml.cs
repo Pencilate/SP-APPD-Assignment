@@ -37,14 +37,22 @@ namespace DisplayMRTLine
                 resultStat.StationCode = Guide.SearchByStationName(station).StationCode;
             }
 
-            
-            
+            string h = string.Empty;
+
             foreach (string StationCodeStr in resultStat.StationCode)
             {
-               result += Guide.DisplayRoute(StationCodeStr);
+                result += Guide.DisplayRoute(StationCodeStr);
             }
 
-            txtDisplay.Text = result;
+            foreach (string a in Guide.SearchByStationName(station).StationCode)
+            {
+                h += a + "\n";
+
+            }
+
+            h += result;
+
+            txtDisplay.Text = h;
 
 
         }

@@ -544,7 +544,7 @@ namespace APPDCA1
 
             Console.WriteLine("Display path WIP");
             FindPathV2("NS1","EW1");
-            DisplayRoute("EW4");
+            DisplayRoute("EW2");
             Console.ReadKey();
         }
 

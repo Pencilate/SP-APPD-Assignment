@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Home" Height="450" Width="800">
     <Grid>
-        <Button Name = "btnDirections" Content="Directions" HorizontalAlignment="Left" Margin="316,39,0,0" VerticalAlignment="Top" Width="75" Click="btnDirections_Click"/>
-        <Button Name = "btnDisplayLine" Content="Display MRT Line" HorizontalAlignment="Left" Margin="487,39,0,0" VerticalAlignment="Top" Width="118" Click="btnDisplayLine_Click"/>
-        <Button Name = "btnHome" Content="Home" HorizontalAlignment="Left" Margin="132,39,0,0" VerticalAlignment="Top" Width="75" Click="btnHome_Click"/>
+        <Button Name = "btnDirections" Content="Directions" HorizontalAlignment="Left" Margin="340,39,0,0" VerticalAlignment="Top" Width="90" Click="btnDirections_Click" Height="35"/>
+        <Button Name = "btnDisplayLine" Content="Display MRT Line" HorizontalAlignment="Left" Margin="545,39,0,0" VerticalAlignment="Top" Width="127" Click="btnDisplayLine_Click" Height="35" RenderTransformOrigin="0.429,0.538"/>
+        <Button Name = "btnHome" Content="Home" HorizontalAlignment="Left" Margin="130,39,0,0" VerticalAlignment="Top" Width="88" Click="btnHome_Click" Height="35"/>
 
     </Grid>
 </Window>
