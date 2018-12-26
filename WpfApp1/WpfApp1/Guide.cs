@@ -23,7 +23,7 @@ namespace WpfApp1
             List<string> stationNameStrLst = new List<string>();
             foreach (Line line in MRT)
             {
-                foreach(Station stat in line.getStationList())
+                foreach (Station stat in line.getStationList())
                 {
                     string statName = stat.StationName;
                     if (!stationNameStrLst.Contains(statName))
@@ -36,7 +36,7 @@ namespace WpfApp1
             return stationNameStrLst;
         }
 
-        public static List<string> StationCideStringList()
+        public static List<string> StationCodeStringList()
         {
             List<string> stationCodeStrLst = new List<string>();
             foreach (Line line in MRT)
@@ -124,6 +124,150 @@ namespace WpfApp1
             return ResultLineIndex;
         }
 
+        public static int GetStationIndexFromLine(int lineIndex, string StationName) //gets Station Index using Line Index
+        {
+            int index = -1;
+            for (int i = 0; i < MRT[lineIndex].getStationList().Count; i++) //for loop
+            {
+                if (MRT[lineIndex].getStationList()[i].StationName.Equals(StationName)) //checks to see if Station Name in MRT List matches the input station name
+                {
+                    index = i; //sets index to the index where the Station was found.
+                    break;
+                }
+            }
+            return index; //returns the index
+        }
+
+        //public static void DisplayRoute(string StationCd)
+        //{
+        //    StationCd = StationCd.ToUpper();
+        //    string InputLineCd = StationCd.Substring(0, 2);
+        //    int LineIndex = -1;
+        //    for (int index = 0; index < MRT.Count; index++)
+        //    {
+        //        if (InputLineCd.Equals(MRT[index].LineCd))
+        //        {
+        //            LineIndex = index;
+        //            break;
+        //        }
+        //    }
+        //    Console.WriteLine("Listing station for {0} Line", InputLineCd);
+        //    for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
+        //    {
+        //        if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
+        //        {
+        //            bool IsStation = false;
+        //            for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
+        //            {
+        //                if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(StationCd))
+        //                {
+        //                    IsStation = true;
+        //                }
+        //            }
+
+        //            if (IsStation)
+        //            {
+        //                Console.WriteLine("#{0} - {1} - {2}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
+        //            }
+        //            else
+        //            {
+        //                for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
+        //                {
+        //                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd)))
+        //                    {
+        //                        Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].getStationList()[StationIndex].StationCode[i], MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
+        //                        break;
+        //                    }
+        //                }
+        //            }
+
+
+
+        //        }
+        //        else
+        //        {
+        //            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(StationCd))
+        //            {
+        //                Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[0], MRT[LineIndex].getStationList()[StationIndex].StationName);
+        //            }
+        //        }
+        //    }
+
+        //}
+
+        public static string DisplayRoute(string StationCd) //method to DisplayRoute
+        {
+            string isInterchange = string.Empty;
+            string interchange = string.Empty;
+            string output = string.Empty;
+            string output1 = string.Empty;
+            string interchangeOutput = string.Empty;
+            string finaloutput = string.Empty;
+            StationCd = StationCd.ToUpper(); //makes input not case sensitive
+            string InputLineCd = StationCd.Substring(0, 2); //extracts first 2 characters from StationCd and assigns it to InputLineCd
+            int LineIndex = -1;
+            for (int index = 0; index < MRT.Count; index++) //for loop
+            {
+                if (InputLineCd.Equals(MRT[index].LineCd)) //checks if input line code matches LineCd in MRT
+                {
+                    LineIndex = index; //sets LineIndex to Index where input line code was found
+                    break;
+                }
+            }
+            for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++) //for loop
+            {
+                if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange) //checks if Station is an Interchange
+                {
+                    bool IsStation = false; //boolean variable
+                    for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++) //for loop
+                    {
+                        if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
+                        {
+                            IsStation = true; //sets boolean variable IsStation to true
+                        }
+                    }
+
+                    if (IsStation) //if (true)
+                    {
+                        isInterchange = "#" + StationCd + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName + " - " + "Interchange" + "\n";
+                        interchangeOutput += isInterchange; //string output
+                    }
+                    else //else
+                    {
+                        for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++) //for loop
+                        {
+                            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd))) //checks if Station Code in MRT Station list starts with InputLineCd
+                            {
+                                interchange = MRT[LineIndex].getStationList()[StationIndex].StationCode[i] + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName + " - " + "Interchange";
+                                interchangeOutput += interchange + "\n"; //string output
+                                break;
+                            }
+                        }
+                    }
+                }
+                else //else
+                {
+                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
+                    {
+                        output = "#" + StationCd + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName;
+                        interchangeOutput += output + "\n"; //string output
+                    }
+                    else //else
+                    {
+                        output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0] + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName;
+                        interchangeOutput += output1 + "\n"; //string output
+                    }
+                }
+                finaloutput = interchangeOutput;
+            }
+            return finaloutput; //returns string
+        }
+    
+
 
         public static string DisplayFindPath(int lineIndex, int ssIndex, int esIndex) //method to display entire line
         {
@@ -185,8 +329,6 @@ namespace WpfApp1
                 return "Same Station for Start and End";
             }
         }
-
-
 
         public static string FindPathV2(string StartingStatCd, string EndingStatCd) //method to find route between 2 stations
         {
@@ -288,19 +430,7 @@ namespace WpfApp1
         }
 
 
-        public static int GetStationIndexFromLine(int lineIndex, string StationName) //gets Station Index using Line Index
-        {
-            int index = -1;
-            for (int i = 0; i < MRT[lineIndex].getStationList().Count; i++) //for loop
-            {
-                if (MRT[lineIndex].getStationList()[i].StationName.Equals(StationName)) //checks to see if Station Name in MRT List matches the input station name
-                {
-                    index = i; //sets index to the index where the Station was found.
-                    break;
-                }
-            }
-            return index; //returns the index
-        }
+       
 
     }
 }
