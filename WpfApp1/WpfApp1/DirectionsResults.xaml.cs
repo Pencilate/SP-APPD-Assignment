@@ -33,8 +33,5 @@ namespace WpfApp1
             this.Close(); //close current window
         }
 
-        private void txtBoxDisplay_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
     }
 }

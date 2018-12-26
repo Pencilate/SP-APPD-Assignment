@@ -9,7 +9,7 @@
     <Grid>
         <TextBox x:Name="txtBoxDisplay" HorizontalAlignment="Left" Height="340" Margin="162,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="468" ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.CanContentScroll="True" TextChanged="txtBoxDisplay_TextChanged"/>
+            ScrollViewer.CanContentScroll="True"/>
         <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="37,23,0,0" VerticalAlignment="Top" Width="75" Click="btnHome_Click"/>
 
     </Grid>
