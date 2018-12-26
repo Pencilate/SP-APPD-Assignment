@@ -11,9 +11,13 @@ namespace APPDCA1
         public static void Main(string[] args)
         {
             Guide.initLineArray();
-            Guide.TestStationRoute(); 
+            //Guide.TestStationRoute();
             //Guide.TestingStationMtd();
             //Guide.Testing();
+            GraphRoute.initStationIndex();
+            GraphRoute.initGraph();
+            GraphRoute.TestGraph();
+
 
 
             Console.ReadKey();

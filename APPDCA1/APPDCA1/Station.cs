@@ -10,6 +10,7 @@ namespace APPDCA1
     {
         private string stationName;
         private bool isInterchange = false;
+        private int graphIndex = -1;
 
         private List<string> stationCode = new List<string>();
 
@@ -20,6 +21,12 @@ namespace APPDCA1
         }
 
         public Station() { }
+        
+        public int GraphIndex
+        {
+            get { return graphIndex; }
+            set { this.graphIndex = value; }
+        }
 
         public List<string> StationCode
         {

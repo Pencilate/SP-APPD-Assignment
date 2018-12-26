@@ -10,6 +10,11 @@ namespace APPDCA1
     {
         private static List<Line> MRT = new List<Line>();
 
+        public static List<Line> GetMRTLine()
+        {
+            return MRT;
+        }
+
         public static void initLineArray()
         {
             string FilePath = "..\\..\\resources\\MRT.txt";
