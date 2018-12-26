@@ -13,7 +13,6 @@
         <TextBox Name="txtStat" HorizontalAlignment="Left" Height="22" Margin="231,195,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="663,376,0,0" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
         <Button Content="Home" HorizontalAlignment="Left" Margin="49,36,0,0" VerticalAlignment="Top" Width="103" Height="35" Click="Button_Click"/>
-        <!--<GroupBox Header="" HorizontalAlignment="Left" Height="147" Margin="64,121,0,0" VerticalAlignment="Top" Width="327"/>-->
         <Label Content="Display Line" HorizontalAlignment="Left" Margin="317,34,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <ComboBox Name="cmbxStationStrChooser" HorizontalAlignment="Left" Margin="231,232,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
