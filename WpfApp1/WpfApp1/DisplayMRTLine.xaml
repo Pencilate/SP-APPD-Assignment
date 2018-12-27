@@ -5,15 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Display Line" Height="450" Width="800">
-    <Grid>
-        <RadioButton Name="radStation" Content="Station Name" HorizontalAlignment="Left" Margin="94,162,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
-        <RadioButton Name="radCode" Content="Code" HorizontalAlignment="Left" Margin="231,162,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
-        <Label Content="Station Name/Code" HorizontalAlignment="Left" Margin="88,195,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtStat" HorizontalAlignment="Left" Height="22" Margin="231,195,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="663,376,0,0" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
-        <Button Content="Home" HorizontalAlignment="Left" Margin="49,36,0,0" VerticalAlignment="Top" Width="103" Height="35" Click="Button_Click"/>
-        <Label Content="Display Line" HorizontalAlignment="Left" Margin="317,34,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
-        <ComboBox Name="cmbxStationStrChooser" HorizontalAlignment="Left" Margin="231,232,0,0" VerticalAlignment="Top" Width="120"/>
+        Title="Display Line" Height="303.543" Width="430.315">
+    <Grid Margin="0,0,2,0">
+        <Button Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="158,202,0,0" VerticalAlignment="Top" Width="77" Click="btnSearch_Click" Height="28"/>
+        <Button Content="Home" HorizontalAlignment="Left" Margin="23,16,0,0" VerticalAlignment="Top" Width="83" Height="35" Click="Button_Click"/>
+        <Label Content="Display Line" HorizontalAlignment="Left" Margin="123,9,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <GroupBox Header="Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="96,63,0,0" VerticalAlignment="Top" Width="220">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Name ="radStatName"  Content="Station Name" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
+                <RadioButton Name ="radStatCode" Content="Station Code" Grid.Column="1" HorizontalAlignment="Left" Margin="7,20,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
+                <ComboBox Name="cmbxStationStrChooser" Text="Selection" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="78,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+                <Label Content="Station:" HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

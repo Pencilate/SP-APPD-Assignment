@@ -62,10 +62,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DirectionsResults.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DisplayMRTLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,9 +80,6 @@
     </Compile>
     <Compile Include="Directions.xaml.cs">
       <DependentUpon>Directions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DirectionsResults.xaml.cs">
-      <DependentUpon>DirectionsResults.xaml</DependentUpon>
     </Compile>
     <Compile Include="DisplayMRTLine.xaml.cs">
       <DependentUpon>DisplayMRTLine.xaml</DependentUpon>

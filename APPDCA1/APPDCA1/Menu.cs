@@ -14,6 +14,7 @@ namespace APPDCA1
             //Guide.TestStationRoute();
             //Guide.TestingStationMtd();
             //Guide.Testing();
+            Console.WriteLine("INITIALISING GRAPH");
             GraphRoute.initStationIndex();
             GraphRoute.initGraph();
             GraphRoute.TestGraph();
