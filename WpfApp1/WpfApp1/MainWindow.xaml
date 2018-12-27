@@ -5,17 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-       Title="Home" Height="450" Width="400.788">
+       Title="Home" Height="276.378" Width="400.788">
     <Grid>
         <StackPanel>
             <Label Content="Main Screen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
             <TextBox Height="57" TextWrapping="Wrap" Text="Welcome to MRT Search and Route System! Please select the options below" Margin="20,10" FontSize="18" TextAlignment="Center"/>
             <Button Name = "btnDirections" Content="Directions" Click="btnDirections_Click" Margin="20,10" VerticalAlignment="Top" Height="25" />
             <Button Name = "btnDisplayLine" Content="Display MRT Line" Click="btnDisplayLine_Click" Margin="20,10" VerticalAlignment="Top" Height="25"/>
-
-
         </StackPanel>
-        <Button Name = "btnHome" Content="Home" HorizontalAlignment="Left" Margin="158,290,0,0" VerticalAlignment="Top" Width="88" Click="btnHome_Click" Height="35"/>
 
     </Grid>
 </Window>

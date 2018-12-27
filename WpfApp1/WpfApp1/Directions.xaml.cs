@@ -23,6 +23,7 @@ namespace WpfApp1
         public Directions()
         {
             InitializeComponent();
+            Guide.initLineArray();
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
@@ -64,10 +65,10 @@ namespace WpfApp1
             this.Close(); //close Current Window
         }
 
-        private void StationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
+        private void BoardingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
         {
-            Guide.initLineArray();
-            Station resultStat = new Station();
+            
+            //Station resultStat = new Station();
             if (radBStatName.IsChecked.Value == true)
             {
                 cmbxBStationStrChooser.Items.Clear();
@@ -79,13 +80,15 @@ namespace WpfApp1
             }
             else if (radBStatCode.IsChecked.Value == true)
             {
-                cmbxAStationStrChooser.Items.Clear();
+                cmbxBStationStrChooser.Items.Clear();
                 foreach (string stationCode in Guide.StationCodeStringList())
                 {
                     cmbxBStationStrChooser.Items.Add(stationCode);
                 }
             }
-
+        }
+        private void AlightingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
+        {
             if (radAStatName.IsChecked.Value == true)
             {
                 cmbxAStationStrChooser.Items.Clear();
