@@ -66,10 +66,6 @@ namespace WpfApp1
         private void StationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
         {
             Guide.initLineArray();
-            string statName = string.Empty;
-            string result = string.Empty;
-            Station resultStat = new Station();
-            bool SIChecked = true;
             if (radStation.IsChecked.Value == true)
             {
                 cmbxStationStrChooser.Items.Clear();
@@ -77,14 +73,6 @@ namespace WpfApp1
                 {
                     cmbxStationStrChooser.Items.Add(stationName);
                 }
-                statName = cmbxStationStrChooser.Text;
-                resultStat.StationCode = Guide.SearchByStationName(statName).StationCode; //search for the input station code based on inputted station name
-                foreach (string StationCodeStr in resultStat.StationCode) //foreach loop
-                {
-                    result += Guide.DisplayRoute(StationCodeStr); //output string
-                }
-                SIChecked = true;
-
             }
             else if (radCode.IsChecked.Value == true)
             {

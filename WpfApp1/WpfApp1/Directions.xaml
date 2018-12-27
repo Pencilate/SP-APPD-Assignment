@@ -17,8 +17,10 @@
         <CheckBox Name ="chkAName" Content="Station Name" HorizontalAlignment="Left" Margin="70,260,0,0" VerticalAlignment="Top"/>
         <CheckBox Name ="chkACode" Content="Code" HorizontalAlignment="Left" Margin="178,260,0,0" VerticalAlignment="Top"/>
         <Button Content="Home" HorizontalAlignment="Left" Margin="29,10,0,0" VerticalAlignment="Top" Width="91" Click="Button_Click" Height="34"/>
-        <GroupBox Header="" HorizontalAlignment="Left" Height="135" Margin="53,52,0,0" VerticalAlignment="Top" Width="220"/>
-        <GroupBox Header="" HorizontalAlignment="Left" Height="140" Margin="53,202,0,0" VerticalAlignment="Top" Width="220" RenderTransformOrigin="-1.613,0.413"/>
+        <GroupBox Header="" HorizontalAlignment="Left" Height="135" Margin="53,52,0,0" VerticalAlignment="Top" Width="427"/>
+        <GroupBox Header="" HorizontalAlignment="Left" Height="140" Margin="53,202,0,0" VerticalAlignment="Top" Width="427" RenderTransformOrigin="-1.613,0.413"/>
         <Label Content="Directions" HorizontalAlignment="Left" Margin="339,4,0,0" VerticalAlignment="Top" Height="79" Width="141" FontSize="24" FontWeight="Bold"/>
+        <ComboBox x:Name="cmbxStationStrChooser" HorizontalAlignment="Left" Margin="237,146,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmbxStationStrChooser_Copy" HorizontalAlignment="Left" Margin="237,296,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
