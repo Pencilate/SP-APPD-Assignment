@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
                 <RadioButton Name ="radStatName"  Content="Station Name" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
                 <RadioButton Name ="radStatCode" Content="Station Code" Grid.Column="1" HorizontalAlignment="Left" Margin="7,20,0,0" VerticalAlignment="Top" Checked="StationIdentifier_CheckChanged" Unchecked="StationIdentifier_CheckChanged"/>
-                <ComboBox Name="cmbxStationStrChooser" Text="Selection" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="78,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+                <ComboBox Name="cmbxStationStrChooser" Text="" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="78,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" IsEditable="True" IsTextSearchEnabled="True"/>
                 <Label Content="Station:" HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27"/>
             </Grid>
         </GroupBox>
