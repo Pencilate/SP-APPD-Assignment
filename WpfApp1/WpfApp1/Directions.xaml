@@ -9,12 +9,8 @@
     <Grid HorizontalAlignment="Left" Width="404" Height="419" VerticalAlignment="Top">
         <Label Content="Directions" HorizontalAlignment="Left" Margin="139,19,0,0" VerticalAlignment="Top" Height="40" Width="141" FontSize="24" FontWeight="Bold"/>
         <Button Name ="btnSearch" Content="Submit" HorizontalAlignment="Left" Margin="158,373,0,0" VerticalAlignment="Top" Width="102" Click="btnSearch_Click" Height="36"/>
-        <!--<CheckBox Name ="chkBName" Content="Station Name" HorizontalAlignment="Left" Margin="70,108,0,0" VerticalAlignment="Top"/>
-        <CheckBox Name ="chkBCode" Content="Code" HorizontalAlignment="Left" Margin="178,108,0,0" VerticalAlignment="Top"/>
-        <CheckBox Name ="chkAName" Content="Station Name" HorizontalAlignment="Left" Margin="70,260,0,0" VerticalAlignment="Top"/>
-        <CheckBox Name ="chkACode" Content="Code" HorizontalAlignment="Left" Margin="178,260,0,0" VerticalAlignment="Top"/> !-->
         <Button Content="Home" HorizontalAlignment="Left" Margin="23,33,0,0" VerticalAlignment="Top" Width="77" Click="Button_Click" Height="24"/>
-        <GroupBox Header="Bording Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="104,73,0,0" VerticalAlignment="Top" Width="220">
+        <GroupBox Header="Boarding Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="104,73,0,0" VerticalAlignment="Top" Width="220">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>

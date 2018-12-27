@@ -75,7 +75,7 @@ namespace WpfApp1
                 {
                     cmbxBStationStrChooser.Items.Add(stationName);
                 }
-
+                
             }
             else if (radBStatCode.IsChecked.Value == true)
             {
