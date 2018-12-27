@@ -138,66 +138,6 @@ namespace WpfApp1
             return index; //returns the index
         }
 
-        //public static void DisplayRoute(string StationCd)
-        //{
-        //    StationCd = StationCd.ToUpper();
-        //    string InputLineCd = StationCd.Substring(0, 2);
-        //    int LineIndex = -1;
-        //    for (int index = 0; index < MRT.Count; index++)
-        //    {
-        //        if (InputLineCd.Equals(MRT[index].LineCd))
-        //        {
-        //            LineIndex = index;
-        //            break;
-        //        }
-        //    }
-        //    Console.WriteLine("Listing station for {0} Line", InputLineCd);
-        //    for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++)
-        //    {
-        //        if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange)
-        //        {
-        //            bool IsStation = false;
-        //            for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
-        //            {
-        //                if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(StationCd))
-        //                {
-        //                    IsStation = true;
-        //                }
-        //            }
-
-        //            if (IsStation)
-        //            {
-        //                Console.WriteLine("#{0} - {1} - {2}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
-        //            }
-        //            else
-        //            {
-        //                for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++)
-        //                {
-        //                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd)))
-        //                    {
-        //                        Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].getStationList()[StationIndex].StationCode[i], MRT[LineIndex].getStationList()[StationIndex].StationName, "Interchange");
-        //                        break;
-        //                    }
-        //                }
-        //            }
-
-
-
-        //        }
-        //        else
-        //        {
-        //            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(StationCd))
-        //            {
-        //                Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].getStationList()[StationIndex].StationName);
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("{0} - {1}", MRT[LineIndex].getStationList()[StationIndex].StationCode[0], MRT[LineIndex].getStationList()[StationIndex].StationName);
-        //            }
-        //        }
-        //    }
-
-        //}
 
         public static string DisplayRoute(string StationCd) //method to DisplayRoute
         {

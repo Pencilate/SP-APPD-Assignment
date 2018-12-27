@@ -70,7 +70,6 @@ namespace WpfApp1
             Station resultStat = new Station();
             if (radBStatName.IsChecked.Value == true)
             {
-                cmbxBStationStrChooser.Items.Clear();
                 foreach (string stationName in Guide.StationNameStringList())
                 {
                     cmbxBStationStrChooser.Items.Add(stationName);
@@ -79,7 +78,6 @@ namespace WpfApp1
             }
             else if (radBStatCode.IsChecked.Value == true)
             {
-                cmbxBStationStrChooser.Items.Clear();
                 foreach (string stationCode in Guide.StationCodeStringList())
                 {
                     cmbxBStationStrChooser.Items.Add(stationCode);
@@ -88,7 +86,6 @@ namespace WpfApp1
 
             if (radAStatName.IsChecked.Value == true)
             {
-                cmbxAStationStrChooser.Items.Clear();
                 foreach (string stationName in Guide.StationNameStringList())
                 {
                     cmbxAStationStrChooser.Items.Add(stationName);
@@ -97,7 +94,6 @@ namespace WpfApp1
             }
             else if (radAStatCode.IsChecked.Value == true)
             {
-                cmbxAStationStrChooser.Items.Clear();
                 foreach (string stationCode in Guide.StationCodeStringList())
                 {
                     cmbxAStationStrChooser.Items.Add(stationCode);
