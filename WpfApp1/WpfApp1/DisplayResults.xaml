@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="DisplayResults" Height="450" Width="800">
+        Title="DisplayResults" Height="450" Width="439.764">
     <Grid>
-        <TextBox x:Name="txtDisplay" HorizontalAlignment="Left" Height="335" Margin="217,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        <TextBox x:Name="txtBoxDisplay" HorizontalAlignment="Left" Height="335" Margin="45,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.CanContentScroll="True"/>
         <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="45,34,0,0" VerticalAlignment="Top" Width="75" Click="btnHome_Click"/>

@@ -28,29 +28,28 @@ namespace WpfApp1
         private void btnSearch_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
         {
             Guide.initLineArray(); //Invokes Guide.initLineArray() method
-            string station = txtStat.Text; //gets input from user
+            string station = cmbxStationStrChooser.Text; //gets input from user
             string result = string.Empty;
             Station resultStat = new Station(); //creates new Station Object
-            if (radStation.IsChecked == true) //if StationName checkbox is checked
+            if (radStatName.IsChecked == true) //if StationName checkbox is checked
             {
-                resultStat.StationCode = Guide.SearchByStationName(station).StationCode; //search for the input station code based on inputted station name
-                foreach (string StationCodeStr in resultStat.StationCode) //foreach loop
-                {
-                    result += Guide.DisplayRoute(StationCodeStr); //output string
-                }
+                resultStat = Guide.SearchByStationName(station); //search for the input station code based on inputted station name
             }
             else //else if StationCode checkbox is checked
             {
                 resultStat = Guide.SearchByStationCd(station); //search by station code based on user input
-                foreach (string stationCd in resultStat.StationCode) //foreach loop
-                {
-                    result+= Guide.DisplayRoute(stationCd); //output string
-                }
+            }
+
+            foreach (string StationCodeStr in resultStat.StationCode) //foreach loop
+            {
+                result += string.Format("Displaying {0} Line:\r\n", StationCodeStr.Substring(0, 2));
+                result += Guide.DisplayRoute(StationCodeStr); //output string
+                result += "\r\n";
             }
 
             DisplayResults LineResult = new DisplayResults(); //create new instance of DisplayResults object
             LineResult.Show(); //show DisplayResults window
-            LineResult.txtDisplay.Text = "Displaying Line : " + "\n\n" +result; //display output in textbox in DisplayResults window
+            LineResult.txtBoxDisplay.Text = "Displaying Line : " + "\r\n" +result; //display output in textbox in DisplayResults window
             this.Hide(); //hides current window
 
         }
@@ -70,7 +69,7 @@ namespace WpfApp1
             string result = string.Empty;
             Station resultStat = new Station();
             bool SIChecked = true;
-            if (radStation.IsChecked.Value == true)
+            if (radStatName.IsChecked.Value == true)
             {
                 cmbxStationStrChooser.Items.Clear();
                 foreach (string stationName in Guide.StationNameStringList())
@@ -86,7 +85,7 @@ namespace WpfApp1
                 SIChecked = true;
 
             }
-            else if (radCode.IsChecked.Value == true)
+            else if (radStatCode.IsChecked.Value == true)
             {
                 cmbxStationStrChooser.Items.Clear();
                 foreach (string stationCode in Guide.StationCodeStringList())

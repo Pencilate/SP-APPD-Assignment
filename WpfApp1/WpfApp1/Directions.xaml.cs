@@ -30,25 +30,25 @@ namespace WpfApp1
             Guide.initLineArray(); //Invokes Guide.initLineArray() Method
             string bStatCode;
             string aStatCode;
-            if (chkBName.IsChecked == true) //if Station Name CheckBox is checked
+            if (radBStatName.IsChecked == true) //if Station Name CheckBox is checked
             {
-                bStatCode = Guide.SearchByStationName(txtBoarding.Text).StationCode[0]; //Search for the input Station Code based on user input
+                bStatCode = Guide.SearchByStationName(cmbxBStationStrChooser.Text).StationCode[0]; //Search for the input Station Code based on user input
             }
             else //else if Station Code CheckBox is checked
             {
-                bStatCode = txtBoarding.Text;
+                bStatCode = cmbxBStationStrChooser.Text;
             }
 
-            if (chkAName.IsChecked == true) //if Station Name CheckBox is checked
+            if (radAStatName.IsChecked == true) //if Station Name CheckBox is checked
             {
-                aStatCode = Guide.SearchByStationName(txtAlighting.Text).StationCode[0]; //search for the input Station Code based on user input
+                aStatCode = Guide.SearchByStationName(cmbxAStationStrChooser.Text).StationCode[0]; //search for the input Station Code based on user input
             }
             else //else if Station Code CheckBox is checked
             {
-                aStatCode = txtAlighting.Text;
+                aStatCode = cmbxAStationStrChooser.Text;
             }
 
-            DirectionsResults Results = new DirectionsResults(); //create new instance of Results form
+            DisplayResults Results = new DisplayResults(); //create new instance of Results form
             Results.Show(); //show Results form
             Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + Guide.FindPathV2(bStatCode, aStatCode); //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
             this.Hide(); //hides current window
@@ -62,6 +62,48 @@ namespace WpfApp1
             MainWindow Home = new MainWindow(); //create new instance of MainWindow object
             Home.Show(); //Show Home Window
             this.Close(); //close Current Window
+        }
+
+        private void StationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            Guide.initLineArray();
+            Station resultStat = new Station();
+            if (radBStatName.IsChecked.Value == true)
+            {
+                cmbxBStationStrChooser.Items.Clear();
+                foreach (string stationName in Guide.StationNameStringList())
+                {
+                    cmbxBStationStrChooser.Items.Add(stationName);
+                }
+
+            }
+            else if (radBStatCode.IsChecked.Value == true)
+            {
+                cmbxBStationStrChooser.Items.Clear();
+                foreach (string stationCode in Guide.StationCodeStringList())
+                {
+                    cmbxBStationStrChooser.Items.Add(stationCode);
+                }
+            }
+
+            if (radAStatName.IsChecked.Value == true)
+            {
+                cmbxAStationStrChooser.Items.Clear();
+                foreach (string stationName in Guide.StationNameStringList())
+                {
+                    cmbxAStationStrChooser.Items.Add(stationName);
+                }
+
+            }
+            else if (radAStatCode.IsChecked.Value == true)
+            {
+                cmbxAStationStrChooser.Items.Clear();
+                foreach (string stationCode in Guide.StationCodeStringList())
+                {
+                    cmbxAStationStrChooser.Items.Add(stationCode);
+                }
+            }
+
         }
     }
 }
