@@ -10,6 +10,11 @@ namespace WpfApp1
     {
         private static List<Line> MRT = new List<Line>();
 
+        public static List<Line> MRTLine
+        {
+            get { return MRT; }
+        }
+
         public static void initLineArray() //Initializes LineArray
         {
             string FilePath = "..\\..\\resources\\MRT.txt";
@@ -23,7 +28,7 @@ namespace WpfApp1
             List<string> stationNameStrLst = new List<string>();
             foreach (Line line in MRT)
             {
-                foreach (Station stat in line.getStationList())
+                foreach (Station stat in line.StationList)
                 {
                     string statName = stat.StationName;
                     if (!stationNameStrLst.Contains(statName))
@@ -41,7 +46,7 @@ namespace WpfApp1
             List<string> stationCodeStrLst = new List<string>();
             foreach (Line line in MRT)
             {
-                foreach (Station stat in line.getStationList())
+                foreach (Station stat in line.StationList)
                 {
                     foreach (string statCd in stat.StationCode)
                     {
@@ -65,25 +70,25 @@ namespace WpfApp1
             int ResultLineIndex = GetIndexOfLine(lineCd); // Sets ResultLineIndex to index of input.
 
             Station ResultStation = new Station(); //creates new Station Object
-                                                   //foreach (Station sta in MRT[ResultLineIndex].getStationList())
-            for (int i = 0; i < MRT[ResultLineIndex].getStationList().Count; i++)
+                                                   //foreach (Station sta in MRT[ResultLineIndex].StationList)
+            for (int i = 0; i < MRT[ResultLineIndex].StationList.Count; i++)
             {
-                if (MRT[ResultLineIndex].getStationList()[i].IsInterchange) //if input station is a Interchange
+                if (MRT[ResultLineIndex].StationList[i].IsInterchange) //if input station is a Interchange
                 {
-                    for (int j = 0; j < MRT[ResultLineIndex].getStationList()[i].StationCode.Count; j++) //for loop
+                    for (int j = 0; j < MRT[ResultLineIndex].StationList[i].StationCode.Count; j++) //for loop
                     {
-                        if (searchInput.Equals(MRT[ResultLineIndex].getStationList()[i].StationCode[j])) // if searchInput matches StationCode in Station List
+                        if (searchInput.Equals(MRT[ResultLineIndex].StationList[i].StationCode[j])) // if searchInput matches StationCode in Station List
                         {
-                            ResultStation = MRT[ResultLineIndex].getStationList()[i]; //sets Station Object name to Station Name
+                            ResultStation = MRT[ResultLineIndex].StationList[i]; //sets Station Object name to Station Name
                             break;
                         }
                     }
                 }
                 else
                 {
-                    if (searchInput.Equals(MRT[ResultLineIndex].getStationList()[i].StationCode[0])) //if input station is not a Interchange
+                    if (searchInput.Equals(MRT[ResultLineIndex].StationList[i].StationCode[0])) //if input station is not a Interchange
                     {
-                        ResultStation = MRT[ResultLineIndex].getStationList()[i]; //sets Station Object name to Station Name
+                        ResultStation = MRT[ResultLineIndex].StationList[i]; //sets Station Object name to Station Name
                         break;
                     }
                 }
@@ -97,11 +102,11 @@ namespace WpfApp1
             Station ResultStation = new Station(); //creates new Station Object
             for (int i = 0; i < MRT.Count; i++) //for loop
             {
-                for (int j = 0; j < MRT[i].getStationList().Count; j++)
+                for (int j = 0; j < MRT[i].StationList.Count; j++)
                 {
-                    if (searchInput.Equals(MRT[i].getStation(j).StationName)) //if search input equals to station names in MRT list
+                    if (searchInput.Equals(MRT[i].StationList[j].StationName)) //if search input equals to station names in MRT list
                     {
-                        ResultStation = MRT[i].getStation(j); //sets Station Object code to matching Station Code
+                        ResultStation = MRT[i].StationList[j]; //sets Station Object code to matching Station Code
                         break;
                     }
                 }
@@ -127,9 +132,9 @@ namespace WpfApp1
         public static int GetStationIndexFromLine(int lineIndex, string StationName) //gets Station Index using Line Index
         {
             int index = -1;
-            for (int i = 0; i < MRT[lineIndex].getStationList().Count; i++) //for loop
+            for (int i = 0; i < MRT[lineIndex].StationList.Count; i++) //for loop
             {
-                if (MRT[lineIndex].getStationList()[i].StationName.Equals(StationName)) //checks to see if Station Name in MRT List matches the input station name
+                if (MRT[lineIndex].StationList[i].StationName.Equals(StationName)) //checks to see if Station Name in MRT List matches the input station name
                 {
                     index = i; //sets index to the index where the Station was found.
                     break;
@@ -158,14 +163,14 @@ namespace WpfApp1
                     break;
                 }
             }
-            for (int StationIndex = 0; StationIndex < MRT[LineIndex].getStationList().Count; StationIndex++) //for loop
+            for (int StationIndex = 0; StationIndex < MRT[LineIndex].StationList.Count; StationIndex++) //for loop
             {
-                if (MRT[LineIndex].getStationList()[StationIndex].IsInterchange) //checks if Station is an Interchange
+                if (MRT[LineIndex].StationList[StationIndex].IsInterchange) //checks if Station is an Interchange
                 {
                     bool IsStation = false; //boolean variable
-                    for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++) //for loop
+                    for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++) //for loop
                     {
-                        if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
+                        if (MRT[LineIndex].StationList[StationIndex].StationCode[i].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
                         {
                             IsStation = true; //sets boolean variable IsStation to true
                         }
@@ -173,16 +178,16 @@ namespace WpfApp1
 
                     if (IsStation) //if (true)
                     {
-                        isInterchange = "#" + StationCd + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName + " - " + "Interchange" + "\n";
+                        isInterchange = "#" + StationCd + " - " + MRT[LineIndex].StationList[StationIndex].StationName + " - " + "Interchange" + "\n";
                         interchangeOutput += isInterchange; //string output
                     }
                     else //else
                     {
-                        for (int i = 0; i < MRT[LineIndex].getStationList()[StationIndex].StationCode.Count; i++) //for loop
+                        for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++) //for loop
                         {
-                            if (MRT[LineIndex].getStationList()[StationIndex].StationCode[i].StartsWith((InputLineCd))) //checks if Station Code in MRT Station list starts with InputLineCd
+                            if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd))) //checks if Station Code in MRT Station list starts with InputLineCd
                             {
-                                interchange = MRT[LineIndex].getStationList()[StationIndex].StationCode[i] + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName + " - " + "Interchange";
+                                interchange = MRT[LineIndex].StationList[StationIndex].StationCode[i] + " - " + MRT[LineIndex].StationList[StationIndex].StationName + " - " + "Interchange";
                                 interchangeOutput += interchange + "\n"; //string output
                                 break;
                             }
@@ -191,14 +196,14 @@ namespace WpfApp1
                 }
                 else //else
                 {
-                    if (MRT[LineIndex].getStationList()[StationIndex].StationCode[0].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
+                    if (MRT[LineIndex].StationList[StationIndex].StationCode[0].Equals(StationCd)) //checks if inputted Station Code matches Station Code in MRT Station List
                     {
-                        output = "#" + StationCd + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName;
+                        output = "#" + StationCd + " - " + MRT[LineIndex].StationList[StationIndex].StationName;
                         interchangeOutput += output + "\n"; //string output
                     }
                     else //else
                     {
-                        output1 = MRT[LineIndex].getStationList()[StationIndex].StationCode[0] + " - " + MRT[LineIndex].getStationList()[StationIndex].StationName;
+                        output1 = MRT[LineIndex].StationList[StationIndex].StationCode[0] + " - " + MRT[LineIndex].StationList[StationIndex].StationName;
                         interchangeOutput += output1 + "\n"; //string output
                     }
                 }
@@ -219,9 +224,9 @@ namespace WpfApp1
                 for (int i = ssIndex; i <= esIndex; i++) //for loop
                 {
                     string extractedStatCd = "";
-                    if (MRT[lineIndex].getStationList()[i].IsInterchange) //if statement to check if Station is an Interchange
+                    if (MRT[lineIndex].StationList[i].IsInterchange) //if statement to check if Station is an Interchange
                     {
-                        foreach (string statCd in MRT[lineIndex].getStationList()[i].StationCode) //foreach loop  
+                        foreach (string statCd in MRT[lineIndex].StationList[i].StationCode) //foreach loop  
                         {
                             if (statCd.Contains(lineCd)) //to check if StationCode in MRT contains input LineCd
                             {
@@ -232,9 +237,9 @@ namespace WpfApp1
                     }
                     else //else
                     {
-                        extractedStatCd = MRT[lineIndex].getStationList()[i].StationCode[0]; //sets extracted Station Code to be equals to StationCode in MRT
+                        extractedStatCd = MRT[lineIndex].StationList[i].StationCode[0]; //sets extracted Station Code to be equals to StationCode in MRT
                     }
-                    output1 += "\n" + extractedStatCd + " - " + MRT[lineIndex].getStationList()[i].StationName; //output string
+                    output1 += "\n" + extractedStatCd + " - " + MRT[lineIndex].StationList[i].StationName; //output string
                 } //end of for loop
                 return output1; //returns output string
 
@@ -244,9 +249,9 @@ namespace WpfApp1
                 for (int i = ssIndex; i >= esIndex; i--) //for loop
                 {
                     string extractedStatCd = "";
-                    if (MRT[lineIndex].getStationList()[i].IsInterchange) //check if Station is an Interchange
+                    if (MRT[lineIndex].StationList[i].IsInterchange) //check if Station is an Interchange
                     {
-                        foreach (string statCd in MRT[lineIndex].getStationList()[i].StationCode) //foreach loop
+                        foreach (string statCd in MRT[lineIndex].StationList[i].StationCode) //foreach loop
                         {
                             if (statCd.Contains(lineCd)) //check if StationCode in MRT contains input line code
                             {
@@ -258,9 +263,9 @@ namespace WpfApp1
                     }
                     else //else
                     {
-                        extractedStatCd = MRT[lineIndex].getStationList()[i].StationCode[0]; //sets extracted station code to be equals to StationCode in MRT
+                        extractedStatCd = MRT[lineIndex].StationList[i].StationCode[0]; //sets extracted station code to be equals to StationCode in MRT
                     }
-                    output2 += "\n" + extractedStatCd + " - " + MRT[lineIndex].getStationList()[i].StationName; //output string
+                    output2 += "\n" + extractedStatCd + " - " + MRT[lineIndex].StationList[i].StationName; //output string
                 } //end of for loop
                 return output2; //returns output string
             }
@@ -312,7 +317,7 @@ namespace WpfApp1
                 {
                     int lineIndex = GetIndexOfLine((statCdPair[i])[0]); //gets the index of the line of the first pair of station codes
 
-                    foreach (Station stat in MRT[lineIndex].getStationList()) //foreach loop
+                    foreach (Station stat in MRT[lineIndex].StationList) //foreach loop
                     {
                         if (stat.IsInterchange) //if Station is an Interchange
                         {

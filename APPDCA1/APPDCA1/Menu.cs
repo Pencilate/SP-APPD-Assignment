@@ -17,7 +17,8 @@ namespace APPDCA1
             Console.WriteLine("INITIALISING GRAPH");
             GraphRoute.initStationIndex();
             GraphRoute.initGraph();
-            GraphRoute.TestGraph();
+            //GraphRoute.TestGraph();
+            GraphRoute.initTraverseDijkstra(Guide.SearchByStationCd("EW21").GraphIndex, Guide.SearchByStationCd("NS2").GraphIndex);
 
 
 

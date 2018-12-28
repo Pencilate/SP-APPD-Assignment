@@ -43,6 +43,11 @@ namespace APPDCA1
             return isEdge;
         }
 
+        public int edgeDistance(int b, int a)
+        {
+            return adjacentMatrix[b, a];
+        }
+
 
     }
 }

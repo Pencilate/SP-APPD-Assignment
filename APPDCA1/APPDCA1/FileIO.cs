@@ -54,44 +54,44 @@ namespace APPDCA1
                 for (int i = ComparedLine; i >= 0; i--)
                 {
 
-                    for (int j = 0; j < MRT[CurrentLine].getStationList().Count(); j++)
+                    for (int j = 0; j < MRT[CurrentLine].StationList.Count(); j++)
                     {
 
-                        for (int h = 0; h < MRT[i].getStationList().Count(); h++)
+                        for (int h = 0; h < MRT[i].StationList.Count(); h++)
                         {
                             //Compare name of stations between CurruntLine and ComparedLine
-                            Console.WriteLine("{0} {1} VS {2} {3}", MRT[CurrentLine].LineCd, MRT[CurrentLine].getStationList()[j].StationName, MRT[i].LineCd, MRT[i].getStationList()[h].StationName);
-                            if (MRT[CurrentLine].getStationList()[j].StationName.Equals(MRT[i].getStationList()[h].StationName))
+                            Console.WriteLine("{0} {1} VS {2} {3}", MRT[CurrentLine].LineCd, MRT[CurrentLine].StationList[j].StationName, MRT[i].LineCd, MRT[i].StationList[h].StationName);
+                            if (MRT[CurrentLine].StationList[j].StationName.Equals(MRT[i].StationList[h].StationName))
                             {
                                 //if the station names match,                              
-                                MRT[CurrentLine].getStationList()[j].IsInterchange = true;
+                                MRT[CurrentLine].StationList[j].IsInterchange = true;
                                 //set varible to identify it as a interchange as true
 
 
                                 Console.WriteLine("YES");
-                                foreach (string str in MRT[CurrentLine].getStationList()[j].StationCode)
+                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
                                 {
                                     Console.Write(str + " ");
                                 }
                                 Console.WriteLine();
-                                foreach (string str in MRT[i].getStationList()[h].StationCode)
-                                {
-                                    Console.Write(str + " ");
-                                }
-                                Console.WriteLine();
-
-                                if ((MRT[CurrentLine].getStationList()[j].StationCode) != (MRT[i].getStationList()[h].StationCode))
-                                {
-                                    MRT[CurrentLine].getStationList()[j].StationCode.AddRange(MRT[i].getStationList()[h].StationCode);
-                                }
-
-                                foreach (string str in MRT[CurrentLine].getStationList()[j].StationCode)
+                                foreach (string str in MRT[i].StationList[h].StationCode)
                                 {
                                     Console.Write(str + " ");
                                 }
                                 Console.WriteLine();
 
-                                MRT[i].getStationList()[h] = MRT[CurrentLine].getStationList()[j];
+                                if ((MRT[CurrentLine].StationList[j].StationCode) != (MRT[i].StationList[h].StationCode))
+                                {
+                                    MRT[CurrentLine].StationList[j].StationCode.AddRange(MRT[i].StationList[h].StationCode);
+                                }
+
+                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
+                                {
+                                    Console.Write(str + " ");
+                                }
+                                Console.WriteLine();
+
+                                MRT[i].StationList[h] = MRT[CurrentLine].StationList[j];
 
                             }//end if
 
@@ -104,7 +104,7 @@ namespace APPDCA1
 
 
             //Old Code Pls Review and remove
-            //                   for(int i=0;i<MRT.get(0).getStationList().size();i++){
+            //                   for(int i=0;i<MRT.get(0).StationList.size();i++){
             //              if(MRT.get(0).getStation(i).getStationInterchangeStatus()){
             //                  System.out.println(MRT.get(0).getStation(i).getStationName());
             //                  int size =MRT.get(0).getStation(i).getStationCode().size();
@@ -114,8 +114,8 @@ namespace APPDCA1
             //              }
             //          }
 
-            //Console.WriteLine(MRT[0].getStationList()[0].IsInterchange);
-            //Console.WriteLine(MRT[2].getStationList()[3].IsInterchange);
+            //Console.WriteLine(MRT[0].StationList[0].IsInterchange);
+            //Console.WriteLine(MRT[2].StationList[3].IsInterchange);
 
             return MRT;
         }

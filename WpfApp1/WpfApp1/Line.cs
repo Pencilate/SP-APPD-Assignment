@@ -9,7 +9,7 @@ namespace WpfApp1
     public class Line //Line class
     {
         private string lineCd;
-        private List<Station> StationLine = new List<Station>();
+        private List<Station> stationLine = new List<Station>();
 
         public Line(string lineCd) //Line constructor with parameters
         {
@@ -22,17 +22,13 @@ namespace WpfApp1
 
         public void AddStationToLine(string StationCd, string StationName) //Adds a Station to the Line
         {
-            StationLine.Add(new Station(StationCd, StationName));
+            stationLine.Add(new Station(StationCd, StationName));
         }
 
-        internal Station getStation(int index) //Returns station object based on its index 
-        {
-            return StationLine[index];
-        }
 
-        internal List<Station> getStationList() //Returns Station Line
+        internal List<Station> StationList //Returns Station Line
         {
-            return StationLine;
+            get { return stationLine; }
         }
 
         public string LineCd //Line Code property of Line object

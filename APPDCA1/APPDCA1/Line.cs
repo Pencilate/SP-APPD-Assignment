@@ -31,9 +31,9 @@ namespace APPDCA1
             return StationLine[index];
         }
 
-        internal List<Station> getStationList()
+        internal List<Station> StationList
         {
-            return StationLine;
+            get { return StationLine; }
         }
 
         public string LineCd
