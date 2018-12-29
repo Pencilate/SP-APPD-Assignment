@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Directions" Height="458" Width="414">
-    <Grid HorizontalAlignment="Left" Width="404" Height="419" VerticalAlignment="Top">
+        Title="Directions" Height="489" Width="414">
+    <Grid HorizontalAlignment="Left" Width="404" Margin="0,0,0,1">
         <Label Content="Directions" HorizontalAlignment="Left" Margin="139,19,0,0" VerticalAlignment="Top" Height="40" Width="141" FontSize="24" FontWeight="Bold"/>
-        <Button Name ="btnSearch" Content="Submit" HorizontalAlignment="Left" Margin="158,373,0,0" VerticalAlignment="Top" Width="102" Click="btnSearch_Click" Height="36"/>
+        <Button Name ="btnSearch" Content="Submit" HorizontalAlignment="Left" Margin="158,405,0,0" VerticalAlignment="Top" Width="102" Click="btnSearch_Click" Height="36"/>
         <Button Content="Home" HorizontalAlignment="Left" Margin="23,33,0,0" VerticalAlignment="Top" Width="77" Click="Button_Click" Height="24"/>
         <GroupBox Header="Boarding Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="104,73,0,0" VerticalAlignment="Top" Width="220">
             <Grid>
@@ -44,6 +44,7 @@
                 <Label Content="Station:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Margin="10,8,0,0" Grid.Row="1"/>
             </Grid>
         </GroupBox>
+        <CheckBox Name="chkbxAdvFeature" Content="Enable Advance Features" Margin="139,373,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="152"/>
 
     </Grid>
 </Window>

@@ -24,7 +24,7 @@ namespace WpfApp1
                         case "(start)":
                             string LineStationCdStr = reader.ReadLine();
                             string LineCd = LineStationCdStr.Substring(0, 2);
-                            Console.WriteLine(LineCd);
+                            //Console.WriteLine(LineCd);
 
                             MRT.Add(new Line(LineCd));
                             if (LineCd.Equals("CG"))
@@ -60,21 +60,21 @@ namespace WpfApp1
                         for (int h = 0; h < MRT[i].StationList.Count(); h++)
                         {
                             //Compare name of stations between CurrentLine and ComparedLine
-                            Console.WriteLine("{0} {1} VS {2} {3}", MRT[CurrentLine].LineCd, MRT[CurrentLine].StationList[j].StationName, MRT[i].LineCd, MRT[i].StationList[h].StationName);
+                            //Console.WriteLine("{0} {1} VS {2} {3}", MRT[CurrentLine].LineCd, MRT[CurrentLine].StationList[j].StationName, MRT[i].LineCd, MRT[i].StationList[h].StationName);
                             if (MRT[CurrentLine].StationList[j].StationName.Equals(MRT[i].StationList[h].StationName))
                             {
                                 //if the station names match,set variable to identify it as a interchange as true                              
                                 MRT[CurrentLine].StationList[j].IsInterchange = true;
                                 foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
                                 {
-                                    Console.Write(str + " ");
+                                    //Console.Write(str + " ");
                                 }
-                                Console.WriteLine();
+                                //Console.WriteLine();
                                 foreach (string str in MRT[i].StationList[h].StationCode)
                                 {
-                                    Console.Write(str + " ");
+                                    //Console.Write(str + " ");
                                 }
-                                Console.WriteLine();
+                                //Console.WriteLine();
 
                                 if ((MRT[CurrentLine].StationList[j].StationCode) != (MRT[i].StationList[h].StationCode))
                                 {
@@ -83,9 +83,9 @@ namespace WpfApp1
 
                                 foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
                                 {
-                                    Console.Write(str + " ");
+                                    //Console.Write(str + " ");
                                 }
-                                Console.WriteLine();
+                                //Console.WriteLine();
 
                                 MRT[i].StationList[h] = MRT[CurrentLine].StationList[j];
 

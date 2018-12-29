@@ -9,6 +9,7 @@ namespace WpfApp1
     public class Guide
     {
         private static List<Line> MRT = new List<Line>();
+        private static bool GraphInitialized = false;
 
         public static List<Line> MRTLine
         {
@@ -275,7 +276,7 @@ namespace WpfApp1
             }
         }
 
-        public static string FindPathV2(string StartingStatCd, string EndingStatCd) //method to find route between 2 stations
+        public static string FindPathV2(string StartingStatCd, string EndingStatCd, bool useAdvFeature) //method to find route between 2 stations
         {
             Station StartStat = SearchByStationCd(StartingStatCd); //searches for station by Station Code, then returns and stores station object in StartStat object
             Station EndStat = SearchByStationCd(EndingStatCd); //searches for station by Station Code, then returns and stores station object in EndStat object
@@ -309,37 +310,43 @@ namespace WpfApp1
                     selectedStatCdPairIndex = i;
                 }
             }
-
-            if (!directRoute) //if a direct route is not available
+            if (useAdvFeature)
             {
-
-                for (int i = 0; i < statCdPair.Count; i++) //for loop
+                routeAvailable = true;
+            }
+            else
+            {
+                if (!directRoute) //if a direct route is not available
                 {
-                    int lineIndex = GetIndexOfLine((statCdPair[i])[0]); //gets the index of the line of the first pair of station codes
 
-                    foreach (Station stat in MRT[lineIndex].StationList) //foreach loop
+                    for (int i = 0; i < statCdPair.Count; i++) //for loop
                     {
-                        if (stat.IsInterchange) //if Station is an Interchange
+                        int lineIndex = GetIndexOfLine((statCdPair[i])[0]); //gets the index of the line of the first pair of station codes
+
+                        foreach (Station stat in MRT[lineIndex].StationList) //foreach loop
                         {
-                            List<string> lineOffered = new List<string>(); //creates a string list
-                            foreach (string statCd in stat.StationCode) //foreach loop
+                            if (stat.IsInterchange) //if Station is an Interchange
                             {
-                                lineOffered.Add(statCd.Substring(0, 2)); //add Station Code to string list
+                                List<string> lineOffered = new List<string>(); //creates a string list
+                                foreach (string statCd in stat.StationCode) //foreach loop
+                                {
+                                    lineOffered.Add(statCd.Substring(0, 2)); //add Station Code to string list
+                                }
+
+                                if ((lineOffered.Contains(statCdPair[i][0])) && (lineOffered.Contains(statCdPair[i][1]))) //checks to see if a common Station (interchange) is found 
+                                {
+                                    routeAvailable = true; // a route between both stations is available.
+                                    selectedStatCdPairIndex = i; //sets index of interchange Station to selectedStatCdPairIndex
+                                    interchangeName = stat.StationName; //sets name of the Interchange Station to interchangeName
+                                    break;
+                                }
+
+
                             }
-
-                            if ((lineOffered.Contains(statCdPair[i][0])) && (lineOffered.Contains(statCdPair[i][1]))) //checks to see if a common Station (interchange) is found 
-                            {
-                                routeAvailable = true; // a route between both stations is available.
-                                selectedStatCdPairIndex = i; //sets index of interchange Station to selectedStatCdPairIndex
-                                interchangeName = stat.StationName; //sets name of the Interchange Station to interchangeName
-                                break;
-                            }
-
-
                         }
+
+
                     }
-
-
                 }
             }
 
@@ -353,7 +360,16 @@ namespace WpfApp1
                     int esIndex = GetStationIndexFromLine(lineIndex, EndStat.StationName); //sets Ending Index to the Station Index of the Ending Station
                     return DisplayFindPath(lineIndex, ssIndex, esIndex); //invokes DisplayFindPath and returns route 
                 }
-                else //else if a direct route is not available (need to change trains at an interchange)
+                else if (useAdvFeature)
+                {
+                    if (!GraphInitialized)
+                    {
+                        GraphRoute.initStationIndex();
+                        GraphRoute.initGraph();
+                    }
+                    return GraphRoute.initTraverseDijkstra(StartStat.GraphIndex, EndStat.GraphIndex);
+                }
+                else//else if a direct route is not available (need to change trains at an interchange)
                 {
                     int lineIndex = GetIndexOfLine(statCdPair[selectedStatCdPairIndex][0]); //sets Line Index to Line Index of the selected Station Code Pair
 
