@@ -26,10 +26,10 @@ namespace APPDCA1
         public static Station SearchByStationCd(string searchInput) //This method scans through the MRT List of Line Objects then the List of Station Objects within it to find the specific station object and return it.
         {
             searchInput = searchInput.ToUpper(); //Makes the input case insensitive
-             string lineCd = searchInput.Substring(0, 2);
+            string lineCd = searchInput.Substring(0, 2);
 
             int ResultLineIndex = GetIndexOfLine(lineCd);
-            
+
             Station ResultStation = new Station();
             //foreach (Station sta in MRT[ResultLineIndex].StationList)
             for (int i = 0; i < MRT[ResultLineIndex].StationList.Count; i++)
@@ -166,18 +166,18 @@ namespace APPDCA1
                 }
             }
             Console.WriteLine("Listing station for {0} Line", InputLineCd);
-            for(int StationIndex = 0; StationIndex < MRT[LineIndex].StationList.Count; StationIndex++)
+            for (int StationIndex = 0; StationIndex < MRT[LineIndex].StationList.Count; StationIndex++)
             {
                 if (MRT[LineIndex].StationList[StationIndex].IsInterchange)
                 {
-                    bool IsStation = false ;
-                    for(int i =0; i< MRT[LineIndex].StationList[StationIndex].StationCode.Count;i++)
-                        {
+                    bool IsStation = false;
+                    for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)
+                    {
                         if (MRT[LineIndex].StationList[StationIndex].StationCode[i].Equals(StationCd))
                         {
                             IsStation = true;
                         }
-                        }
+                    }
 
                     if (IsStation)
                     {
@@ -187,7 +187,8 @@ namespace APPDCA1
                     {
                         for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)
                         {
-                           if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd))){
+                            if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd)))
+                            {
                                 Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].StationList[StationIndex].StationCode[i], MRT[LineIndex].StationList[StationIndex].StationName, "Interchange");
                                 break;
                             }
@@ -230,7 +231,7 @@ namespace APPDCA1
                                 extractedStatCd = statCd;
                             }
                         }
-                       
+
                     }
                     else
                     {
@@ -332,14 +333,14 @@ namespace APPDCA1
 
             List<string[]> statCdPair = new List<string[]>();
 
-            for(int i =0; i < StartStat.StationCode.Count; i++)
+            for (int i = 0; i < StartStat.StationCode.Count; i++)
             {
-                for(int j = 0; j < EndStat.StationCode.Count; j++)
+                for (int j = 0; j < EndStat.StationCode.Count; j++)
                 {
 
                     string ssLineCd = StartStat.StationCode[i].Substring(0, 2);
                     string esLineCd = EndStat.StationCode[j].Substring(0, 2);
-                    string[] cdPair = {ssLineCd, esLineCd};
+                    string[] cdPair = { ssLineCd, esLineCd };
                     statCdPair.Add(cdPair);
 
 
@@ -350,7 +351,7 @@ namespace APPDCA1
             bool routeAvailable = false;
             string interchangeName = "";
             int selectedStatCdPairIndex = -1;
-            for(int i = 0; i < statCdPair.Count; i++)
+            for (int i = 0; i < statCdPair.Count; i++)
             {
                 if ((statCdPair[i])[0].Equals((statCdPair[i])[1]))
                 {
@@ -412,7 +413,7 @@ namespace APPDCA1
                                 lineOffered.Add(statCd.Substring(0, 2));
                             }
 
-                            if((lineOffered.Contains(statCdPair[i][0]))&& (lineOffered.Contains(statCdPair[i][1])))
+                            if ((lineOffered.Contains(statCdPair[i][0])) && (lineOffered.Contains(statCdPair[i][1])))
                             {
                                 routeAvailable = true;
                                 selectedStatCdPairIndex = i;
@@ -515,10 +516,10 @@ namespace APPDCA1
             Console.WriteLine(Guide.SearchByStationCd("CC1").StationName);
             Console.WriteLine("--------");
 
-            string output ="";
+            string output = "";
             foreach (string str in Guide.SearchByStationName("Jurong East").StationCode)
             {
-                output += str+" ";
+                output += str + " ";
             }
             Console.WriteLine(output);
 
@@ -548,7 +549,7 @@ namespace APPDCA1
             }
 
             Console.WriteLine("Display path WIP");
-            FindPathV2("NS1","EW1");
+            FindPathV2("NS1", "EW1");
             DisplayRoute("EW2");
             Console.ReadKey();
         }
@@ -573,14 +574,14 @@ namespace APPDCA1
             }
 
             Station s3 = new Station("CC9", "Jurong East");
-            Station s4 = new Station("NE12","Pasir Ris");
+            Station s4 = new Station("NE12", "Pasir Ris");
             Console.WriteLine();
             Console.WriteLine();
             //FindRoute(s3, s4);
             //Console.WriteLine();
             //FindRoute("NS1", "EW1"); // Find route cant do this yet
             Console.ReadKey();
-            
+
         }
 
         public static void TestStationRoute()
@@ -595,7 +596,7 @@ namespace APPDCA1
             {
                 case 1:
                     Console.WriteLine("Option 1 Selected:");
-                    Console.Write("Enter the station code:" );
+                    Console.Write("Enter the station code:");
                     string input = Console.ReadLine();
                     Station stat = SearchByStationCd(input);
                     foreach (string statCd in stat.StationCode)

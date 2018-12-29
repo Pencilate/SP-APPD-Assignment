@@ -12,16 +12,16 @@ namespace APPDCA1
 
         public Graph(int size)
         {
-            adjacentMatrix = new int[size,size];
-            for(int i=0; i < size; i++)
+            adjacentMatrix = new int[size, size];
+            for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
-                { 
+                {
                     adjacentMatrix[i, j] = -1;
                 }
             }
         }
-       
+
         public void addEdge(int b, int a, int cost)
         {
             adjacentMatrix[b, a] = cost;

@@ -86,9 +86,9 @@ namespace APPDCA1
                 Console.WriteLine("{0} - Distance:{1} - Comes From:{2}", i, distanceTable[i, 0], distanceTable[i, 1]);
             }
 
-            List<int> routeGraphIndex = new List<int>() {destinationGraphIndex};
+            List<int> routeGraphIndex = new List<int>() { destinationGraphIndex };
             int currentIndex = destinationGraphIndex;
-            while(currentIndex != sourceGraphIndex)
+            while (currentIndex != sourceGraphIndex)
             {
                 currentIndex = distanceTable[currentIndex, 1];
                 routeGraphIndex.Add(currentIndex);
@@ -96,12 +96,239 @@ namespace APPDCA1
 
             routeGraphIndex.Reverse();
 
-            List<string> routeStationName = new List<string>();
-            foreach(int gI in routeGraphIndex)
+            List<Station> routeStation = new List<Station>();
+            foreach (int gI in routeGraphIndex)
             {
-                routeStationName.Add(SearchByStationGraphIndex(gI).StationName);
-                Console.WriteLine(SearchByStationGraphIndex(gI).StationName);
+                routeStation.Add(SearchByStationGraphIndex(gI));
             }
+
+
+
+            //int startIndex = -1;
+            //int endIndex = -1;
+
+            //string lineCd = "";
+            //int lineCdIdx = -1;
+            //int nextLineCdIdx = -1;
+            //int nextStartIndex = -1;
+            //for (int idx = 0; idx < routeStation.Count; idx++)
+            //{
+            //    bool matchFound = false;
+            //    if (idx == 0)
+            //    {
+            //        if (routeStation[idx].IsInterchange)
+            //        {
+            //            List<string> stationLineCd = new List<string>();
+            //            foreach(string statCd in routeStation[idx].StationCode)
+            //            {
+            //                stationLineCd.Add(statCd.Substring(0, 2));
+            //            }
+            //                foreach(string statCd in routeStation[1].StationCode)
+            //                {
+            //                    if (stationLineCd.Contains(statCd.Substring(0, 2)))
+            //                    {
+
+            //                        lineCd = statCd.Substring(0, 2);
+
+            //                    }
+            //                }
+            //            lineCdIdx = Guide.GetIndexOfLine(lineCd);
+
+            //        }
+            //        else
+            //        {
+            //            lineCdIdx = Guide.GetIndexOfLine(routeStation[idx].StationCode[0].Substring(0, 2));
+            //        }
+            //        startIndex = Guide.GetStationIndexFromLine(lineCdIdx, routeStation[idx].StationName);
+            //    }
+            //    else if (idx == (routeStation.Count - 1))
+            //    {
+            //        if (routeStation[idx].IsInterchange)
+            //        {
+            //            List<string> stationLineCd = new List<string>();
+            //            foreach (string statCd in routeStation[idx].StationCode)
+            //            {
+            //                stationLineCd.Add(statCd.Substring(0, 2));
+            //            }
+            //            foreach (string statCd in routeStation[routeStation.Count - 2].StationCode)
+            //            {
+            //                if (stationLineCd.Contains(statCd.Substring(0, 2)))
+            //                {
+            //                    lineCd = statCd.Substring(0, 2);
+
+            //                }
+            //            }
+            //            lineCdIdx = Guide.GetIndexOfLine(lineCd);
+
+            //        }
+            //        else
+            //        {
+            //            lineCdIdx = Guide.GetIndexOfLine(routeStation[idx].StationCode[0].Substring(0, 2));
+            //        }
+            //        endIndex = Guide.GetStationIndexFromLine(lineCdIdx, routeStation[idx].StationName);
+            //    }
+            //    else
+            //    {
+            //        if (routeStation[idx].IsInterchange)
+            //        {
+
+            //            List<string> statLineCd = new List<string>();
+            //            foreach (string statCd in routeStation[idx-1].StationCode)
+            //            {
+            //                statLineCd.Add(statCd.Substring(0, 2));
+            //            }
+            //            foreach (string statCd in routeStation[idx+1].StationCode)
+            //            {
+            //                bool contains = statLineCd.Contains(statCd.Substring(0, 2));
+            //                if (contains)
+            //                {
+            //                    matchFound = true;
+
+            //                }
+            //            }
+            //            if (!matchFound)
+            //            {
+            //                endIndex = Guide.GetStationIndexFromLine(lineCdIdx,routeStation[idx].StationName);
+
+            //                List<string> stationLineCd = new List<string>();
+            //                foreach (string statCd in routeStation[idx].StationCode)
+            //                {
+            //                    stationLineCd.Add(statCd.Substring(0, 2));
+            //                }
+            //                foreach (string statCd in routeStation[idx+1].StationCode)
+            //                {
+            //                    if (stationLineCd.Contains(statCd.Substring(0, 2)))
+            //                    {
+
+            //                        lineCd = statCd.Substring(0, 2);
+
+            //                    }
+            //                }
+            //                nextLineCdIdx = Guide.GetIndexOfLine(lineCd);
+            //                nextStartIndex = Guide.GetStationIndexFromLine(nextLineCdIdx, routeStation[idx].StationName);
+            //            }
+
+            //        }
+
+            //    }
+            //    if (matchFound)
+            //    {
+            //        continue;
+            //    }
+            //    if ((startIndex != -1) &&(endIndex != -1)&&(lineCdIdx != -1))
+            //    {
+            //        Guide.DisplayFindPath(lineCdIdx, startIndex, endIndex);
+            //        lineCdIdx = nextLineCdIdx;
+            //        startIndex = nextStartIndex;
+            //        endIndex = -1;
+            //    }
+
+            //}
+
+            List<string> routeStationCd = new List<string>();
+            for (int idx = 0; idx < routeStation.Count; idx++)
+            {
+                string lineCd = "";
+                if ((idx == 0) && (routeStation[idx].IsInterchange))
+                {
+                    List<string> stationLineCd = new List<string>();
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        stationLineCd.Add(statCd.Substring(0, 2));
+                    }
+                    foreach (string statCd in routeStation[idx + 1].StationCode)
+                    {
+                        if (stationLineCd.Contains(statCd.Substring(0, 2)))
+                        {
+                            lineCd = statCd.Substring(0, 2);
+                        }
+                    }
+
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        if (statCd.Contains(lineCd))
+                        {
+                            routeStationCd.Add(statCd);
+                        }
+                    }
+
+                }
+                else if ((idx == routeStation.Count - 1) && (routeStation[idx].IsInterchange))
+                {
+                    List<string> stationLineCd = new List<string>();
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        stationLineCd.Add(statCd.Substring(0, 2));
+                    }
+                    foreach (string statCd in routeStation[idx - 1].StationCode)
+                    {
+                        if (stationLineCd.Contains(statCd.Substring(0, 2)))
+                        {
+                            lineCd = statCd.Substring(0, 2);
+                        }
+                    }
+
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        if (statCd.Contains(lineCd))
+                        {
+                            routeStationCd.Add(statCd);
+                        }
+                    }
+                }
+                else if (routeStation[idx].IsInterchange)
+                {
+                    List<string> stationLineCd = new List<string>();
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        stationLineCd.Add(statCd.Substring(0, 2));
+                    }
+                    foreach (string statCd in routeStation[idx - 1].StationCode)
+                    {
+                        if (stationLineCd.Contains(statCd.Substring(0, 2)))
+                        {
+                            lineCd = statCd.Substring(0, 2);
+                        }
+                    }
+
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        if (statCd.Contains(lineCd))
+                        {
+                            routeStationCd.Add(statCd);
+                        }
+                    }
+
+                    foreach (string statCd in routeStation[idx + 1].StationCode)
+                    {
+                        if (stationLineCd.Contains(statCd.Substring(0, 2)))
+                        {
+                            lineCd = statCd.Substring(0, 2);
+                        }
+                    }
+
+                    foreach (string statCd in routeStation[idx].StationCode)
+                    {
+                        if (statCd.Contains(lineCd))
+                        {
+                            routeStationCd.Add(statCd);
+                        }
+                    }
+                }
+                else
+                {
+                    routeStationCd.Add(routeStation[idx].StationCode[0]);
+                }
+            }
+
+            string outputRoute = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n", routeStation[0].StationName, routeStation[routeStation.Count - 1].StationName, routeStation.Count);
+            outputRoute += "Start of Route\r\n";
+            foreach (string statCd in routeStationCd)
+            {
+                outputRoute += string.Format("{0} - {1}\r\n", statCd, Guide.SearchByStationCd(statCd).StationName);
+            }
+            outputRoute += "End of Route";
+            Console.WriteLine(outputRoute);
 
 
 
@@ -206,6 +433,14 @@ namespace APPDCA1
                 Console.WriteLine("{0,5}|{1}", neighbourIdx[i], neighbourName[i]);
             }
 
+        }
+        public static void TestGraphRoute()
+        {
+            Console.Write("Please enter the boarding station code: ");
+            string boardingStationCd = Console.ReadLine();
+            Console.Write("Please enter the alighting station code: ");
+            string alightingStationCd = Console.ReadLine();
+            GraphRoute.initTraverseDijkstra(Guide.SearchByStationCd(boardingStationCd).GraphIndex, Guide.SearchByStationCd(alightingStationCd).GraphIndex);
         }
     }
 }

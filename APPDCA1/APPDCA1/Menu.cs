@@ -18,7 +18,8 @@ namespace APPDCA1
             GraphRoute.initStationIndex();
             GraphRoute.initGraph();
             //GraphRoute.TestGraph();
-            GraphRoute.initTraverseDijkstra(Guide.SearchByStationCd("EW21").GraphIndex, Guide.SearchByStationCd("NS2").GraphIndex);
+
+            GraphRoute.TestGraphRoute();
 
 
 

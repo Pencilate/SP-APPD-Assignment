@@ -21,7 +21,7 @@ namespace APPDCA1
         }
 
         public Station() { }
-        
+
         public int GraphIndex
         {
             get { return graphIndex; }
@@ -43,7 +43,7 @@ namespace APPDCA1
         public bool IsInterchange
         {
             get { return isInterchange; }
-            set { this.isInterchange = value;}
+            set { this.isInterchange = value; }
         }
     }
 }
