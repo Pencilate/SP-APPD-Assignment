@@ -11,9 +11,6 @@ namespace WpfApp1
         private static Graph mrtGraph;
         private static int size;
 
-        
-        
-
 
         public static void initStationIndex()
         {
@@ -79,7 +76,7 @@ namespace WpfApp1
 
             while (visitedIndex.Count < size)
             {
-                currentNodeIndex = TraverseDijkstra(distanceTable,visitedIndex,currentNodeIndex);
+                currentNodeIndex = TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex);
             }
 
             for (int i = 0; i < size; i++)
@@ -342,7 +339,7 @@ namespace WpfApp1
 
         }
 
-        public static int TraverseDijkstra(int[,] distanceTable,List<int> visitedIndex,int currentNodeIndex)
+        public static int TraverseDijkstra(int[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>();
 

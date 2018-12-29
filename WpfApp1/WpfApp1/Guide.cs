@@ -225,7 +225,7 @@ namespace WpfApp1
                     }
                     output += extractedStatCd + " - " + MRT[lineIndex].StationList[i].StationName + "\n"; //output string
                 } //end of for loop
-               
+
 
             }
             else if (ssIndex > esIndex) //if starting index is greater than the ending index
@@ -342,7 +342,7 @@ namespace WpfApp1
 
                     int ssIndex = GetStationIndexFromLine(lineIndex, StartStat.StationName); //sets Starting Index to the Station Index of the Starting Station
                     int esIndex = GetStationIndexFromLine(lineIndex, EndStat.StationName); //sets Ending Index to the Station Index of the Ending Station
-                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route",StartStat.StationName,EndStat.StationName,(Math.Abs(esIndex - ssIndex)),DisplayFindPath(lineIndex, ssIndex, esIndex)); //invokes DisplayFindPath and returns route 
+                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route", StartStat.StationName, EndStat.StationName, (Math.Abs(esIndex - ssIndex)), DisplayFindPath(lineIndex, ssIndex, esIndex)); //invokes DisplayFindPath and returns route 
                 }
                 else if (useAdvFeature)
                 {
@@ -365,7 +365,7 @@ namespace WpfApp1
                     int icsDeprtIndex = GetStationIndexFromLine(lineIndex2, interchangeName); //sets departing index to the Station Index of the Interchange
                     int esIndex = GetStationIndexFromLine(lineIndex2, EndStat.StationName); //sets Final ending Index to the Station Index of the Ending Station
 
-                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex)+Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
+                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
                 }
                 return output;
             }
@@ -376,7 +376,7 @@ namespace WpfApp1
         }
 
 
-       
+
 
     }
 }
