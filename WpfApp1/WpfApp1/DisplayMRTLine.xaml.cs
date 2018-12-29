@@ -43,14 +43,14 @@ namespace WpfApp1
 
             foreach (string StationCodeStr in resultStat.StationCode) //foreach loop
             {
-                result += string.Format("Displaying {0} Line:\r\n", StationCodeStr.Substring(0, 2));
+                //result += string.Format("Displaying {0} Line:\r\n", StationCodeStr.Substring(0, 2));
                 result += Guide.DisplayRoute(StationCodeStr); //output string
                 result += "\r\n";
             }
 
             DisplayResults LineResult = new DisplayResults(); //create new instance of DisplayResults object
             LineResult.Show(); //show DisplayResults window
-            LineResult.txtBoxDisplay.Text = "Displaying Line : " + "\r\n" +result; //display output in textbox in DisplayResults window
+            LineResult.txtBoxDisplay.Text = "Displaying Line : \r\n" + "# - Represents the station that you selected\r\n" +result; //display output in textbox in DisplayResults window
             this.Hide(); //hides current window
 
         }

@@ -82,9 +82,9 @@ namespace APPDCA1
 
             for (int index = 0; index < MRT.Count; index++)
             {
-                if (lineCd.Equals(MRT[index].LineCd))
+                if (lineCd.Equals(MRT[index].LineCd))//checks if input line code matches LineCd in MRT
                 {
-                    ResultLineIndex = index;
+                    ResultLineIndex = index;//sets LineIndex to index where input line code was found
                     break;
                 }
             }
@@ -154,42 +154,34 @@ namespace APPDCA1
 
         public static void DisplayRoute(string StationCd)
         {
-            StationCd = StationCd.ToUpper();
-            string InputLineCd = StationCd.Substring(0, 2);
-            int LineIndex = -1;
-            for (int index = 0; index < MRT.Count; index++)
-            {
-                if (InputLineCd.Equals(MRT[index].LineCd))
-                {
-                    LineIndex = index;
-                    break;
-                }
-            }
+            StationCd = StationCd.ToUpper(); //makes input not case sensitive
+            string InputLineCd = StationCd.Substring(0, 2);//extracts first 2 characters from StationCd and assigns it to InputLineCd
+            int LineIndex = GetIndexOfLine(InputLineCd);
             Console.WriteLine("Listing station for {0} Line", InputLineCd);
-            for (int StationIndex = 0; StationIndex < MRT[LineIndex].StationList.Count; StationIndex++)
+            for (int StationIndex = 0; StationIndex < MRT[LineIndex].StationList.Count; StationIndex++) //cycles through the StationList for the line stationCd is in
             {
                 if (MRT[LineIndex].StationList[StationIndex].IsInterchange)
                 {
-                    bool IsStation = false;
-                    for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)
+                    bool IsStation = false; //boolean variable for checking if station is the station in the input
+                    for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)//cycles through the different station codes a interchange may have.
                     {
-                        if (MRT[LineIndex].StationList[StationIndex].StationCode[i].Equals(StationCd))
+                        if (MRT[LineIndex].StationList[StationIndex].StationCode[i].Equals(StationCd)) //checks if the current Station Code in MRT Station List matches input stationCd
                         {
-                            IsStation = true;
+                            IsStation = true;//if this station matches the stationCd, sets IsStation to true;
                         }
                     }
 
                     if (IsStation)
                     {
-                        Console.WriteLine("#{0} - {1} - {2}", StationCd, MRT[LineIndex].StationList[StationIndex].StationName, "Interchange");
+                        Console.WriteLine("#{0} - {1} - {2}", StationCd, MRT[LineIndex].StationList[StationIndex].StationName, "Interchange"); //output
                     }
                     else
                     {
-                        for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)
+                        for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)//cycles through the different station codes a interchange may have.
                         {
-                            if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd)))
+                            if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd))) //checks if the station code have the correct line code
                             {
-                                Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].StationList[StationIndex].StationCode[i], MRT[LineIndex].StationList[StationIndex].StationName, "Interchange");
+                                Console.WriteLine("{0} - {1} - {2}", MRT[LineIndex].StationList[StationIndex].StationCode[i], MRT[LineIndex].StationList[StationIndex].StationName, "Interchange"); // output
                                 break;
                             }
                         }
@@ -200,13 +192,13 @@ namespace APPDCA1
                 }
                 else
                 {
-                    if (MRT[LineIndex].StationList[StationIndex].StationCode[0].Equals(StationCd))
+                    if (MRT[LineIndex].StationList[StationIndex].StationCode[0].Equals(StationCd))  //checks if the current Station Code in MRT Station List matches input stationCd
                     {
-                        Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].StationList[StationIndex].StationName);
+                        Console.WriteLine("#{0} - {1}", StationCd, MRT[LineIndex].StationList[StationIndex].StationName);//if this station matches the stationCd,output 
                     }
                     else
                     {
-                        Console.WriteLine("{0} - {1}", MRT[LineIndex].StationList[StationIndex].StationCode[0], MRT[LineIndex].StationList[StationIndex].StationName);
+                        Console.WriteLine("{0} - {1}", MRT[LineIndex].StationList[StationIndex].StationCode[0], MRT[LineIndex].StationList[StationIndex].StationName);//otherwise, this output
                     }
                 }
             }

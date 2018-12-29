@@ -11,7 +11,7 @@ namespace APPDCA1
         private static Graph mrtGraph;
         private static int size;
 
-        private static List<int> visitedIndex = new List<int>();
+        private static List<int> visitedIndex;
         private static int[,] distanceTable;
 
 
@@ -66,7 +66,7 @@ namespace APPDCA1
 
         public static void initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex)
         {
-
+            visitedIndex = new List<int>();
             distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
             for (int i = 0; i < size; i++)
             {
@@ -228,7 +228,8 @@ namespace APPDCA1
             List<string> routeStationCd = new List<string>();
             for (int idx = 0; idx < routeStation.Count; idx++)
             {
-                string lineCd = "";
+                string prevStatLineCd = "";
+                string nextStatLineCd = "";
                 if ((idx == 0) && (routeStation[idx].IsInterchange))
                 {
                     List<string> stationLineCd = new List<string>();
@@ -240,13 +241,13 @@ namespace APPDCA1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            nextStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(nextStatLineCd))
                         {
                             routeStationCd.Add(statCd);
                         }
@@ -264,13 +265,13 @@ namespace APPDCA1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            prevStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(prevStatLineCd))
                         {
                             routeStationCd.Add(statCd);
                         }
@@ -278,24 +279,18 @@ namespace APPDCA1
                 }
                 else if (routeStation[idx].IsInterchange)
                 {
+
                     List<string> stationLineCd = new List<string>();
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
                         stationLineCd.Add(statCd.Substring(0, 2));
                     }
+
                     foreach (string statCd in routeStation[idx - 1].StationCode)
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
-                        }
-                    }
-
-                    foreach (string statCd in routeStation[idx].StationCode)
-                    {
-                        if (statCd.Contains(lineCd))
-                        {
-                            routeStationCd.Add(statCd);
+                            prevStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
@@ -303,15 +298,26 @@ namespace APPDCA1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            nextStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
+
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(prevStatLineCd))
                         {
                             routeStationCd.Add(statCd);
+                        }
+                    }
+                    if (!prevStatLineCd.Equals(nextStatLineCd))
+                    {
+                        foreach (string statCd in routeStation[idx].StationCode)
+                        {
+                            if (statCd.Contains(nextStatLineCd))
+                            {
+                                routeStationCd.Add(statCd);
+                            }
                         }
                     }
                 }

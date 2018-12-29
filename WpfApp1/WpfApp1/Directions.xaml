@@ -44,7 +44,7 @@
                 <Label Content="Station:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Margin="10,8,0,0" Grid.Row="1"/>
             </Grid>
         </GroupBox>
-        <CheckBox Name="chkbxAdvFeature" Content="Enable Advance Features" Margin="139,373,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="152"/>
+        <CheckBox Name="chkbxAdvFeature" Content="Enable Advance Features (Graph Routing)" Margin="90,373,75,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
 
     </Grid>
 </Window>

@@ -17,10 +17,23 @@ namespace APPDCA1
             Console.WriteLine("INITIALISING GRAPH");
             GraphRoute.initStationIndex();
             GraphRoute.initGraph();
-            //GraphRoute.TestGraph();
-
-            GraphRoute.TestGraphRoute();
-
+            //GraphRoute.TestGraph   
+            bool repeat = true;
+            while (repeat)
+            {
+                GraphRoute.TestGraphRoute();
+                Console.Write("New Route? (Y/N)");
+                char response = char.Parse(Console.ReadLine().ToUpper());
+                switch (response)
+                {
+                    case 'Y':
+                        repeat = true;
+                        break;
+                    case 'N':
+                        repeat = false;
+                        break;
+                }
+            }
 
 
             Console.ReadKey();

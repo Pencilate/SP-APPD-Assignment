@@ -11,7 +11,7 @@ namespace WpfApp1
         private static Graph mrtGraph;
         private static int size;
 
-        private static List<int> visitedIndex = new List<int>();
+        
         
 
 
@@ -67,6 +67,8 @@ namespace WpfApp1
         public static string initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex)
         {
             int[,] distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
+            List<int> visitedIndex = new List<int>();
+
             for (int i = 0; i < size; i++)
             {
                 distanceTable[i, 0] = int.MaxValue;
@@ -77,7 +79,7 @@ namespace WpfApp1
 
             while (visitedIndex.Count < size)
             {
-                currentNodeIndex = TraverseDijkstra(distanceTable,currentNodeIndex);
+                currentNodeIndex = TraverseDijkstra(distanceTable,visitedIndex,currentNodeIndex);
             }
 
             for (int i = 0; i < size; i++)
@@ -227,7 +229,8 @@ namespace WpfApp1
             List<string> routeStationCd = new List<string>();
             for (int idx = 0; idx < routeStation.Count; idx++)
             {
-                string lineCd = "";
+                string prevStatLineCd = "";
+                string nextStatLineCd = "";
                 if ((idx == 0) && (routeStation[idx].IsInterchange))
                 {
                     List<string> stationLineCd = new List<string>();
@@ -239,13 +242,13 @@ namespace WpfApp1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            nextStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(nextStatLineCd))
                         {
                             routeStationCd.Add(statCd);
                         }
@@ -263,13 +266,13 @@ namespace WpfApp1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            prevStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(prevStatLineCd))
                         {
                             routeStationCd.Add(statCd);
                         }
@@ -277,24 +280,18 @@ namespace WpfApp1
                 }
                 else if (routeStation[idx].IsInterchange)
                 {
+
                     List<string> stationLineCd = new List<string>();
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
                         stationLineCd.Add(statCd.Substring(0, 2));
                     }
+
                     foreach (string statCd in routeStation[idx - 1].StationCode)
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
-                        }
-                    }
-
-                    foreach (string statCd in routeStation[idx].StationCode)
-                    {
-                        if (statCd.Contains(lineCd))
-                        {
-                            routeStationCd.Add(statCd);
+                            prevStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
@@ -302,15 +299,26 @@ namespace WpfApp1
                     {
                         if (stationLineCd.Contains(statCd.Substring(0, 2)))
                         {
-                            lineCd = statCd.Substring(0, 2);
+                            nextStatLineCd = statCd.Substring(0, 2);
                         }
                     }
 
+
                     foreach (string statCd in routeStation[idx].StationCode)
                     {
-                        if (statCd.Contains(lineCd))
+                        if (statCd.Contains(prevStatLineCd))
                         {
                             routeStationCd.Add(statCd);
+                        }
+                    }
+                    if (!prevStatLineCd.Equals(nextStatLineCd))
+                    {
+                        foreach (string statCd in routeStation[idx].StationCode)
+                        {
+                            if (statCd.Contains(nextStatLineCd))
+                            {
+                                routeStationCd.Add(statCd);
+                            }
                         }
                     }
                 }
@@ -334,7 +342,7 @@ namespace WpfApp1
 
         }
 
-        public static int TraverseDijkstra(int[,] distanceTable,int currentNodeIndex)
+        public static int TraverseDijkstra(int[,] distanceTable,List<int> visitedIndex,int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>();
 
