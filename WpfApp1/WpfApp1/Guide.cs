@@ -18,8 +18,8 @@ namespace WpfApp1
 
         public static void initLineArray() //Initializes LineArray
         {
-            //string FilePath = "..\\..\\resources\\MRT.txt"; //original file path in resources folder under the project folder
-            string FilePath = "MRT.txt"; //file path to MRT.txt in the same folder as WpfApp1.exe under both Release folder and Debug folder
+            string FilePath = "..\\..\\resources\\MRT.txt"; //original file path in resources folder under the project folder
+            //string FilePath = "MRT.txt"; //file path to MRT.txt in the same folder as WpfApp1.exe under both Release folder and Debug folder, but git didnt sync the datafiles
             //FilePath Points to the MRT.txt file
             MRT = FileIO.textFileReader(FilePath);
 
