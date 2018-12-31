@@ -22,10 +22,10 @@ namespace WpfApp1
 
         public Station() { } //Station constructor
 
-        public int GraphIndex
+        public int GraphIndex //GraphIndex property of Station object
         {
-            get { return graphIndex; }
-            set { this.graphIndex = value; }
+            get { return graphIndex; } //get method
+            set { this.graphIndex = value; } //set method
         }
 
         public List<string> StationCode //StationCode property of Station object

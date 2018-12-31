@@ -11,7 +11,7 @@ namespace WpfApp1
         private static List<Line> MRT = new List<Line>();
         private static bool GraphInitialized = false;
 
-        public static List<Line> MRTLine
+        public static List<Line> MRTLine //MRTLine list
         {
             get { return MRT; }
         }
@@ -26,40 +26,40 @@ namespace WpfApp1
 
         public static List<string> StationNameStringList()
         {
-            List<string> stationNameStrLst = new List<string>();
-            foreach (Line line in MRT)
+            List<string> stationNameStrLst = new List<string>(); //new list
+            foreach (Line line in MRT) //foreach loop
             {
-                foreach (Station stat in line.StationList)
+                foreach (Station stat in line.StationList) //inner foreach loop
                 {
                     string statName = stat.StationName;
-                    if (!stationNameStrLst.Contains(statName))
+                    if (!stationNameStrLst.Contains(statName)) //if stationNameStrLst list does not contain statName
                     {
-                        stationNameStrLst.Add(statName);
+                        stationNameStrLst.Add(statName); //add station name to stationNameStrLst list
                     }
                 }
             }
-            stationNameStrLst.Sort();
-            return stationNameStrLst;
+            stationNameStrLst.Sort(); //sort the list
+            return stationNameStrLst; //return the list
         }
 
         public static List<string> StationCodeStringList()
         {
-            List<string> stationCodeStrLst = new List<string>();
-            foreach (Line line in MRT)
+            List<string> stationCodeStrLst = new List<string>(); //new list
+            foreach (Line line in MRT) //foreach loop
             {
-                foreach (Station stat in line.StationList)
+                foreach (Station stat in line.StationList) //inner foreach loop
                 {
-                    foreach (string statCd in stat.StationCode)
+                    foreach (string statCd in stat.StationCode) //innermost foreach loop
                     {
-                        if (!stationCodeStrLst.Contains(statCd))
+                        if (!stationCodeStrLst.Contains(statCd)) //if stationCodeStrLst does not contain statCd
                         {
-                            stationCodeStrLst.Add(statCd);
+                            stationCodeStrLst.Add(statCd); //add station code to the stationCodeStrLst list
                         }
                     }
                 }
             }
-            stationCodeStrLst.Sort();
-            return stationCodeStrLst;
+            stationCodeStrLst.Sort(); //sort the list
+            return stationCodeStrLst; //return the list
         }
 
 
@@ -95,7 +95,7 @@ namespace WpfApp1
                 }
 
             }
-            return ResultStation;
+            return ResultStation; //return Station object
         }
 
         public static Station SearchByStationName(string searchInput)
@@ -112,7 +112,7 @@ namespace WpfApp1
                     }
                 }
             }
-            return ResultStation;
+            return ResultStation; //return Station object
         }
 
         public static int GetIndexOfLine(string lineCd) //method to find index of line
@@ -164,39 +164,35 @@ namespace WpfApp1
                         }
                     }
 
-                    if (IsStation)
+                    if (IsStation) //if true
                     {
                         output += string.Format("#{0} - {1} - {2}\r\n", StationCd, MRT[LineIndex].StationList[StationIndex].StationName, "Interchange"); //Add info the string output variable
                     }
-                    else
+                    else //else if false
                     {
                         for (int i = 0; i < MRT[LineIndex].StationList[StationIndex].StationCode.Count; i++)//cycles through the different station codes a interchange may have.
                         {
                             if (MRT[LineIndex].StationList[StationIndex].StationCode[i].StartsWith((InputLineCd))) //checks if the station code have the correct line code
                             {
-                                output += string.Format("{0} - {1} - {2}\r\n", MRT[LineIndex].StationList[StationIndex].StationCode[i], MRT[LineIndex].StationList[StationIndex].StationName, "Interchange"); // add info the string output variable
+                                output += string.Format("{0} - {1} - {2}\r\n", MRT[LineIndex].StationList[StationIndex].StationCode[i], MRT[LineIndex].StationList[StationIndex].StationName, "Interchange"); // add info to the string output variable
                                 break;
                             }
                         }
                     }
-
-
-
                 }
                 else
                 {
                     if (MRT[LineIndex].StationList[StationIndex].StationCode[0].Equals(StationCd))  //checks if the current Station Code in MRT Station List matches input stationCd
                     {
-                        output += string.Format("#{0} - {1}\r\n", StationCd, MRT[LineIndex].StationList[StationIndex].StationName);//if this station matches the stationCd,add info the string output variable
+                        output += string.Format("#{0} - {1}\r\n", StationCd, MRT[LineIndex].StationList[StationIndex].StationName);//if this station matches the stationCd,add info to the string output variable
                     }
                     else
                     {
-                        output += string.Format("{0} - {1}\r\n", MRT[LineIndex].StationList[StationIndex].StationCode[0], MRT[LineIndex].StationList[StationIndex].StationName);//otherwise, add this info the string output variable
+                        output += string.Format("{0} - {1}\r\n", MRT[LineIndex].StationList[StationIndex].StationCode[0], MRT[LineIndex].StationList[StationIndex].StationName);//otherwise, add this info to the string output variable
                     }
                 }
             }
-            return output;
-
+            return output; //return string
         }
 
         public static string DisplayFindPath(int lineIndex, int ssIndex, int esIndex) //method to display entire line
@@ -293,7 +289,7 @@ namespace WpfApp1
                     selectedStatCdPairIndex = i;
                 }
             }
-            if (useAdvFeature)
+            if (useAdvFeature) //if advanced feature (dijkstra) is used
             {
                 routeAvailable = true;
             }
@@ -342,16 +338,16 @@ namespace WpfApp1
 
                     int ssIndex = GetStationIndexFromLine(lineIndex, StartStat.StationName); //sets Starting Index to the Station Index of the Starting Station
                     int esIndex = GetStationIndexFromLine(lineIndex, EndStat.StationName); //sets Ending Index to the Station Index of the Ending Station
-                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route", StartStat.StationName, EndStat.StationName, (Math.Abs(esIndex - ssIndex)), DisplayFindPath(lineIndex, ssIndex, esIndex)); //invokes DisplayFindPath and returns route 
+                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(esIndex - ssIndex)), DisplayFindPath(lineIndex, ssIndex, esIndex)); //invokes DisplayFindPath and returns route 
                 }
-                else if (useAdvFeature)
+                else if (useAdvFeature) //else if true
                 {
-                    if (!GraphInitialized)
+                    if (!GraphInitialized) //if Graph is not initialized
                     {
-                        GraphRoute.initStationIndex();
-                        GraphRoute.initGraph();
+                        GraphRoute.initStationIndex(); //initialize station index
+                        GraphRoute.initGraph(); //initialize Graph
                     }
-                    output = GraphRoute.initTraverseDijkstra(StartStat.GraphIndex, EndStat.GraphIndex);
+                    output = GraphRoute.initTraverseDijkstra(StartStat.GraphIndex, EndStat.GraphIndex); //invokes GraphRoute.initTraverseDijkstra and stores return value to string output
                 }
                 else//else if a direct route is not available (need to change trains at an interchange)
                 {
@@ -365,7 +361,7 @@ namespace WpfApp1
                     int icsDeprtIndex = GetStationIndexFromLine(lineIndex2, interchangeName); //sets departing index to the Station Index of the Interchange
                     int esIndex = GetStationIndexFromLine(lineIndex2, EndStat.StationName); //sets Final ending Index to the Station Index of the Ending Station
 
-                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\nStart of Route\r\n{3}End of Route", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
+                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
                 }
                 return output;
             }
@@ -374,9 +370,5 @@ namespace WpfApp1
                 return "No route available";
             }
         }
-
-
-
-
     }
 }

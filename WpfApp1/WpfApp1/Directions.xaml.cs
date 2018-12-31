@@ -23,29 +23,28 @@ namespace WpfApp1
         public Directions()
         {
             InitializeComponent();
-            Guide.initLineArray();
-           
+            Guide.initLineArray(); //Invokes Guide.initLineArray() Method
+
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
         {
-            Guide.initLineArray(); //Invokes Guide.initLineArray() Method
             string bStatCode;
             string aStatCode;
-            if (radBStatName.IsChecked == true) //if Station Name CheckBox is checked
+            if (radBStatName.IsChecked == true) //if Station Name radiobutton is checked
             {
                 bStatCode = Guide.SearchByStationName(cmbxBStationStrChooser.Text).StationCode[0]; //Search for the input Station Code based on user input
             }
-            else //else if Station Code CheckBox is checked
+            else //else if Station Code radiobutton is checked
             {
                 bStatCode = cmbxBStationStrChooser.Text;
             }
 
-            if (radAStatName.IsChecked == true) //if Station Name CheckBox is checked
+            if (radAStatName.IsChecked == true) //if Station Name radiobutton is checked
             {
                 aStatCode = Guide.SearchByStationName(cmbxAStationStrChooser.Text).StationCode[0]; //search for the input Station Code based on user input
             }
-            else //else if Station Code CheckBox is checked
+            else //else if Station Code radiobutton is checked
             {
                 aStatCode = cmbxAStationStrChooser.Text;
             }
@@ -57,8 +56,6 @@ namespace WpfApp1
 
         }
 
-
-
         private void Button_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
         {
             MainWindow Home = new MainWindow(); //create new instance of MainWindow object
@@ -66,48 +63,44 @@ namespace WpfApp1
             this.Close(); //close Current Window
         }
 
-        private void BoardingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
+        private void BoardingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e) //for boarding station groupbox
         {
-            
-            //Station resultStat = new Station();
-            if (radBStatName.IsChecked.Value == true)
+            if (radBStatName.IsChecked.Value == true) //if radiobutton for station name is checked
             {
-                cmbxBStationStrChooser.Items.Clear();
-                foreach (string stationName in Guide.StationNameStringList())
+                cmbxBStationStrChooser.Items.Clear(); //clear the combobox
+                foreach (string stationName in Guide.StationNameStringList()) //foreach loop
                 {
-                    cmbxBStationStrChooser.Items.Add(stationName);
+                    cmbxBStationStrChooser.Items.Add(stationName); //add station names to the combobox
                 }
-                
             }
-            else if (radBStatCode.IsChecked.Value == true)
+            else if (radBStatCode.IsChecked.Value == true) //if radiobutton for station code is checked
             {
-                cmbxBStationStrChooser.Items.Clear();
-                foreach (string stationCode in Guide.StationCodeStringList())
+                cmbxBStationStrChooser.Items.Clear(); //clear the combobox
+                foreach (string stationCode in Guide.StationCodeStringList()) //foreach loop
                 {
-                    cmbxBStationStrChooser.Items.Add(stationCode);
+                    cmbxBStationStrChooser.Items.Add(stationCode); //add station codes to the combobox
                 }
             }
         }
-        private void AlightingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e)
+        private void AlightingStationIdentifier_CheckChanged(object sender, RoutedEventArgs e) //for alighting station groupbox
         {
-            if (radAStatName.IsChecked.Value == true)
+            if (radAStatName.IsChecked.Value == true) //if radiobutton for station name is checked
             {
-                cmbxAStationStrChooser.Items.Clear();
-                foreach (string stationName in Guide.StationNameStringList())
+                cmbxAStationStrChooser.Items.Clear(); //clear the combobox
+                foreach (string stationName in Guide.StationNameStringList()) //foreach loop
                 {
-                    cmbxAStationStrChooser.Items.Add(stationName);
+                    cmbxAStationStrChooser.Items.Add(stationName); //add station names to the combobox
                 }
 
             }
-            else if (radAStatCode.IsChecked.Value == true)
+            else if (radAStatCode.IsChecked.Value == true) //if radiobutton for station code is checked
             {
-                cmbxAStationStrChooser.Items.Clear();
-                foreach (string stationCode in Guide.StationCodeStringList())
+                cmbxAStationStrChooser.Items.Clear(); //clear the combobox
+                foreach (string stationCode in Guide.StationCodeStringList()) //foreach loop
                 {
-                    cmbxAStationStrChooser.Items.Add(stationCode);
+                    cmbxAStationStrChooser.Items.Add(stationCode); //add station codes to the combobox
                 }
             }
-
         }
     }
 }

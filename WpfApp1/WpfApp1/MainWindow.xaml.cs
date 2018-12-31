@@ -25,13 +25,6 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void btnHome_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
-        {
-            MainWindow Home = new MainWindow(); //create new instance of MainWindow
-            Home.Show(); //show MainWindow window
-            this.Close(); //close current window
-        }
-
         private void btnDirections_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
         {
             Directions Dir = new Directions(); //create new instance of Directions

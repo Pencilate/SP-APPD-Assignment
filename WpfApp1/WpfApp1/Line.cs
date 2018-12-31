@@ -15,16 +15,12 @@ namespace WpfApp1
         {
             this.lineCd = lineCd;
         }
-        public Line() //Line constructor
-        {
-
-        }
+        public Line() { } //Line constructor
 
         public void AddStationToLine(string StationCd, string StationName) //Adds a Station to the Line
         {
             stationLine.Add(new Station(StationCd, StationName));
         }
-
 
         internal List<Station> StationList //Returns Station Line
         {
@@ -36,6 +32,5 @@ namespace WpfApp1
             get { return lineCd; } //get method
             set { this.lineCd = value; } //set method
         }
-
     }
 }
