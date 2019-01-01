@@ -61,7 +61,7 @@ namespace WpfApp1
             return ResultStation; //return station object
         }
 
-        public static string initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex) //find route 
+        public static string initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex) //find route.  Dijikstra algorithm referenced from here: https://www.codingame.com/playgrounds/1608/shortest-paths-with-dijkstras-algorithm/dijkstras-algorithm
         {
             int[,] distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
             List<int> visitedIndex = new List<int>(); //new list
