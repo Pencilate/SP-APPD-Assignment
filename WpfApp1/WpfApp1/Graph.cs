@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     class Graph
     {
-        private int[,] adjacentMatrix; //creates an int array 
+        private int[,] adjacentMatrix; //creates an int array  //adjacenctMatrix used to represent the graph references from here: http://ceadserv1.nku.edu/longa//classes/mat385_resources/docs/matrix.html
 
         public Graph(int size) //Graph object
         {
