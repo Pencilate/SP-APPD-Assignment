@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APPDCA1", "APPDCA1\APPDCA1.csproj", "{26057F73-F37D-417D-973F-AECCD03B777A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APPDCA1Console", "APPDCA1\APPDCA1Console.csproj", "{26057F73-F37D-417D-973F-AECCD03B777A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
