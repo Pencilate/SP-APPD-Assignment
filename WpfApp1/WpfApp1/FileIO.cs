@@ -63,20 +63,10 @@ namespace WpfApp1
                             {
                                 //if the station names match,set variable to identify it as a interchange as true                              
                                 MRT[CurrentLine].StationList[j].IsInterchange = true;
-                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
-                                {
-                                }
-                                foreach (string str in MRT[i].StationList[h].StationCode)
-                                {
-                                }
 
                                 if ((MRT[CurrentLine].StationList[j].StationCode) != (MRT[i].StationList[h].StationCode))
                                 {
                                     MRT[CurrentLine].StationList[j].StationCode.AddRange(MRT[i].StationList[h].StationCode);
-                                }
-
-                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
-                                {
                                 }
 
                                 MRT[i].StationList[h] = MRT[CurrentLine].StationList[j];

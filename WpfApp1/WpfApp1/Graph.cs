@@ -17,7 +17,7 @@ namespace WpfApp1
             {
                 for (int j = 0; j < size; j++) //inner for loop
                 {
-                    adjacentMatrix[i, j] = -1;
+                    adjacentMatrix[i, j] = -1; //sets the cost of each edge to -1 to represent no edge
                 }
             }
         }

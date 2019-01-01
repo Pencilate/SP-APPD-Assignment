@@ -81,7 +81,7 @@ namespace WpfApp1
 
             for (int i = 0; i < size; i++) //for loop
             {
-                Console.WriteLine("{0} - Distance:{1} - Comes From:{2}", i, distanceTable[i, 0], distanceTable[i, 1]);
+                Console.WriteLine("{0} - Distance:{1} - Comes From:{2}", i, distanceTable[i, 0], distanceTable[i, 1]);//for debug to list the entire distance table value
             }
 
             List<int> routeGraphIndex = new List<int>() { destinationGraphIndex }; //new list

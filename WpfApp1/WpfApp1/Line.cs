@@ -22,7 +22,7 @@ namespace WpfApp1
             stationLine.Add(new Station(StationCd, StationName));
         }
 
-        internal List<Station> StationList //Returns Station Line
+        public List<Station> StationList //Returns Station Line
         {
             get { return stationLine; }
         }
