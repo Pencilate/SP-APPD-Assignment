@@ -249,7 +249,7 @@ namespace WpfApp1
             }
             else //else statement
             {
-                output = "Same Station for Start and End";
+                output = "Same Station for Start and End \n";
             }
             return output;//returns output string
         }
