@@ -11,8 +11,7 @@ namespace APPDCA1
         private static Graph mrtGraph;
         private static int size;
 
-        private static List<int> visitedIndex;
-        private static int[,] distanceTable;
+        
 
 
         public static void initStationIndex()
@@ -66,6 +65,8 @@ namespace APPDCA1
 
         public static void initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex)
         {
+            List<int> visitedIndex;
+            int[,] distanceTable;
             visitedIndex = new List<int>();
             distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
             for (int i = 0; i < size; i++)
@@ -76,10 +77,11 @@ namespace APPDCA1
             distanceTable[sourceGraphIndex, 0] = 0; //Distance from the starting station from the starting station is 0, thus setting it.
             int currentNodeIndex = sourceGraphIndex;
 
-            while (visitedIndex.Count < size)
-            {
-                currentNodeIndex = TraverseDijkstra(currentNodeIndex);
-            }
+            //while (visitedIndex.Count < size)
+            //{
+            //    currentNodeIndex = TraverseDijkstra(currentNodeIndex);
+            //}
+            TraverseDijkstraRecursive(distanceTable,visitedIndex,currentNodeIndex);
 
             for (int i = 0; i < size; i++)
             {
@@ -341,7 +343,7 @@ namespace APPDCA1
 
         }
 
-        public static int TraverseDijkstra(int currentNodeIndex)
+        public static int TraverseDijkstra(int[,] distanceTable, List<int> visitedIndex ,int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>();
 
@@ -398,6 +400,69 @@ namespace APPDCA1
             }
             Console.WriteLine(currentNodeIndex + " " + nextNode + " | " + neighbourStr);
             return nextNode;
+        }
+
+        public static void TraverseDijkstraRecursive(int[,] distanceTable, List<int> visitedIndex,int currentNodeIndex)
+        {
+            List<int> currentNodeNeighbour = new List<int>();
+
+            for (int i = 0; i < size; i++)
+            {
+                if (mrtGraph.isEdge(currentNodeIndex, i))
+                {
+                    currentNodeNeighbour.Add(i);
+                }
+            }
+            foreach (int visitedIdx in visitedIndex)
+            {
+                currentNodeNeighbour.Remove(visitedIdx);
+
+            }
+
+            for (int i = 0; i < currentNodeNeighbour.Count; i++)
+            {
+                int sumDistance = distanceTable[currentNodeIndex, 0] + mrtGraph.edgeDistance(currentNodeIndex, currentNodeNeighbour[i]);
+
+                if (distanceTable[currentNodeNeighbour[i], 0] > sumDistance)
+                {
+                    distanceTable[currentNodeNeighbour[i], 0] = sumDistance;
+                    distanceTable[currentNodeNeighbour[i], 1] = currentNodeIndex;
+                }
+
+            }
+
+            visitedIndex.Add(currentNodeIndex);
+
+            int nextNode = -1;
+            int shortestDist = int.MaxValue;
+            for (int i = 0; i < size; i++)
+            {
+                if (visitedIndex.Contains(i))
+                {
+                    continue;
+                }
+                else
+                {
+                    if (shortestDist > distanceTable[i, 0])
+                    {
+                        shortestDist = distanceTable[i, 0];
+                        nextNode = i;
+                    }
+                }
+            }
+
+
+            string neighbourStr = "";
+            foreach (int idx in currentNodeNeighbour)
+            {
+                neighbourStr += idx + " ";
+            }
+            Console.WriteLine(currentNodeIndex + " " + nextNode + " | " + neighbourStr);
+
+            if (visitedIndex.Count < size)
+            {
+                TraverseDijkstraRecursive(distanceTable,visitedIndex,nextNode);
+            }
         }
 
         public static void TestGraph()
