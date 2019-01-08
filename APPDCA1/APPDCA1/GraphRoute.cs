@@ -507,11 +507,29 @@ namespace APPDCA1
         }
         public static void TestGraphRoute()
         {
-            Console.Write("Please enter the boarding station code: ");
-            string boardingStationCd = Console.ReadLine();
-            Console.Write("Please enter the alighting station code: ");
-            string alightingStationCd = Console.ReadLine();
-            GraphRoute.initTraverseDijkstra(Guide.SearchByStationCd(boardingStationCd).GraphIndex, Guide.SearchByStationCd(alightingStationCd).GraphIndex);
-        }
+
+            bool repeat = true;
+            while (repeat)
+            {
+                Console.Write("Please enter the boarding station code: ");
+                string boardingStationCd = Console.ReadLine();
+                Console.Write("Please enter the alighting station code: ");
+                string alightingStationCd = Console.ReadLine();
+                initTraverseDijkstra(Guide.SearchByStationCd(boardingStationCd).GraphIndex, Guide.SearchByStationCd(alightingStationCd).GraphIndex);
+
+                Console.Write("New Route? (Y/N)");
+                char response = char.Parse(Console.ReadLine().ToUpper());
+                switch (response)
+                {
+                    case 'Y':
+                        repeat = true;
+                        break;
+                    case 'N':
+                        repeat = false;
+                        break;
+                }
+            }
+
+            }
     }
 }
