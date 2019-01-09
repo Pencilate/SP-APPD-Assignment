@@ -14,6 +14,11 @@ It features:
  - Display the number of station that you need to take when the route is displayed
  - Option to use the shortest route to get from one train station to another
 
+Future feature:
+
+- Integration with database systems
+- Fare and Distance implementations
+
 >  Everything is written in C#.
 
-##### (C)2019 Pencilate & Matttt01 
+##### &copy; 2019 Pencilate & Matttt01 
