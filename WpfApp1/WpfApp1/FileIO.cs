@@ -9,7 +9,7 @@ namespace WpfApp1
 {
     public class FileIO //File input and output 
     {
-        public static List<Line> textFileReader(string FilePath)
+        public static List<Line> textFileReaderMRT(string FilePath)
         {
             List<Line> MRT = new List<Line>();
             string StationName;

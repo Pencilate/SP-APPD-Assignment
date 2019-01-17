@@ -20,7 +20,7 @@ namespace WpfApp1
         {
             string FilePath = "..\\..\\resources\\MRT.txt"; //original file path in resources folder under the project folder            
             //FilePath Points to the MRT.txt file
-            MRT = FileIO.textFileReader(FilePath);
+            MRT = FileIO.textFileReaderMRT(FilePath);
         }
 
         public static List<string> StationNameStringList()
