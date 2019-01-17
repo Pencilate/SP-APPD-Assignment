@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DBGuide.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphRoute.cs" />
