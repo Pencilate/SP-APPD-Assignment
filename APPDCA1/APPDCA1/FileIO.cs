@@ -119,5 +119,17 @@ namespace APPDCA1
 
             return MRT;
         }
+
+        public string FilePath = "..\\..\\resources\\fares.txt";
+        public static void textFileReaderFare(string FilePath)
+        {
+            using (StreamReader reader = new StreamReader(FilePath))
+            {
+                //string faresData;
+                //while ((faresData = reader.ReadLine()) != null)
+                string StartStationCd = reader.ReadLine().Substring(0, 4);
+                string EndStationCd = reader.ReadLine().Substring(5,);
+            }
+        }
     }
 }

@@ -10,17 +10,17 @@ namespace APPDCA1
     {
         public static void Main(string[] args)
         {
-            Guide.initLineArray();
+            //Guide.initLineArray();
             //Guide.TestStationRoute();
             //Guide.TestingStationMtd();
             //Guide.Testing();
-            Console.WriteLine("INITIALISING GRAPH");
-            GraphRoute.initStationIndex();
-            GraphRoute.initGraph();
+            //Console.WriteLine("INITIALISING GRAPH");
+            //GraphRoute.initStationIndex();
+            //GraphRoute.initGraph();
             //GraphRoute.TestGraph   
 
-            GraphRoute.TestGraphRoute();
-
+            //GraphRoute.TestGraphRoute();
+            FileIO.textFileReaderFare("..\\..\\resources\\fares.txt");
 
             Console.ReadKey();
         }
