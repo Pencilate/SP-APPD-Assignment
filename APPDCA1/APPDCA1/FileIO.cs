@@ -97,7 +97,7 @@ namespace APPDCA1
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        //System.Windows.MessageBox.Show("Error Retriving Line Information");
+                        Console.WriteLine("Error Retriving Line Information");
                     }
                     finally
                     {
