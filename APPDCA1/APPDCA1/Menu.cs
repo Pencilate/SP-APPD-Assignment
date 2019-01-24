@@ -20,8 +20,8 @@ namespace APPDCA1
             //GraphRoute.TestGraph   
 
             //GraphRoute.TestGraphRoute();
-            FileIO.textFileReaderFare("..\\..\\resources\\fares.txt");
-
+            FileIO.textFareFileReaderToDB("..\\..\\resources\\fares.txt");
+            //FileIO.textMRTFileReaderToDB("..\\..\\resources\\MRT.txt");
             Console.ReadKey();
         }
     }

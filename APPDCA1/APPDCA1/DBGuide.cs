@@ -13,7 +13,7 @@ namespace APPDCA1
     {
         private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=5; integrated security = true;";
 
-        public List<Line> RetrieveMRTDataFromDBtoList()
+        public static List<Line> RetrieveMRTDataFromDBtoList()
         {
             List<Line> MRT = new List<Line>();
             DataTable LineCdRef = new DataTable();

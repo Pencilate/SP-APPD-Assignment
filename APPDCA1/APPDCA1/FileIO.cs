@@ -4,131 +4,162 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace APPDCA1
 {
     public class FileIO
     {
-        public static List<Line> textFileReader(string FilePath)
+        public static void textMRTFileReaderToDB(string FilePath)
         {
-            List<Line> MRT = new List<Line>();
-            string StationName;
-            int LineNo = 0;
-            using (StreamReader reader = new StreamReader(FilePath))
+            using (SqlConnection connection = new SqlConnection())
             {
-                string lineData;
-                while ((lineData = reader.ReadLine()) != null)
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    switch (lineData)
+                    try
                     {
-                        case "(start)":
-                            string LineStationCdStr = reader.ReadLine();
-                            string LineCd = LineStationCdStr.Substring(0, 2);
-                            Console.WriteLine(LineCd);
-
-                            MRT.Add(new Line(LineCd));
-                            if (LineCd.Equals("CG"))
-                            { //Special Case for Tanah Merah
-                                MRT[LineNo].AddStationToLine("CG0", "Tanah Merah");
-                            }
-                            StationName = reader.ReadLine();
-                            MRT[LineNo].AddStationToLine(LineStationCdStr, StationName);
-                            break;
-                        case "(end)":
-                            LineNo++;
-                            break;
-                        default:
-                            StationName = reader.ReadLine();
-                            MRT[LineNo].AddStationToLine(lineData, StationName);
-                            break;
-                    }
-                }
-
-            }
-
-            //Comparing station to set them as interchange
-            for (int count = (MRT.Count - 1); count > 0; count--)
-            {
-                int CurrentLine = count;
-                int ComparedLine = count - 1;
-                for (int i = ComparedLine; i >= 0; i--)
-                {
-
-                    for (int j = 0; j < MRT[CurrentLine].StationList.Count(); j++)
-                    {
-
-                        for (int h = 0; h < MRT[i].StationList.Count(); h++)
+                        connection.Open();
+                        cmd.Connection = connection;
+                        string StationName;
+                        using (StreamReader reader = new StreamReader(FilePath))
                         {
-                            //Compare name of stations between CurruntLine and ComparedLine
-                            Console.WriteLine("{0} {1} VS {2} {3}", MRT[CurrentLine].LineCd, MRT[CurrentLine].StationList[j].StationName, MRT[i].LineCd, MRT[i].StationList[h].StationName);
-                            if (MRT[CurrentLine].StationList[j].StationName.Equals(MRT[i].StationList[h].StationName))
+                            string lineData;
+                            while ((lineData = reader.ReadLine()) != null)
                             {
-                                //if the station names match,                              
-                                MRT[CurrentLine].StationList[j].IsInterchange = true;
-                                //set varible to identify it as a interchange as true
-
-
-                                Console.WriteLine("YES");
-                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
+                                string LineCd = "";
+                                switch (lineData)
                                 {
-                                    Console.Write(str + " ");
-                                }
-                                Console.WriteLine();
-                                foreach (string str in MRT[i].StationList[h].StationCode)
-                                {
-                                    Console.Write(str + " ");
-                                }
-                                Console.WriteLine();
+                                    case "(start)":
+                                        string LineStationCdStr = reader.ReadLine();
+                                        LineCd = LineStationCdStr.Substring(0, 2);
+                                        Console.WriteLine(LineCd);
 
-                                if ((MRT[CurrentLine].StationList[j].StationCode) != (MRT[i].StationList[h].StationCode))
-                                {
-                                    MRT[CurrentLine].StationList[j].StationCode.AddRange(MRT[i].StationList[h].StationCode);
+                                        cmd.CommandText = "INSERT INTO LineCdRef (LineCd) VALUES (@LineCd)";
+
+                                        cmd.Parameters.Add("@LineCd");
+                                        cmd.Parameters["@LineCd"].Value = LineCd;
+                                        cmd.ExecuteNonQuery();
+
+                                        if (LineCd.Equals("CG"))
+                                        { //Special Case for Tanah Merah
+                                            cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
+
+                                            cmd.Parameters.Add("@LineCd");
+                                            cmd.Parameters.Add("@StatCd");
+                                            cmd.Parameters.Add("@StatName");
+
+                                            cmd.Parameters["@LineCd"].Value = LineCd;
+                                            cmd.Parameters["@StatCd"].Value = "CG0";
+                                            cmd.Parameters["Statname"].Value = "Tanah Merah";
+
+                                            cmd.ExecuteNonQuery();
+                                        }
+
+                                        StationName = reader.ReadLine();
+
+                                        cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
+
+                                        cmd.Parameters.Add("@LineCd");
+                                        cmd.Parameters.Add("@StatCd");
+                                        cmd.Parameters.Add("@StatName");
+
+                                        cmd.Parameters["@LineCd"].Value = LineCd;
+                                        cmd.Parameters["@StatCd"].Value = LineStationCdStr;
+                                        cmd.Parameters["Statname"].Value = StationName;
+
+                                        cmd.ExecuteNonQuery();
+                                        break;
+                                    case "(end)":
+                                        break;
+                                    default:
+                                        StationName = reader.ReadLine();
+
+                                        StationName = reader.ReadLine();
+
+                                        cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
+
+                                        cmd.Parameters.Add("@LineCd");
+                                        cmd.Parameters.Add("@StatCd");
+                                        cmd.Parameters.Add("@StatName");
+
+                                        cmd.Parameters["@LineCd"].Value = LineCd;
+                                        cmd.Parameters["@StatCd"].Value = lineData;
+                                        cmd.Parameters["Statname"].Value = StationName;
+
+                                        cmd.ExecuteNonQuery();
+                                        break;
                                 }
-
-                                foreach (string str in MRT[CurrentLine].StationList[j].StationCode)
-                                {
-                                    Console.Write(str + " ");
-                                }
-                                Console.WriteLine();
-
-                                MRT[i].StationList[h] = MRT[CurrentLine].StationList[j];
-
-                            }//end if
+                            }
 
                         }
                     }
-
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        //System.Windows.MessageBox.Show("Error Retriving Line Information");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        Console.WriteLine("Connection closed");
+                    }
                 }
-
             }
-
-
-            //Old Code Pls Review and remove
-            //                   for(int i=0;i<MRT.get(0).StationList.size();i++){
-            //              if(MRT.get(0).getStation(i).getStationInterchangeStatus()){
-            //                  System.out.println(MRT.get(0).getStation(i).getStationName());
-            //                  int size =MRT.get(0).getStation(i).getStationCode().size();
-            //                  for(int count =0; count<size;count++){
-            //                      System.out.println(MRT.get(0).getStation(i).getStationCode().get(count));
-            //                  }
-            //              }
-            //          }
-
-            //Console.WriteLine(MRT[0].StationList[0].IsInterchange);
-            //Console.WriteLine(MRT[2].StationList[3].IsInterchange);
-
-            return MRT;
         }
 
-        public string FilePath = "..\\..\\resources\\fares.txt";
-        public static void textFileReaderFare(string FilePath)
+        public static void textFareFileReaderToDB(string FilePath)
         {
             using (StreamReader reader = new StreamReader(FilePath))
             {
-                //string faresData;
-                //while ((faresData = reader.ReadLine()) != null)
-                string StartStationCd = reader.ReadLine().Substring(0, 4);
-                string EndStationCd = reader.ReadLine().Substring(5,);
+                string fareData;
+                List<string> startStatCdList= new List<string>();
+                List<string> endStatCdList = new List<string>();
+                while ((fareData = reader.ReadLine()) != null)
+                {
+                    int spaceIndex = fareData.IndexOf(" ");
+                    string startStatCd = fareData.Substring(0, 4).Trim();
+                    string endStatCd = fareData.Substring(spaceIndex).Trim();
+                    int slashIndex;
+                    if (startStatCd.IndexOf("/") == -1)
+                    {
+                        if (endStatCd.IndexOf("/") == -1)
+                        {
+                            double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                            double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                            int timeTaken = int.Parse(reader.ReadLine());
+                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                        }
+                        else
+                        {
+                            slashIndex = endStatCd.IndexOf("/");
+                            while (slashIndex != -1)
+                            {
+                                endStatCdList.Add(endStatCd.Substring(0, slashIndex));
+                                string endStat = endStatCd.Substring(slashIndex);
+                                slashIndex = endStatCd.IndexOf("/");
+                            }
+                            double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                            double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                            int timeTaken = int.Parse(reader.ReadLine());
+                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                        }
+                    }
+                    else if (endStatCd.IndexOf("/") == -1)
+                    {
+                        slashIndex = startStatCd.IndexOf("/");
+                        while (slashIndex != -1)
+                        {
+                            startStatCdList.Add(startStatCd.Substring(0, slashIndex));
+                            string startStat = startStatCd.Substring(slashIndex);
+                            slashIndex = startStatCd.IndexOf("/");
+                        }
+                        double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                        double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                        int timeTaken = int.Parse(reader.ReadLine());
+                        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                    }
+                }
             }
         }
     }

@@ -17,9 +17,8 @@ namespace APPDCA1
 
         public static void initLineArray()
         {
-            string FilePath = "..\\..\\resources\\MRT.txt";
-            //FilePath Points to the MRT.txt file
-            MRT = FileIO.textFileReader(FilePath);
+    
+            MRT = DBGuide.RetrieveMRTDataFromDBtoList();
 
         }
 
