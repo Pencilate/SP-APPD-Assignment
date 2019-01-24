@@ -128,6 +128,7 @@ namespace APPDCA1
                 //string faresData;
                 //while ((faresData = reader.ReadLine()) != null)
                 string StartStationCd = reader.ReadLine().Substring(0, 4);
+                string EndStationCd = reader.ReadLine().Substring(5,);
             }
         }
     }
