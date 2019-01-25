@@ -11,6 +11,8 @@ namespace APPDCA1
 {
     public class FileIO
     {
+        //Make sure to check the connection string
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=5; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
             using (SqlConnection connection = new SqlConnection())
@@ -19,6 +21,7 @@ namespace APPDCA1
                 {
                     try
                     {
+                        connection.ConnectionString = connectionString;
                         connection.Open();
                         cmd.Connection = connection;
                         string StationName;
@@ -75,8 +78,6 @@ namespace APPDCA1
                                     default:
                                         StationName = reader.ReadLine();
 
-                                        StationName = reader.ReadLine();
-
                                         cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
 
                                         cmd.Parameters.Add("@LineCd");
@@ -96,8 +97,7 @@ namespace APPDCA1
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
-                        Console.WriteLine("Error Retriving Line Information");
+                        Console.WriteLine("Error Retriving Line Information\nError Details:{0}",ex);
                     }
                     finally
                     {
@@ -110,61 +110,132 @@ namespace APPDCA1
 
         public static void textFareFileReaderToDB(string FilePath)
         {
-            using (StreamReader reader = new StreamReader(FilePath))
+            using (SqlConnection connection = new SqlConnection())
             {
-                string fareData;
-                List<string> startStatCdList= new List<string>();
-                List<string> endStatCdList = new List<string>();
-                string startStat = string.Empty;
-                string endStat = string.Empty;
-                string firstStartStat = string.Empty;
-                string firstEndStat = string.Empty;
-                while ((fareData = reader.ReadLine()) != null)
+                using (SqlCommand cmd = new SqlCommand())
                 {
-                    int spaceIndex = fareData.IndexOf(" ");
-                    string startStatCd = fareData.Substring(0, 4).Trim();
-                    string endStatCd = fareData.Substring(spaceIndex).Trim();
-                    int slashIndex;
-                    if (startStatCd.IndexOf("/") == -1)
+                    try
                     {
-                        if (endStatCd.IndexOf("/") == -1)
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        cmd.Connection = connection;
+                        using (StreamReader reader = new StreamReader(FilePath))
                         {
-                            double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
-                            double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
-                            int timeTaken = int.Parse(reader.ReadLine());
-                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
-                        }
-                        else
-                        {
-                            slashIndex = endStatCd.IndexOf("/");
-                            while (slashIndex != -1)
+                            string fareData;
+                            List<string> startStatCdList = new List<string>();
+                            List<string> endStatCdList = new List<string>();
+                            string startStat = string.Empty;
+                            string endStat = string.Empty;
+                            while ((fareData = reader.ReadLine()) != null)
                             {
-                                firstEndStat = endStatCd.Substring(0, slashIndex);
-                                endStatCdList.Add(firstEndStat);
-                                endStat = endStatCd.Substring(slashIndex+1);
-                                slashIndex = endStat.IndexOf("/");
+                                int spaceIndex = fareData.IndexOf(" ");
+                                string startStatCd = fareData.Substring(0, spaceIndex).Trim();
+                                string endStatCd = fareData.Substring(spaceIndex).Trim();
+                                int slashIndex;
+                                Console.Write("{0}-{1}|Space:{2}|", startStatCd, endStatCd, spaceIndex);
+                                //if (startStatCd.IndexOf("/") == -1)
+                                //{
+                                //    if (endStatCd.IndexOf("/") == -1)
+                                //    {
+                                //        double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //        double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //        int timeTaken = int.Parse(reader.ReadLine());
+                                //        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                                //    }
+                                //    else
+                                //    {
+                                //        slashIndex = endStatCd.IndexOf("/");
+                                //        while (slashIndex != -1)
+                                //        {
+                                //            firstEndStat = endStatCd.Substring(0, slashIndex);
+                                //            endStatCdList.Add(firstEndStat);
+                                //            endStat = endStatCd.Substring(slashIndex+1);
+                                //            slashIndex = endStat.IndexOf("/");
+                                //        }
+                                //        double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //        double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //        int timeTaken = int.Parse(reader.ReadLine());
+                                //        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCd, firstEndStat, endStat, cardFare, standardTicket, timeTaken);
+                                //    }
+                                //}
+                                //else if (endStatCd.IndexOf("/") == -1)
+                                //{
+                                //    slashIndex = startStatCd.IndexOf("/");
+                                //    while (slashIndex != -1)
+                                //    {
+                                //        startStatCdList.Add(startStatCd.Substring(0, slashIndex));
+                                //        startStat = startStatCd.Substring(slashIndex);
+                                //        slashIndex = startStat.IndexOf("/");
+                                //    }
+                                //    double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //    double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                                //    int timeTaken = int.Parse(reader.ReadLine());
+                                //    Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCdList[0], startStat, endStatCd, cardFare, standardTicket, timeTaken);
+                                //}
+                                slashIndex = startStatCd.IndexOf("/");
+                                Console.Write("START:|{0}|", slashIndex);
+                                while (slashIndex != -1)
+                                {
+                                    startStatCdList.Add(startStatCd.Substring(0, slashIndex));
+                                    startStatCd = startStatCd.Substring(slashIndex + 1);
+                                    slashIndex = startStatCd.IndexOf("/");
+                                    Console.Write("{0}|", slashIndex);
+                                }
+                                startStatCdList.Add(startStatCd);
+
+                                slashIndex = endStatCd.IndexOf("/");
+                                Console.Write("END:|{0}|", slashIndex);
+                                while (slashIndex != -1)
+                                {
+                                    endStatCdList.Add(endStatCd.Substring(0, slashIndex));
+                                    endStatCd = endStatCd.Substring(slashIndex + 1);
+                                    slashIndex = endStatCd.IndexOf("/");
+                                    Console.Write("{0}|", slashIndex);
+                                }
+                                endStatCdList.Add(endStatCd);
+                                double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
+                                double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
+                                int timeTaken = int.Parse(reader.ReadLine());
+                                Console.WriteLine("{0},{1}", startStatCdList.Count, endStatCdList.Count);
+                                foreach (string ssC in startStatCdList)
+                                {
+                                    foreach (string esC in endStatCdList)
+                                    {
+                                        Console.WriteLine("{0}-{1}-{2}-{3}-{4}", ssC, esC, cardFare, standardTicket, timeTaken);
+                                        //INSERT INSERT SQL STATEMENTS HERE
+                                        //cmd.CommandText = "INSERT INTO <Table> (<Column Names>) VALUES (<Column Values>)";
+
+                                        //cmd.Parameters.Add("");
+                                        
+                                        ////Forward Direction
+                                        //cmd.Parameters[""].Value = ;
+
+                                        //cmd.ExecuteNonQuery();
+                                        ////Backward Direction
+                                        //cmd.Parameters[""].Value = ;
+
+                                        //cmd.ExecuteNonQuery();
+                                    }
+                                }
+                                Console.WriteLine("End stat");
+                                startStatCdList.Clear();
+                                endStatCdList.Clear();
+
+
                             }
-                            double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
-                            double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
-                            int timeTaken = int.Parse(reader.ReadLine());
-                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCd, firstEndStat, endStat, cardFare, standardTicket, timeTaken);
                         }
                     }
-                    else if (endStatCd.IndexOf("/") == -1)
+                    catch (Exception ex)
                     {
-                        slashIndex = startStatCd.IndexOf("/");
-                        while (slashIndex != -1)
-                        {
-                            startStatCdList.Add(startStatCd.Substring(0, slashIndex));
-                            startStat = startStatCd.Substring(slashIndex);
-                            slashIndex = startStat.IndexOf("/");
-                        }
-                        double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
-                        double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
-                        int timeTaken = int.Parse(reader.ReadLine());
-                        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCdList[0], startStat, endStatCd, cardFare, standardTicket, timeTaken);
+                        Console.WriteLine("Unable to Insert Fare Infomation\nError Details:{0}",ex);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        Console.WriteLine("Connection closed");
                     }
                 }
+            
             }
         }
     }
