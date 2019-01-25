@@ -144,10 +144,11 @@ namespace APPDCA1
                                 endStat = endStatCd.Substring(slashIndex+1);
                                 slashIndex = endStat.IndexOf("/");
                             }
+                            endStatCdList.Add(endStat);
                             double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
                             double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
-                            int timeTaken = int.Parse(reader.ReadLine());
-                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCd, firstEndStat, endStat, cardFare, standardTicket, timeTaken);
+                            int timeTaken = int.Parse(reader.ReadLine());                                            
+                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCd, endStatCdList[x], endStat, cardFare, standardTicket, timeTaken);                            
                         }
                     }
                     else if (endStatCd.IndexOf("/") == -1)
