@@ -115,6 +115,10 @@ namespace APPDCA1
                 string fareData;
                 List<string> startStatCdList= new List<string>();
                 List<string> endStatCdList = new List<string>();
+                string startStat = string.Empty;
+                string endStat = string.Empty;
+                string firstStartStat = string.Empty;
+                string firstEndStat = string.Empty;
                 while ((fareData = reader.ReadLine()) != null)
                 {
                     int spaceIndex = fareData.IndexOf(" ");
@@ -135,14 +139,15 @@ namespace APPDCA1
                             slashIndex = endStatCd.IndexOf("/");
                             while (slashIndex != -1)
                             {
-                                endStatCdList.Add(endStatCd.Substring(0, slashIndex));
-                                string endStat = endStatCd.Substring(slashIndex);
-                                slashIndex = endStatCd.IndexOf("/");
+                                firstEndStat = endStatCd.Substring(0, slashIndex);
+                                endStatCdList.Add(firstEndStat);
+                                endStat = endStatCd.Substring(slashIndex+1);
+                                slashIndex = endStat.IndexOf("/");
                             }
                             double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
                             double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
                             int timeTaken = int.Parse(reader.ReadLine());
-                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                            Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCd, firstEndStat, endStat, cardFare, standardTicket, timeTaken);
                         }
                     }
                     else if (endStatCd.IndexOf("/") == -1)
@@ -151,13 +156,13 @@ namespace APPDCA1
                         while (slashIndex != -1)
                         {
                             startStatCdList.Add(startStatCd.Substring(0, slashIndex));
-                            string startStat = startStatCd.Substring(slashIndex);
-                            slashIndex = startStatCd.IndexOf("/");
+                            startStat = startStatCd.Substring(slashIndex);
+                            slashIndex = startStat.IndexOf("/");
                         }
                         double cardFare = double.Parse(reader.ReadLine().TrimStart('$'));
                         double standardTicket = double.Parse(reader.ReadLine().TrimStart('$'));
                         int timeTaken = int.Parse(reader.ReadLine());
-                        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}", startStatCd, endStatCd, cardFare, standardTicket, timeTaken);
+                        Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", startStatCdList[0], startStat, endStatCd, cardFare, standardTicket, timeTaken);
                     }
                 }
             }
