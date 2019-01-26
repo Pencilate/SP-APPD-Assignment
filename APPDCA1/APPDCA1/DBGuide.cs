@@ -30,7 +30,7 @@ namespace APPDCA1
                             connection.ConnectionString = connectionString;
                             connection.Open();
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT LineCd FROM Station";
+                            cmd.CommandText = "SELECT LineCd FROM LineCdRef";
 
                             da.SelectCommand = cmd;
                             da.Fill(LineCdRef);
