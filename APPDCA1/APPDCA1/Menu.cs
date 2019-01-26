@@ -10,7 +10,7 @@ namespace APPDCA1
     {
         public static void Main(string[] args)
         {
-            //Guide.initLineArray();
+            
             //Guide.TestStationRoute();
             //Guide.TestingStationMtd();
             //Guide.Testing();
@@ -21,9 +21,14 @@ namespace APPDCA1
 
             //GraphRoute.TestGraphRoute();
 
-            FileIO.textMRTFileReaderToDB("..\\..\\resources\\MRT.txt");
-            FileIO.textFareFileReaderToDB("..\\..\\resources\\fares.txt");
-            
+            //FileIO.textMRTFileReaderToDB("..\\..\\resources\\MRT.txt");
+            //FileIO.textFareFileReaderToDB("..\\..\\resources\\fares.txt");
+
+            Guide.initLineArray();
+            Guide.TestStationRoute();
+
+
+
             Console.ReadKey();
         }
     }

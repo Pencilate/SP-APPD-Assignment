@@ -13,10 +13,9 @@ It features:
  - Support for multi-line transfers
  - Display the number of station that you need to take when the route is displayed
  - Option to use the shortest route to get from one train station to another
+ - Integration with database systems
 
 Future feature:
-
-- Integration with database systems
 - Fare and Distance implementations
 
 >  Everything is written in C#.

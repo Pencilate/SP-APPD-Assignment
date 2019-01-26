@@ -118,6 +118,7 @@ namespace APPDCA1
         public static void textFareFileReaderToDB(string FilePath)
         {
             List<string> stationCdBlacklsit = new List<string>() {"PTC", "STC" };
+            int counter = 0;
             using (SqlConnection connection = new SqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand())
@@ -230,21 +231,23 @@ namespace APPDCA1
                                         }
                                         Console.WriteLine("{0}-{1}-{2}-{3}-{4}", ssC, esC, cardFare, standardTicket, timeTaken);
                                         //INSERT INSERT SQL STATEMENTS HERE
-                                        cmd.CommandText = "BEGIN TRY INSERT INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES (@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration) END TRY BEGIN CATCH END CATCH";
-
+                                        //cmd.CommandText = "INSERT IGNORE INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES (@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration)";
+                                        cmd.CommandText = "INSERT INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) SELECT @StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration WHERE NOT EXISTS ( SELECT * FROM Fare WHERE Start_Station_Code = @StartStatCd AND End_Station_Code = @EndStatCd)";
                                         //Forward Direction
                                         cmd.Parameters["@StartStatCd"].Value = ssC;
                                         cmd.Parameters["@EndStatCd"].Value = esC;
                                         cmd.Parameters["@CardFare"].Value = cardFare;
                                         cmd.Parameters["@TicketFare"].Value = standardTicket;
                                         cmd.Parameters["@JourneyDuration"].Value = timeTaken;
-
+                                        
                                         cmd.ExecuteNonQuery();
+                                        counter++;
                                         //Backward Direction
                                         cmd.Parameters["@StartStatCd"].Value = esC;
                                         cmd.Parameters["@EndStatCd"].Value = ssC;
 
                                         cmd.ExecuteNonQuery();
+                                        counter++;
                                     }
                                 }
                                 Console.WriteLine("End stat");
@@ -263,6 +266,7 @@ namespace APPDCA1
                     {
                         connection.Close();
                         Console.WriteLine("Connection closed");
+                        Console.WriteLine("Records inserted: {0}",counter);
                     }
                 }
 

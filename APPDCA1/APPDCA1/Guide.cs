@@ -580,6 +580,7 @@ namespace APPDCA1
             Console.Clear();
             Console.WriteLine("Option 1: Find Line of Station");
             Console.WriteLine("Option 2: Find Route Path ");
+            Console.WriteLine("Option 3: Query Fare");
             Console.Write("Please enter your selection: ");
             int option = int.Parse(Console.ReadLine());
 
@@ -603,6 +604,17 @@ namespace APPDCA1
                     Console.Write("Enter the ending station code:");
                     string endStatCd = Console.ReadLine();
                     FindPathV2(startStatCd, endStatCd);
+                    break;
+                case 3:
+                    Console.WriteLine("Option 3 Selected:");
+                    Console.Write("Enter the starting station code:");
+                    string sStatCd = Console.ReadLine();
+                    Console.Write("Enter the ending station code:");
+                    string eStatCd = Console.ReadLine();
+                    foreach(string data in DBGuide.QueryFareFromDatabase(sStatCd, eStatCd))
+                    {
+                        Console.WriteLine(data);
+                    }
                     break;
             }
 
