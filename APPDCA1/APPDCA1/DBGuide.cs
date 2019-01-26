@@ -55,8 +55,9 @@ namespace APPDCA1
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    cmd.Parameters.Add("@LineCd", SqlDbType.Char,2);
-                    for (int LineNo = 0; LineNo < LineCdRef.Rows.Count; LineNo++) {
+                    cmd.Parameters.Add("@LineCd", SqlDbType.Char, 2);
+                    for (int LineNo = 0; LineNo < LineCdRef.Rows.Count; LineNo++)
+                    {
                         try
                         {
                             connection.ConnectionString = connectionString;
@@ -64,7 +65,7 @@ namespace APPDCA1
                             cmd.Connection = connection;
                             cmd.CommandText = "SELECT LineCd, StationCd, StationName FROM Station WHERE LineCd=@LineCd";
 
-                            
+
                             DataRow LineCdRow = LineCdRef.Rows[LineNo];
                             cmd.Parameters["@LineCd"].Value = LineCdRow["LineCd"];
 
@@ -157,5 +158,56 @@ namespace APPDCA1
 
         }
 
+        public static List<string> QueryFareFromDatabase(string startStatCd, string endStatCd)
+        {
+            List<string> queryResult = new List<string>();
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        cmd.Connection = connection;
+                        cmd.CommandText = "SELECT Card_Fare,Ticket_Fare,Journey_Duration FROM Fare WHERE Start_Station_Code = @StartStatCd AND End_Station_Code = @EndStatCd";
+                        cmd.Parameters.Add("@StartStatCd", SqlDbType.VarChar, 4);
+                        cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
+                        cmd.Parameters["@StartStatCd"].Value = startStatCd;
+                        cmd.Parameters["@EndStatCd"].Value = endStatCd;
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    for (int i = 0; i < reader.FieldCount; i++)
+                                    {
+                                        queryResult.Add(reader.GetSqlValue(i).ToString());
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        Console.WriteLine("Connection closed");
+
+                    }
+                }
+
+
+            }
+            return queryResult;
+
+        }
     }
 }
