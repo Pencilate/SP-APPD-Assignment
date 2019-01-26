@@ -31,7 +31,7 @@ namespace APPDCA1
                             connection.ConnectionString = connectionString;
                             connection.Open();
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT LineCd FROM LineCdRef";
+                            cmd.CommandText = "SELECT Line_Code FROM LineCdRef";
 
                             da.SelectCommand = cmd;
                             da.Fill(LineCdRef);
@@ -64,13 +64,13 @@ namespace APPDCA1
                             connection.ConnectionString = connectionString;
                             connection.Open();
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT LineCd, StationCd, StationName FROM Station WHERE LineCd=@LineCd";
+                            cmd.CommandText = "SELECT Line_Code, Station_Code, Station_Name FROM Station WHERE Line_Code=@LineCd";
 
 
                             DataRow LineCdRow = LineCdRef.Rows[LineNo];
-                            cmd.Parameters["@LineCd"].Value = LineCdRow["LineCd"];
+                            cmd.Parameters["@LineCd"].Value = LineCdRow["Line_Code"];
 
-                            MRT.Add(new Line(LineCdRow["LineCd"].ToString()));
+                            MRT.Add(new Line(LineCdRow["Line_Code"].ToString()));
 
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
