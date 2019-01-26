@@ -12,7 +12,8 @@ namespace APPDCA1
     public class FileIO
     {
         //Make sure to check the connection string
-        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=CA2_Testing; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
             using (SqlConnection connection = new SqlConnection())
