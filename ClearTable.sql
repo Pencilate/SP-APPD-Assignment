@@ -1,0 +1,3 @@
+DELETE FROM Fare
+DELETE FROM Station
+DELETE FROM LineCdRef
