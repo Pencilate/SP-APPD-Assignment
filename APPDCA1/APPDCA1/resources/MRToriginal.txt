@@ -59,14 +59,6 @@ CC29
 HarbourFront
 (end)
 (start)
-CE0
-Promenade
-CE1 
-Bayfront
-CE2
-Marina Bay
-(end)
-(start)
 DT1
 Bukit Panjang
 DT2

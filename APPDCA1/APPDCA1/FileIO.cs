@@ -12,7 +12,7 @@ namespace APPDCA1
     public class FileIO
     {
         //Make sure to check the connection string
-        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=5; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
             using (SqlConnection connection = new SqlConnection())
@@ -24,13 +24,27 @@ namespace APPDCA1
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         cmd.Connection = connection;
+
+                        cmd.CommandText = "DELETE FROM Fare";
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = "DELETE FROM Station";
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = "DELETE FROM LineCdRef";
+                        cmd.ExecuteNonQuery();
+                       
+
                         string StationName;
                         using (StreamReader reader = new StreamReader(FilePath))
                         {
                             string lineData;
+
+                            cmd.Parameters.Add("@LineCd",SqlDbType.VarChar,2);
+                            cmd.Parameters.Add("@StatCd",SqlDbType.VarChar,4);
+                            cmd.Parameters.Add("@StatName",SqlDbType.VarChar,255);
+
+                            string LineCd = "";
                             while ((lineData = reader.ReadLine()) != null)
                             {
-                                string LineCd = "";
                                 switch (lineData)
                                 {
                                     case "(start)":
@@ -38,55 +52,47 @@ namespace APPDCA1
                                         LineCd = LineStationCdStr.Substring(0, 2);
                                         Console.WriteLine(LineCd);
 
-                                        cmd.CommandText = "INSERT INTO LineCdRef (LineCd) VALUES (@LineCd)";
+                                        cmd.CommandText = "INSERT INTO LineCdRef (Line_Code) VALUES (@LineCd)";
 
-                                        cmd.Parameters.Add("@LineCd");
+
                                         cmd.Parameters["@LineCd"].Value = LineCd;
+                                        cmd.Parameters["@StatCd"].Value = "";
+                                        cmd.Parameters["@StatName"].Value = "";
                                         cmd.ExecuteNonQuery();
 
                                         if (LineCd.Equals("CG"))
                                         { //Special Case for Tanah Merah
-                                            cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
-
-                                            cmd.Parameters.Add("@LineCd");
-                                            cmd.Parameters.Add("@StatCd");
-                                            cmd.Parameters.Add("@StatName");
+                                            cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
 
                                             cmd.Parameters["@LineCd"].Value = LineCd;
                                             cmd.Parameters["@StatCd"].Value = "CG0";
-                                            cmd.Parameters["Statname"].Value = "Tanah Merah";
+                                            cmd.Parameters["@StatName"].Value = "Tanah Merah";
 
                                             cmd.ExecuteNonQuery();
                                         }
 
                                         StationName = reader.ReadLine();
 
-                                        cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
-
-                                        cmd.Parameters.Add("@LineCd");
-                                        cmd.Parameters.Add("@StatCd");
-                                        cmd.Parameters.Add("@StatName");
+                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
 
                                         cmd.Parameters["@LineCd"].Value = LineCd;
                                         cmd.Parameters["@StatCd"].Value = LineStationCdStr;
-                                        cmd.Parameters["Statname"].Value = StationName;
+                                        cmd.Parameters["@StatName"].Value = StationName;
 
                                         cmd.ExecuteNonQuery();
                                         break;
                                     case "(end)":
                                         break;
                                     default:
+                                        Console.WriteLine("Default case");
+                                        Console.WriteLine(LineCd);
                                         StationName = reader.ReadLine();
 
-                                        cmd.CommandText = "INSERT INTO Station (LineCd, StationCode, StationName) VALUES (@LineCd,@StatCd,@StatName)";
-
-                                        cmd.Parameters.Add("@LineCd");
-                                        cmd.Parameters.Add("@StatCd");
-                                        cmd.Parameters.Add("@StatName");
+                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
 
                                         cmd.Parameters["@LineCd"].Value = LineCd;
                                         cmd.Parameters["@StatCd"].Value = lineData;
-                                        cmd.Parameters["Statname"].Value = StationName;
+                                        cmd.Parameters["@StatName"].Value = StationName;
 
                                         cmd.ExecuteNonQuery();
                                         break;
@@ -97,7 +103,7 @@ namespace APPDCA1
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error Retriving Line Information\nError Details:{0}",ex);
+                        Console.WriteLine("Error Retriving Line Information\nError Details:{0}", ex);
                     }
                     finally
                     {
@@ -110,6 +116,7 @@ namespace APPDCA1
 
         public static void textFareFileReaderToDB(string FilePath)
         {
+            List<string> stationCdBlacklsit = new List<string>() {"PTC", "STC" };
             using (SqlConnection connection = new SqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand())
@@ -119,6 +126,10 @@ namespace APPDCA1
                         connection.ConnectionString = connectionString;
                         connection.Open();
                         cmd.Connection = connection;
+
+                        cmd.CommandText = "DELETE FROM Fare";
+                        cmd.ExecuteNonQuery();
+
                         using (StreamReader reader = new StreamReader(FilePath))
                         {
                             string fareData;
@@ -126,6 +137,13 @@ namespace APPDCA1
                             List<string> endStatCdList = new List<string>();
                             string startStat = string.Empty;
                             string endStat = string.Empty;
+
+                            cmd.Parameters.Add("@StartStatCd",SqlDbType.VarChar,4);
+                            cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
+                            cmd.Parameters.Add("@CardFare",SqlDbType.Money);
+                            cmd.Parameters.Add("@TicketFare",SqlDbType.Money);
+                            cmd.Parameters.Add("@JourneyDuration",SqlDbType.Int);
+
                             while ((fareData = reader.ReadLine()) != null)
                             {
                                 int spaceIndex = fareData.IndexOf(" ");
@@ -199,22 +217,33 @@ namespace APPDCA1
                                 Console.WriteLine("{0},{1}", startStatCdList.Count, endStatCdList.Count);
                                 foreach (string ssC in startStatCdList)
                                 {
+                                    if (stationCdBlacklsit.Contains(ssC))
+                                    {
+                                        continue;
+                                    }
                                     foreach (string esC in endStatCdList)
                                     {
+                                        if (stationCdBlacklsit.Contains(esC))
+                                        {
+                                            continue;
+                                        }
                                         Console.WriteLine("{0}-{1}-{2}-{3}-{4}", ssC, esC, cardFare, standardTicket, timeTaken);
                                         //INSERT INSERT SQL STATEMENTS HERE
-                                        //cmd.CommandText = "INSERT INTO <Table> (<Column Names>) VALUES (<Column Values>)";
+                                        cmd.CommandText = "BEGIN TRY INSERT INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES (@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration) END TRY BEGIN CATCH END CATCH";
 
-                                        //cmd.Parameters.Add("");
-                                        
-                                        ////Forward Direction
-                                        //cmd.Parameters[""].Value = ;
+                                        //Forward Direction
+                                        cmd.Parameters["@StartStatCd"].Value = ssC;
+                                        cmd.Parameters["@EndStatCd"].Value = esC;
+                                        cmd.Parameters["@CardFare"].Value = cardFare;
+                                        cmd.Parameters["@TicketFare"].Value = standardTicket;
+                                        cmd.Parameters["@JourneyDuration"].Value = timeTaken;
 
-                                        //cmd.ExecuteNonQuery();
-                                        ////Backward Direction
-                                        //cmd.Parameters[""].Value = ;
+                                        cmd.ExecuteNonQuery();
+                                        //Backward Direction
+                                        cmd.Parameters["@StartStatCd"].Value = esC;
+                                        cmd.Parameters["@EndStatCd"].Value = ssC;
 
-                                        //cmd.ExecuteNonQuery();
+                                        cmd.ExecuteNonQuery();
                                     }
                                 }
                                 Console.WriteLine("End stat");
@@ -227,7 +256,7 @@ namespace APPDCA1
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Unable to Insert Fare Infomation\nError Details:{0}",ex);
+                        Console.WriteLine("Unable to Insert Fare Infomation\nError Details:{0}", ex);
                     }
                     finally
                     {
@@ -235,7 +264,7 @@ namespace APPDCA1
                         Console.WriteLine("Connection closed");
                     }
                 }
-            
+
             }
         }
     }

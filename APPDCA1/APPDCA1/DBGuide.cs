@@ -12,7 +12,7 @@ namespace APPDCA1
     class DBGuide
     {
         //Make sure to check the connection string
-        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=5; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
 
         public static List<Line> RetrieveMRTDataFromDBtoList()
         {
@@ -55,7 +55,8 @@ namespace APPDCA1
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
-                    for(int LineNo = 0; LineNo < LineCdRef.Rows.Count; LineNo++) {
+                    cmd.Parameters.Add("@LineCd", SqlDbType.Char,2);
+                    for (int LineNo = 0; LineNo < LineCdRef.Rows.Count; LineNo++) {
                         try
                         {
                             connection.ConnectionString = connectionString;
@@ -63,7 +64,7 @@ namespace APPDCA1
                             cmd.Connection = connection;
                             cmd.CommandText = "SELECT LineCd, StationCd, StationName FROM Station WHERE LineCd=@LineCd";
 
-                            cmd.Parameters.Add("@LineCd", SqlDbType.Char);
+                            
                             DataRow LineCdRow = LineCdRef.Rows[LineNo];
                             cmd.Parameters["@LineCd"].Value = LineCdRow["LineCd"];
 
