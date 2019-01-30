@@ -195,6 +195,10 @@ namespace WpfApp1
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
+                        queryResult.Clear();
+                        queryResult.Add("10");
+                        queryResult.Add("10");
+                        queryResult.Add("80");
                     }
                     finally
                     {

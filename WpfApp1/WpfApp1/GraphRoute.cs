@@ -38,16 +38,18 @@ namespace WpfApp1
                 for (int i = 0; i < (line.StationList.Count - 1); i++) //for loop
                 {
                     //mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
-                    double weight = 0-1;
-                    switch (mode){
+                    double weight = -1;
+                    switch (mode)
+                    {
                         case 'F':
-                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0],line.StationList[i+1].StationCode[0])[0]);
+                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]);
                             break;
                         case 'T':
                             weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
                             break;
                     }
-                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
+                    Console.WriteLine("Weight:{0}",weight);
+                   mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
 
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
 
