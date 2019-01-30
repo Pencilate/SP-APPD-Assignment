@@ -7,7 +7,8 @@ Line_Code varchar(2),
 Primary Key(Line_Code))
 
 CREATE TABLE Station(
-Line_Code varchar(2),
+Line_Code varchar(2) NOT NULL,
+Id int NOT NULL,
 Station_Code varchar(4) NOT NULL,
 Station_Name varchar(255) NOT NULL,
 Primary Key ("Station_Code"),

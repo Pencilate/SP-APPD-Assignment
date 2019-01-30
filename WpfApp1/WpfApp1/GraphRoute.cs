@@ -47,9 +47,10 @@ namespace WpfApp1
                             weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
                             break;
                     }
-            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
+                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
 
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
+
                 }
             }
 

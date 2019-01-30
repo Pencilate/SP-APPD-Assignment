@@ -12,8 +12,8 @@ namespace WpfApp1
     public class FileIO //File input and output 
     {
         //Make sure to check the connection string
-        //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        //private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
             List<string> stationCdMRTBlacklsit = new List<string>() { "CC18" };
@@ -39,11 +39,11 @@ namespace WpfApp1
                         using (StreamReader reader = new StreamReader(FilePath))
                         {
                             string lineData;
-
+                            int counter = 1;
                             cmd.Parameters.Add("@LineCd", SqlDbType.VarChar, 2);
                             cmd.Parameters.Add("@StatCd", SqlDbType.VarChar, 4);
                             cmd.Parameters.Add("@StatName", SqlDbType.VarChar, 255);
-
+                            cmd.Parameters.Add("@Id", SqlDbType.Int);
                             string LineCd = "";
                             while ((lineData = reader.ReadLine()) != null)
                             {
@@ -60,27 +60,33 @@ namespace WpfApp1
                                         cmd.Parameters["@LineCd"].Value = LineCd;
                                         cmd.Parameters["@StatCd"].Value = "";
                                         cmd.Parameters["@StatName"].Value = "";
+                                        cmd.Parameters["@Id"].Value = 0;
                                         cmd.ExecuteNonQuery();
 
                                         if (LineCd.Equals("CG"))
                                         { //Special Case for Tanah Merah
-                                            cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
+                                            cmd.CommandText = "INSERT INTO Station (Line_Code, Id, Station_Code, Station_Name) VALUES (@LineCd,@Id,@StatCd,@StatName)";
 
                                             cmd.Parameters["@LineCd"].Value = LineCd;
                                             cmd.Parameters["@StatCd"].Value = "CG0";
                                             cmd.Parameters["@StatName"].Value = "Tanah Merah";
-
+                                            cmd.Parameters["@Id"].Value = counter;
+                                            counter++;
                                             cmd.ExecuteNonQuery();
                                         }
 
                                         StationName = reader.ReadLine();
-
-                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
+                                        if (stationCdMRTBlacklsit.Contains(lineData))
+                                        {
+                                            continue;
+                                        }
+                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Id, Station_Code, Station_Name) VALUES (@LineCd,@Id,@StatCd,@StatName)";
 
                                         cmd.Parameters["@LineCd"].Value = LineCd;
                                         cmd.Parameters["@StatCd"].Value = LineStationCdStr;
                                         cmd.Parameters["@StatName"].Value = StationName;
-
+                                        cmd.Parameters["@Id"].Value = counter;
+                                        counter++;
                                         cmd.ExecuteNonQuery();
                                         break;
                                     case "(end)":
@@ -94,12 +100,13 @@ namespace WpfApp1
                                         {
                                             continue;
                                         }
-                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
+                                        cmd.CommandText = "INSERT INTO Station (Line_Code, Id, Station_Code, Station_Name) VALUES (@LineCd,@Id,@StatCd,@StatName)";
 
                                         cmd.Parameters["@LineCd"].Value = LineCd;
                                         cmd.Parameters["@StatCd"].Value = lineData;
                                         cmd.Parameters["@StatName"].Value = StationName;
-
+                                        cmd.Parameters["@Id"].Value = counter;
+                                        counter++;
                                         cmd.ExecuteNonQuery();
                                         break;
                                 }

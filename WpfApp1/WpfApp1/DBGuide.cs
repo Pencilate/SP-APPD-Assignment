@@ -11,8 +11,8 @@ namespace WpfApp1
     class DBGuide
     {
         //Make sure to check the connection string
-        //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        //private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
 
         public static List<Line> RetrieveMRTDataFromDBtoList()
         {
@@ -63,7 +63,7 @@ namespace WpfApp1
                             connection.ConnectionString = connectionString;
                             connection.Open();
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT Line_Code, Station_Code, Station_Name FROM Station WHERE Line_Code=@LineCd";
+                            cmd.CommandText = "SELECT Line_Code, Station_Code, Station_Name FROM Station WHERE Line_Code=@LineCd ORDER BY Id ASC";
 
 
                             DataRow LineCdRow = LineCdRef.Rows[LineNo];
