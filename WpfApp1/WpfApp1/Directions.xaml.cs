@@ -51,7 +51,7 @@ namespace WpfApp1
 
             DisplayResults Results = new DisplayResults(); //create new instance of Results form
             Results.Show(); //show Results form
-            Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + Guide.FindPathV2(bStatCode, aStatCode,chkbxAdvFeature.IsChecked.Value); //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
+            Results.txtBoxDisplay.Text = "Displaying Route : " + "\n"/* + Guide.FindPathV2(bStatCode, aStatCode,chkbxAdvFeature.IsChecked.Value)*/; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
             this.Hide(); //hides current window
 
         }

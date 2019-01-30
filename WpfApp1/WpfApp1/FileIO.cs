@@ -117,7 +117,8 @@ namespace WpfApp1
 
         public static void textFareFileReaderToDB(string FilePath)
         {
-            List<string> stationCdBlacklsit = new List<string>() { "PTC", "STC" };
+
+            List<string> stationCdBlacklsit = new List<string>() { "PTC", "STC","CE1","CE2" };
             int counter = 0;
             using (SqlConnection connection = new SqlConnection())
             {

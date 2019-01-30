@@ -29,7 +29,7 @@ namespace WpfApp1
             size = count; //assigns value of count to size variable
         }
 
-        public static void initGraph() //initializes the Graph
+        public static void initGraph(char mode) //initializes the Graph
         {
             mrtGraph = new Graph(size); //creates the Graph with size found in initStationIndex()
 
@@ -37,7 +37,16 @@ namespace WpfApp1
             {
                 for (int i = 0; i < (line.StationList.Count - 1); i++) //for loop
                 {
-                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
+                    //mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
+                    switch (mode){
+                        case 'F':
+                            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, int.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]));
+                            break;
+                        case 'T':
+                            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, int.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]));
+                            break;
+                    }
+                    
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
                 }
             }

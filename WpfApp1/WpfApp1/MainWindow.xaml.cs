@@ -42,7 +42,9 @@ namespace WpfApp1
 
         private void initDB_Click(object sender, RoutedEventArgs e)
         {
-
+            InitializeDB Display = new InitializeDB();
+            Display.Show();
+            this.Close();
         }
     }
 }
