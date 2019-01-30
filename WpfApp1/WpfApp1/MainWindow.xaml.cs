@@ -39,5 +39,10 @@ namespace WpfApp1
             Display.Show(); //show Display window
             this.Close(); //close current window
         }
+
+        private void initDB_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

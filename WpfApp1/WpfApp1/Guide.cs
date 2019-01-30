@@ -21,7 +21,6 @@ namespace WpfApp1
 
             MRT = DBGuide.RetrieveMRTDataFromDBtoList();
             Console.WriteLine("Reading Done");
-            Console.ReadKey();
 
         }
 

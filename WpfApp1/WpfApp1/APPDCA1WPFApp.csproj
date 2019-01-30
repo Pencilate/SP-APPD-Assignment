@@ -60,6 +60,9 @@
     <Compile Include="Graph.cs" />
     <Compile Include="GraphRoute.cs" />
     <Compile Include="Guide.cs" />
+    <Compile Include="InitializeDB.xaml.cs">
+      <DependentUpon>InitializeDB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Station.cs" />
     <Page Include="Directions.xaml">
       <SubType>Designer</SubType>
@@ -70,6 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DisplayResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InitializeDB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
