@@ -13,9 +13,10 @@ namespace WpfApp1
     {
         //Make sure to check the connection string
         //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=CA2_Testing; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
+            List<string> stationCdMRTBlacklsit = new List<string>() { "CC18" };
             using (SqlConnection connection = new SqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand())
@@ -89,6 +90,10 @@ namespace WpfApp1
                                         Console.WriteLine(LineCd);
                                         StationName = reader.ReadLine();
 
+                                        if (stationCdMRTBlacklsit.Contains(lineData))
+                                        {
+                                            continue;
+                                        }
                                         cmd.CommandText = "INSERT INTO Station (Line_Code, Station_Code, Station_Name) VALUES (@LineCd,@StatCd,@StatName)";
 
                                         cmd.Parameters["@LineCd"].Value = LineCd;
@@ -118,7 +123,7 @@ namespace WpfApp1
         public static void textFareFileReaderToDB(string FilePath)
         {
 
-            List<string> stationCdBlacklsit = new List<string>() { "PTC", "STC","CE1","CE2" };
+            List<string> stationCdFareBlacklsit = new List<string>() { "PTC", "STC","CE1","CE2" };
             int counter = 0;
             using (SqlConnection connection = new SqlConnection())
             {
@@ -181,13 +186,13 @@ namespace WpfApp1
                                 Console.WriteLine("{0},{1}", startStatCdList.Count, endStatCdList.Count);
                                 foreach (string ssC in startStatCdList)
                                 {
-                                    if (stationCdBlacklsit.Contains(ssC))
+                                    if (stationCdFareBlacklsit.Contains(ssC))
                                     {
                                         continue;
                                     }
                                     foreach (string esC in endStatCdList)
                                     {
-                                        if (stationCdBlacklsit.Contains(esC))
+                                        if (stationCdFareBlacklsit.Contains(esC))
                                         {
                                             continue;
                                         }

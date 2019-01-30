@@ -38,15 +38,17 @@ namespace WpfApp1
                 for (int i = 0; i < (line.StationList.Count - 1); i++) //for loop
                 {
                     //mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
+                    double weight = 0-1;
                     switch (mode){
                         case 'F':
-                            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, int.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]));
+                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0],line.StationList[i+1].StationCode[0])[0]);
                             break;
                         case 'T':
-                            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, int.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]));
+                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
                             break;
                     }
-                    
+            mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
+
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
                 }
             }
@@ -72,7 +74,7 @@ namespace WpfApp1
 
         public static string initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex) //find route.  Dijikstra algorithm referenced from here: https://www.codingame.com/playgrounds/1608/shortest-paths-with-dijkstras-algorithm/dijkstras-algorithm
         {
-            int[,] distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
+            double[,] distanceTable = new double[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
             List<int> visitedIndex = new List<int>(); //new list
 
             for (int i = 0; i < size; i++) //for loop
@@ -97,7 +99,7 @@ namespace WpfApp1
             int currentIndex = destinationGraphIndex;
             while (currentIndex != sourceGraphIndex) //while loop
             {
-                currentIndex = distanceTable[currentIndex, 1];
+                currentIndex = (int) distanceTable[currentIndex, 1];
                 routeGraphIndex.Add(currentIndex); //add current index to routeGraphIndex list
             }
 
@@ -222,7 +224,7 @@ namespace WpfApp1
             return outputRoute;
         }
 
-        public static int TraverseDijkstra(int[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
+        public static int TraverseDijkstra(double[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>(); //new list
 
@@ -240,7 +242,7 @@ namespace WpfApp1
 
             for (int i = 0; i < currentNodeNeighbour.Count; i++) //for loop
             {
-                int sumDistance = distanceTable[currentNodeIndex, 0] + mrtGraph.edgeDistance(currentNodeIndex, currentNodeNeighbour[i]);
+                double sumDistance = distanceTable[currentNodeIndex, 0] + mrtGraph.edgeDistance(currentNodeIndex, currentNodeNeighbour[i]);
 
                 if (distanceTable[currentNodeNeighbour[i], 0] > sumDistance) //if distance is greater than the sum of all the distances
                 {
@@ -253,7 +255,7 @@ namespace WpfApp1
             visitedIndex.Add(currentNodeIndex); //add currentNodeIndex to the visitedIndex list
 
             int nextNode = -1;
-            int shortestDist = int.MaxValue;
+            double shortestDist = double.MaxValue;
             for (int i = 0; i < size; i++) //for loop
             {
                 if (visitedIndex.Contains(i)) //if visitedIndex list contains int i
