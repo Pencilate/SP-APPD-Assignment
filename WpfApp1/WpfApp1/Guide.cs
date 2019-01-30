@@ -16,11 +16,13 @@ namespace WpfApp1
             get { return MRT; }
         }
 
-        public static void initLineArray() //Initializes LineArray
+        public static void initLineArray()
         {
-            string FilePath = "..\\..\\resources\\MRT.txt"; //original file path in resources folder under the project folder            
-            //FilePath Points to the MRT.txt file
-            MRT = FileIO.textFileReaderMRT(FilePath);
+
+            MRT = DBGuide.RetrieveMRTDataFromDBtoList();
+            Console.WriteLine("Reading Done");
+            Console.ReadKey();
+
         }
 
         public static List<string> StationNameStringList()
