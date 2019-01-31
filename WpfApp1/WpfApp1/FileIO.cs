@@ -224,12 +224,42 @@ namespace WpfApp1
                                         counter++;
                                     }
                                 }
+
                                 Console.WriteLine("End stat");
                                 startStatCdList.Clear();
                                 endStatCdList.Clear();
 
 
                             }
+                            //SPECIAL CASES
+                           cmd.CommandText = "INSERT INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES (@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration)";
+                            cmd.Parameters["@StartStatCd"].Value = "DT1";
+                            cmd.Parameters["@EndStatCd"].Value = "DT2";
+                            cmd.Parameters["@CardFare"].Value = 0.83;
+                            cmd.Parameters["@TicketFare"].Value = 1.50;
+                            cmd.Parameters["@JourneyDuration"].Value = 6;
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters["@StartStatCd"].Value = "DT2";
+                            cmd.Parameters["@EndStatCd"].Value = "DT1";
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters["@StartStatCd"].Value = "NS3";
+                            cmd.Parameters["@EndStatCd"].Value = "NS4";
+                            cmd.Parameters["@CardFare"].Value = 0.93;
+                            cmd.Parameters["@TicketFare"].Value = 1.70;
+                            cmd.Parameters["@JourneyDuration"].Value = 7;
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters["@StartStatCd"].Value = "NS4";
+                            cmd.Parameters["@EndStatCd"].Value = "NS3";
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters["@StartStatCd"].Value = "NS4";
+                            cmd.Parameters["@EndStatCd"].Value = "NS5";
+                            cmd.Parameters["@CardFare"].Value = 0.83;
+                            cmd.Parameters["@TicketFare"].Value = 1.50;
+                            cmd.Parameters["@JourneyDuration"].Value = 6;
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters["@StartStatCd"].Value = "NS5";
+                            cmd.Parameters["@EndStatCd"].Value = "NS4";
+                            cmd.ExecuteNonQuery();
                         }
                     }
                     catch (Exception ex)

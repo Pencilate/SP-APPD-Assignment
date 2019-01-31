@@ -191,14 +191,19 @@ namespace WpfApp1
                             }
                         }
 
+                        if(queryResult.Count == 0)
+                        {
+                            queryResult.Clear();
+                            queryResult.Add("10");
+                            queryResult.Add("10");
+                            queryResult.Add("80");
+                        }
+
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        queryResult.Clear();
-                        queryResult.Add("10");
-                        queryResult.Add("10");
-                        queryResult.Add("80");
+                        
                     }
                     finally
                     {
