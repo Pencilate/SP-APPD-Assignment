@@ -67,6 +67,13 @@ namespace WpfApp1
                 txtFare.Text = fareFilePath;
             }
         }
+
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow Home = new MainWindow();
+            Home.Show();
+            this.Close();
+        }
     }
 }
 

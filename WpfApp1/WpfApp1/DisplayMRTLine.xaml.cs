@@ -49,7 +49,8 @@ namespace WpfApp1
             DisplayResults LineResult = new DisplayResults(); //create new instance of DisplayResults object
             LineResult.Show(); //show DisplayResults window
             LineResult.txtBoxDisplay.Text = "Displaying Line : \r\n" + "# - Represents the station that you selected\r\n" + result; //display output in textbox in DisplayResults window
-            this.Hide(); //hides current window
+            LineResult.tripDetails.Visibility = Visibility.Collapsed;
+            this.Hide(); //hides current windoxw
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
