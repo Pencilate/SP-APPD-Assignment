@@ -16,7 +16,7 @@ namespace WpfApp1
         //private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
         public static void textMRTFileReaderToDB(string FilePath)
         {
-            List<string> stationCdMRTBlacklsit = new List<string>() { "CC18", "DT1" };
+            List<string> stationCdMRTBlacklsit = new List<string>() { "CC18", "DT1", "DT36", "DT37"};
             using (SqlConnection connection = new SqlConnection())
             {
                 using (SqlCommand cmd = new SqlCommand())

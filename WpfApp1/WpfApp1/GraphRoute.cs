@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfApp1
 {
@@ -39,14 +40,30 @@ namespace WpfApp1
                 {
                     //mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
                     double weight = -1;
-                    switch (mode)
+                    try
                     {
-                        case 'F':
-                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]);
-                            break;
-                        case 'T':
-                            weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
-                            break;
+                        switch (mode)
+                        {
+                            case 'F':
+                                weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]);
+                                break;
+                            case 'T':
+                                weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex));
+                        switch (mode)
+                        {
+                            case 'F':
+                                weight = 10;
+                                break;
+                            case 'T':
+                                weight = 80;
+                                break;
+                        }
                     }
                     Console.WriteLine("Weight:{0}",weight);
                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
