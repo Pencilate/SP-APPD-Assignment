@@ -42,28 +42,29 @@ namespace WpfApp1
                     double weight = -1;
                     try
                     {
+                        List<string> queryResult = DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0]);
                         switch (mode)
                         {
                             case 'F':
-                                weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[0]);
+                                weight = double.Parse(queryResult[0]);
                                 break;
                             case 'T':
-                                weight = double.Parse(DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0])[2]);
+                                weight = double.Parse(queryResult[2]);
                                 break;
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex));
-                        switch (mode)
-                        {
-                            case 'F':
-                                weight = 10;
-                                break;
-                            case 'T':
-                                weight = 80;
-                                break;
-                        }
+                        //switch (mode)
+                        //{
+                        //    case 'F':
+                        //        weight = 10;
+                        //        break;
+                        //    case 'T':
+                        //        weight = 80;
+                        //        break;
+                        //}
                     }
                     Console.WriteLine("Weight:{0}",weight);
                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
