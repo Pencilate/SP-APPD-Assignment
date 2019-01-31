@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="Display Results" Height="450" Width="439.764">
     <Grid>
-        <TextBox x:Name="txtBoxDisplay" HorizontalAlignment="Left" Height="335" Margin="45,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        <TextBox Name="txtBoxDisplay" HorizontalAlignment="Left" Height="208" Margin="45,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
         <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="45,34,0,0" VerticalAlignment="Top" Width="75" Click="btnHome_Click"/>
+        <TextBox Name="tripDetails" HorizontalAlignment="Left" Height="92" Margin="45,297,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="349" IsReadOnly="True"/>
 
     </Grid>
 </Window>
