@@ -5,17 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="InitializeDB" Height="450" Width="800">
+        Title="InitializeDB" Height="277.836" Width="425.989">
     <Grid>
-        <Label Content="Initialize Database" HorizontalAlignment="Left" Margin="234,27,0,0" VerticalAlignment="Top" Width="320" Height="58" FontSize="36" FontWeight="Bold"/>
-        <Label Content="Open MRT File:" HorizontalAlignment="Left" Margin="176,141,0,0" VerticalAlignment="Top" Width="95"/>
-        <Button Content="Load" HorizontalAlignment="Left" Margin="524,274,0,0" VerticalAlignment="Top" Width="78" Height="23" Click="Button_Click"/>
-        <Button Name ="ofdMRT" Content="Open" HorizontalAlignment="Left" Margin="299,146,0,0" VerticalAlignment="Top" Width="235" Click="ofdMRT_Click"/>
-        <TextBox Name ="txtMRT" HorizontalAlignment="Left" Height="21" Margin="299,171,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="235"/>
-        <TextBox Name ="txtFare" HorizontalAlignment="Left" Height="18" Margin="299,234,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="235"/>
-        <Label Content="Open Fare File:" HorizontalAlignment="Left" Margin="176,196,0,0" VerticalAlignment="Top" Width="95"/>
-        <Button Name ="ofdFare" Content="Open" HorizontalAlignment="Left" Margin="299,202,0,0" VerticalAlignment="Top" Width="235" Click="ofdFare_Click"/>
-        <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="23,33,0,0" VerticalAlignment="Top" Width="77" Click="btnHome_Click" Height="24"/>
+        <Label Content="Initialize Database" HorizontalAlignment="Left" Margin="45,39,0,0" VerticalAlignment="Top" Width="320" Height="58" FontSize="36" FontWeight="Bold"/>
+        <Label Content="Open MRT File:" HorizontalAlignment="Left" Margin="45,109,0,0" VerticalAlignment="Top" Width="95"/>
+        <Button Content="Load MRT Data" HorizontalAlignment="Left" Margin="145,140,0,0" VerticalAlignment="Top" Width="99" Height="20" Click="MRTButton_Click" RenderTransformOrigin="0.571,0.689"/>
+        <Button Name ="ofdMRT" Content="Open" HorizontalAlignment="Left" Margin="45,140,0,0" VerticalAlignment="Top" Width="95" Click="ofdMRT_Click"/>
+        <TextBox Name ="txtMRT" HorizontalAlignment="Left" Height="21" Margin="145,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="235"/>
+        <TextBox Name ="txtFare" HorizontalAlignment="Left" Height="18" Margin="145,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="235"/>
+        <Label Content="Open Fare File:" HorizontalAlignment="Left" Margin="45,165,0,0" VerticalAlignment="Top" Width="95"/>
+        <Button Name ="ofdFare" Content="Open" HorizontalAlignment="Left" Margin="45,196,0,0" VerticalAlignment="Top" Width="95" Click="ofdFare_Click"/>
+        <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="77" Click="btnHome_Click" Height="24"/>
+        <Button Content="Load Fare Data" HorizontalAlignment="Left" Margin="145,196,0,0" VerticalAlignment="Top" Width="99" Height="20" Click="FareButton_Click"/>
 
     </Grid>
 </Window>
