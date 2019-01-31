@@ -25,15 +25,20 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void MRTButton_Click(object sender, RoutedEventArgs e)
         {
             FileIO.textMRTFileReaderToDB(txtMRT.Text);
-            FileIO.textFareFileReaderToDB(txtFare.Text);
-            MessageBox.Show("Database has been initialized");
+            
+            MessageBox.Show("MRT Database has been initialized");
             this.Hide();
             MainWindow Display = new MainWindow();
             Display.Show();
             this.Hide();
+        }
+        private void FareButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileIO.textFareFileReaderToDB(txtFare.Text);
+            MessageBox.Show("Fare Database has been initialized");
         }
 
         private void ofdMRT_Click(object sender, RoutedEventArgs e)
@@ -67,6 +72,8 @@ namespace WpfApp1
                 txtFare.Text = fareFilePath;
             }
         }
+
+        
     }
 }
 
