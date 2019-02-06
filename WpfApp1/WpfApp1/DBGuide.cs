@@ -11,8 +11,8 @@ namespace WpfApp1
     class DBGuide
     {
         //Make sure to check the connection string
-        //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        //private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
 
         public static List<Line> RetrieveMRTDataFromDBtoList() //Retrieves MRT Data from Database and stores it in a list
         {
@@ -287,7 +287,7 @@ namespace WpfApp1
                             connection.ConnectionString = connectionString; //set connection string
                             connection.Open(); //open connection
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station', F.End_Station_Code AS 'Alighting Station',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.End_Station_Code = FH.End_Station_Code"; //sql select statement
+                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station Code',S1.Station_Name AS 'Boarding Station Name', F.End_Station_Code AS 'Alighting Station Code', S2.Station_Name AS 'Alighting Station Name',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH, Station AS S1, Station AS S2 WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.Start_Station_Code = S1.Station_Code AND F.End_Station_Code = FH.End_Station_Code AND F.End_Station_Code = S2.Station_Code"; //sql select statement
 
                             da.SelectCommand = cmd;
                             da.Fill(FareHistoryRecords); //fill dataadapter with datatable
@@ -323,7 +323,7 @@ namespace WpfApp1
                             connection.ConnectionString = connectionString; //set connection string
                             connection.Open(); //open connection
                             cmd.Connection = connection;
-                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station', F.End_Station_Code AS 'Alighting Station',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.End_Station_Code = FH.End_Station_Code AND Date_Queried = @Date"; //sql select statement
+                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station Code',S1.Station_Name AS 'Boarding Station Name', F.End_Station_Code AS 'Alighting Station Code', S2.Station_Name AS 'Alighting Station Name',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH, Station AS S1, Station AS S2 WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.Start_Station_Code = S1.Station_Code AND F.End_Station_Code = FH.End_Station_Code AND F.End_Station_Code = S2.Station_Code AND Date_Queried = @Date"; //sql select statement
                             cmd.Parameters.Add("@Date",SqlDbType.Date); //add parameters
                             cmd.Parameters["@Date"].Value = selectedDate.Date; //set value of parameter
                             da.SelectCommand = cmd;
