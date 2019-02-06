@@ -29,38 +29,38 @@ namespace WpfApp1
 
         private void ofdMRT_Click(object sender, RoutedEventArgs e)
         {
-            string mrtFilePath = "";
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = "C:\\Users\\$USERNAME\\Documents";
-            ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string mrtFilePath = ""; //string mrt file Path
+            OpenFileDialog ofd = new OpenFileDialog(); //open file dialog
+            ofd.InitialDirectory = "C:\\Users\\$USERNAME\\Documents"; //directory of open file dialog
+            ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; //filter files that can be opened
             ofd.FilterIndex = 0;
             ofd.RestoreDirectory = true;
-            Nullable<bool> result = ofd.ShowDialog();
-            if (result == true)
+            Nullable<bool> result = ofd.ShowDialog(); //show openfiledialog
+            if (result == true) //if true
             {
-                mrtFilePath = ofd.FileName;
-                txtMRT.Text = mrtFilePath;
+                mrtFilePath = ofd.FileName; //set mrtfilepath to filename selected
+                txtMRT.Text = mrtFilePath; //set txtmrt to filepath
             }
         }
 
         private void ofdFare_Click(object sender, RoutedEventArgs e)
         {
-            string fareFilePath = "";
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = "C:\\Users\\$USERNAME\\Documents";
-            ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string fareFilePath = ""; //string fare file path
+            OpenFileDialog ofd = new OpenFileDialog(); //open file dialog
+            ofd.InitialDirectory = "C:\\Users\\$USERNAME\\Documents"; //directory of open file dialog
+            ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; //filter files that can be opened
             ofd.FilterIndex = 0;
             ofd.RestoreDirectory = true;
-            Nullable<bool> result = ofd.ShowDialog();
-            if (result == true)
+            Nullable<bool> result = ofd.ShowDialog(); //show openfiledialog 
+            if (result == true) //if true
             {
-                fareFilePath = ofd.FileName;
-                txtFare.Text = fareFilePath;
+                fareFilePath = ofd.FileName; //set farefilepath to filename selected
+                txtFare.Text = fareFilePath; //set txtfare to filepath
             }
         }
         private void MRTButton_Click(object sender, RoutedEventArgs e)
         {
-            FileIO.textMRTFileReaderToDB(txtMRT.Text);
+            FileIO.textMRTFileReaderToDB(txtMRT.Text); //initialize DB 
             
             MessageBox.Show("MRT database has been initialized");
         }
@@ -74,7 +74,7 @@ namespace WpfApp1
 
         private void FareButton_Click(object sender, RoutedEventArgs e)
         {
-            FileIO.textFareFileReaderToDB(txtFare.Text);
+            FileIO.textFareFileReaderToDB(txtFare.Text); //initialize DB
             MessageBox.Show("Fare database has been initialized");            
         }
     }

@@ -42,16 +42,16 @@ namespace WpfApp1
 
         private void initDB_Click(object sender, RoutedEventArgs e)
         {
-            InitializeDB Display = new InitializeDB();
-            Display.Show();
-            this.Close();
+            InitializeDB Display = new InitializeDB(); //create new instance of Display
+            Display.Show(); //show Display window
+            this.Close(); //close current window
         }
 
         private void btnFareInfo_Click(object sender, RoutedEventArgs e)
         {
-            DisplayFare Fare = new DisplayFare();
-            Fare.Show();
-            this.Close();
+            DisplayFare Fare = new DisplayFare(); //create new instance of Display
+            Fare.Show(); //show Display window
+            this.Close(); //close current window
         }
     }
 }
