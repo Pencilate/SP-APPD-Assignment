@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-       Title="Home" Height="312.378" Width="400.788">
+       Title="Home" Height="314.378" Width="400.788">
     <Grid>
         <StackPanel>
             <Label Content="Main Screen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="117,0,126,0" Width="151"/>

@@ -49,7 +49,9 @@ namespace WpfApp1
 
         private void btnFareInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            DisplayFare Fare = new DisplayFare();
+            Fare.Show();
+            this.Close();
         }
     }
 }

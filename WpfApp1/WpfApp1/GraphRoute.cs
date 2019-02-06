@@ -102,10 +102,11 @@ namespace WpfApp1
             distanceTable[sourceGraphIndex, 0] = 0; //Distance from the starting station from the starting station is 0, thus setting it.
             int currentNodeIndex = sourceGraphIndex; //sets value of current node index to value of the source graph index
 
-            while (visitedIndex.Count < size) //while loop
-            {
-                currentNodeIndex = TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //invokes TraverseDijkstra method
-            }
+            //while (visitedIndex.Count < size) //while loop
+            //{
+            //    currentNodeIndex = TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //invokes TraverseDijkstra method
+            //}
+            TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //Callibg Dijkstra method
 
             for (int i = 0; i < size; i++) //for loop
             {
@@ -241,7 +242,7 @@ namespace WpfApp1
             return outputRoute;
         }
 
-        public static int TraverseDijkstra(double[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
+        public static void TraverseDijkstra(double[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>(); //new list
 
@@ -288,7 +289,11 @@ namespace WpfApp1
                     }
                 }
             }
-            return nextNode;
+            //return nextNode;
+            if (visitedIndex.Count < size)
+            {
+                TraverseDijkstra(distanceTable, visitedIndex, nextNode);
+            }
         }
     }
 }

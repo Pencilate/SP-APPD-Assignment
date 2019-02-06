@@ -86,7 +86,7 @@ namespace WpfApp1
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
-                DBGuide.InsertDataIntoHistory(bStatCode, aStatCode,'C');//Insert Query into database
+                DBGuide.InsertFareDataIntoHistory(bStatCode, aStatCode,'C');//Insert Query into database
             }
             else if (ticketFareValue)
             {
@@ -94,13 +94,13 @@ namespace WpfApp1
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + ticketFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
-                DBGuide.InsertDataIntoHistory(bStatCode, aStatCode, 'T');//Insert Query into database
+                DBGuide.InsertFareDataIntoHistory(bStatCode, aStatCode, 'T');//Insert Query into database
             }
             else
             {
                 Results.Show(); //show Results form
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
-                Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + ticketFare + "\n" + timeTaken+"\n This fare record will not be inserted into the database as Fare Type has not been selected";
+                Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + ticketFare + "\n" + timeTaken+"\nThis fare record will not be inserted into the database as Fare Type has not been selected";
                 this.Hide(); //hides current window
             }
 

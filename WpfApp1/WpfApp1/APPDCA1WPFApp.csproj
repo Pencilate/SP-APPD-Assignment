@@ -56,6 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DBGuide.cs" />
+    <Compile Include="DisplayFare.xaml.cs">
+      <DependentUpon>DisplayFare.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FileIO.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphRoute.cs" />
@@ -65,6 +68,10 @@
     </Compile>
     <Compile Include="Station.cs" />
     <Page Include="Directions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplayFare.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

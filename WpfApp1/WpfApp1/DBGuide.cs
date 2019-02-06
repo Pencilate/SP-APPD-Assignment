@@ -216,7 +216,7 @@ namespace WpfApp1
         }
 
         //INSERT Past Queries into DB
-        public static void InsertDataIntoHistory(string sSc, string eSc, char type)
+        public static void InsertFareDataIntoHistory(string sSc, string eSc, char type)
         {
             using (SqlConnection conn = new SqlConnection())
             {
@@ -229,16 +229,18 @@ namespace WpfApp1
                         cmd.Connection = conn;
                         conn.Open();
                         Console.WriteLine("Connection open.");
-                        cmd.CommandText = "INSERT INTO FareHistory (Start_Station_Code,End_Station_Code,Fare_Type,Fare) VALUES (@StartStatCd,@EndStatCd,@FareType,@Fare)";
+                        cmd.CommandText = "INSERT INTO FareHistory (Start_Station_Code,End_Station_Code,Date_Queried,Fare_Type,Fare) VALUES (@StartStatCd,@EndStatCd,@Date,@FareType,@Fare)";
 
                         cmd.Parameters.Add("@StartStatCd", SqlDbType.VarChar, 4);
                         cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
-                        cmd.Parameters.Add("@FareType", SqlDbType.Char,1);
+                        cmd.Parameters.Add("@FareType", SqlDbType.Char, 1);
                         cmd.Parameters.Add("@Fare", SqlDbType.Money);
+                        cmd.Parameters.Add("@Date", SqlDbType.Date);
 
                         cmd.Parameters["@StartStatCd"].Value = sSc;
                         cmd.Parameters["@EndStatCd"].Value = eSc;
-
+                        cmd.Parameters["@Date"].Value = DateTime.Now.Date;
+                        Console.WriteLine(cmd.Parameters["@Date"].Value.ToString());
                         switch (type)
                         {
                             case 'C':
@@ -249,7 +251,7 @@ namespace WpfApp1
                                 cmd.Parameters["@Fare"].Value = double.Parse(queryResult[1]);
                                 cmd.Parameters["@FareType"].Value = type;
                                 break;
-                                
+
                         }
 
                         cmd.ExecuteNonQuery();
@@ -258,8 +260,8 @@ namespace WpfApp1
 
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Record failed to add in as it already exists.\n"+ex);
-                     
+                        Console.WriteLine("Record failed to add in as it already exists.\n" + ex);
+
                     }
 
                     finally
@@ -270,5 +272,172 @@ namespace WpfApp1
                 }
             }
         }
+
+        public static DataTable RetrieveFareRecordFromDatabase()
+        {
+            DataTable FareHistoryRecords = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter())
+                    {
+                        try
+                        {
+                            connection.ConnectionString = connectionString;
+                            connection.Open();
+                            cmd.Connection = connection;
+                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station', F.End_Station_Code AS 'Alighting Station',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.End_Station_Code = FH.End_Station_Code";
+
+                            da.SelectCommand = cmd;
+                            da.Fill(FareHistoryRecords);
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        finally
+                        {
+                            connection.Close();
+                            Console.WriteLine("Connection closed");
+                        }
+                    }
+                }
+            }
+            return FareHistoryRecords;
+        }
+        public static DataTable RetrieveFareRecordFromDatabase(DateTime selectedDate)
+        {
+            DataTable FareHistoryRecords = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter())
+                    {
+                        try
+                        {
+                            connection.ConnectionString = connectionString;
+                            connection.Open();
+                            cmd.Connection = connection;
+                            cmd.CommandText = "SELECT F.Start_Station_Code AS 'Boarding Station', F.End_Station_Code AS 'Alighting Station',F.Journey_Duration AS 'Journey Duration', FH.Fare_Type AS 'Fare Type' ,FH.Fare AS 'Fare(S$)' FROM Fare AS F, FareHistory AS FH WHERE F.Start_Station_Code = FH.Start_Station_Code AND F.End_Station_Code = FH.End_Station_Code AND Date_Queried = @Date";
+                            cmd.Parameters.Add("@Date",SqlDbType.Date);
+                            cmd.Parameters["@Date"].Value = selectedDate.Date;
+                            da.SelectCommand = cmd;
+                            da.Fill(FareHistoryRecords);
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                        finally
+                        {
+                            connection.Close();
+                            Console.WriteLine("Connection closed");
+                        }
+                    }
+                }
+            }
+            return FareHistoryRecords;
+        }
+
+        public static double FareHistoryTotalCollected()
+        {
+            double totalFareCollected = 0;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        cmd.Connection = connection;
+                        cmd.CommandText = "SELECT SUM(Fare) AS 'Total Fare Collected' FROM FareHistory";
+
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+
+                                while (reader.Read())
+                                {
+                                    totalFareCollected = (double) reader.GetDecimal(0);
+
+                                }
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        Console.WriteLine("Connection closed");
+
+                    }
+
+                }
+            }
+            return totalFareCollected;
+        }
+
+        public static double FareHistoryTotalCollected(DateTime selectedDate)
+        {
+            double totalFareCollected = 0;
+            using (SqlConnection connection = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        connection.ConnectionString = connectionString;
+                        connection.Open();
+                        cmd.Connection = connection;
+                        cmd.CommandText = "SELECT SUM(Fare) AS 'Total Fare Collected' FROM FareHistory WHERE Date_Queried = @Date";
+                        cmd.Parameters.Add("@Date", SqlDbType.Date);
+                        cmd.Parameters["@Date"].Value = selectedDate.Date;
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+
+                                while (reader.Read())
+                                {
+                                    totalFareCollected = (double)reader.GetDecimal(0);
+
+                                }
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        Console.WriteLine("Connection closed");
+
+                    }
+
+                }
+            }
+            return totalFareCollected;
+        }
     }
 }
+
+
