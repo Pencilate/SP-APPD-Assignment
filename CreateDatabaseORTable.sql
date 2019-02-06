@@ -28,7 +28,7 @@ Foreign Key (End_Station_Code) REFERENCES Station(Station_Code))
 CREATE TABLE FareHistory (
 Start_Station_Code VARCHAR(4) NOT NULL,
 End_Station_Code VARCHAR(4) NOT NULL,
-Date_Queried DATE NOT NULL
+Date_Queried DATE NOT NULL,
 Fare_Type CHAR(1) NOT NULL,
 Fare MONEY NOT NULL,
 Primary Key(Start_Station_Code,End_Station_Code),

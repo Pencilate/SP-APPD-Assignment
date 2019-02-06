@@ -24,7 +24,7 @@ namespace WpfApp1
             InitializeComponent();
             dtpFDateFilter.SelectedDate = DateTime.Now;
             dgFareHistory.ItemsSource = DBGuide.RetrieveFareRecordFromDatabase().DefaultView; //How to fill datagrid using datatable: https://stackoverflow.com/questions/20770438/how-to-bind-datatable-to-datagrid
-            tbxTotalFare.Text = string.Format("S{0:C}",DBGuide.FareHistoryTotalCollected());
+            tbxTotalFare.Text = string.Format("S{0:C}",DBGuide.FareHistoryTotalCollected()); //Total Fare Computed
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,11 +33,11 @@ namespace WpfApp1
             {
                 DateTime dateFilter = dtpFDateFilter.SelectedDate.Value;
                 dgFareHistory.ItemsSource = null; //How to clear datagrid https://stackoverflow.com/questions/14472894/clear-datagrid-values-in-wpf
-                dgFareHistory.Items.Refresh();
+                dgFareHistory.Items.Refresh(); //refresh Datagrid
                 dgFareHistory.ItemsSource = DBGuide.RetrieveFareRecordFromDatabase(dateFilter).DefaultView;
                 tbxTotalFare.Text = string.Format("S{0:C}", DBGuide.FareHistoryTotalCollected(dateFilter));
             }
-            catch (Exception ex)
+            catch (Exception ex) //catch exception error
             {
                 MessageBox.Show("Please select a date");
             }
@@ -46,9 +46,9 @@ namespace WpfApp1
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow Home = new MainWindow();
-            Home.Show();
-            this.Close();
+            MainWindow Home = new MainWindow(); //create new instance of Display
+            Home.Show(); //show Display
+            this.Close(); //close current window
         }
     }
 }

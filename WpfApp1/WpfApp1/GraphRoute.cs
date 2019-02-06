@@ -20,7 +20,7 @@ namespace WpfApp1
             {
                 foreach (Station stat in line.StationList) //inner foreach loop
                 {
-                    if (stat.GraphIndex == -1)
+                    if (stat.GraphIndex == -1) //if
                     {
                         stat.GraphIndex = count;
                         count++;
@@ -43,27 +43,26 @@ namespace WpfApp1
             {
                 for (int i = 0; i < (line.StationList.Count - 1); i++) //for loop
                 {
-                    //mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
                     double weight = -1;
                     try
                     {
-                        List<string> queryResult = DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0]);
+                        List<string> queryResult = DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0]); //invoke method and store in list
                         switch (mode)
                         {
-                            case 'F':
+                            case 'F': //case for fare
                                 weight = double.Parse(queryResult[0]);
                                 break;
-                            case 'T':
+                            case 'T': //case for time
                                 weight = double.Parse(queryResult[2]);
                                 break;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) //catch exception error
                     {
                         MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex)); //SHows missing stations
                     }
                     Console.WriteLine("Weight:{0}",weight);
-                   mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);
+                   mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight); //add an edge
 
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
 
@@ -102,11 +101,7 @@ namespace WpfApp1
             distanceTable[sourceGraphIndex, 0] = 0; //Distance from the starting station from the starting station is 0, thus setting it.
             int currentNodeIndex = sourceGraphIndex; //sets value of current node index to value of the source graph index
 
-            //while (visitedIndex.Count < size) //while loop
-            //{
-            //    currentNodeIndex = TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //invokes TraverseDijkstra method
-            //}
-            TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //Callibg Dijkstra method
+            TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //Calling Dijkstra method
 
             for (int i = 0; i < size; i++) //for loop
             {
@@ -235,11 +230,11 @@ namespace WpfApp1
             outputRoute += "-- Start of Route --\r\n";
             foreach (string statCd in routeStationCd) //foreach loop
             {
-                outputRoute += string.Format("{0} - {1}\r\n", statCd, Guide.SearchByStationCd(statCd).StationName);
+                outputRoute += string.Format("{0} - {1}\r\n", statCd, Guide.SearchByStationCd(statCd).StationName); //output string
             }
-            outputRoute += "-- End of Route --";
+            outputRoute += "-- End of Route --"; //output string
 
-            return outputRoute;
+            return outputRoute; //return string
         }
 
         public static void TraverseDijkstra(double[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)

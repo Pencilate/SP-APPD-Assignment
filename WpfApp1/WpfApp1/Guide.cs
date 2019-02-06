@@ -16,10 +16,10 @@ namespace WpfApp1
             get { return MRT; }
         }
 
-        public static void initLineArray()
+        public static void initLineArray() //initialize line array
         {
 
-            MRT = DBGuide.RetrieveMRTDataFromDBtoList();
+            MRT = DBGuide.RetrieveMRTDataFromDBtoList(); //store in list
             Console.WriteLine("Reading Done");
 
         }
@@ -361,7 +361,7 @@ namespace WpfApp1
                     int icsDeprtIndex = GetStationIndexFromLine(lineIndex2, interchangeName); //sets departing index to the Station Index of the Interchange
                     int esIndex = GetStationIndexFromLine(lineIndex2, EndStat.StationName); //sets Final ending Index to the Station Index of the Ending Station
 
-                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
+                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
                 }
                 return output;
             }
