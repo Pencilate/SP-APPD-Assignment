@@ -44,7 +44,6 @@
                 <Label Content="Station:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Margin="10,8,0,0" Grid.Row="1"/>
             </Grid>
         </GroupBox>
-        <CheckBox Name="chkbxAdvFeature" Content="Enable Advance Features (Graph Routing)" Margin="0,482,249,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <GroupBox Header="Prioritise" HorizontalAlignment="Left" Height="77" Margin="10,373,0,0" VerticalAlignment="Top" Width="230">
             <Grid Margin="0,0,0.333,2.667">
                 <Grid.RowDefinitions>
@@ -57,8 +56,8 @@
                     <ColumnDefinition Width="55*"></ColumnDefinition>
                     <ColumnDefinition Width="54*"/>
                 </Grid.ColumnDefinitions>
-                <RadioButton Name ="radFare" Content="Fare" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <RadioButton Name="radNumOfStations" Content="Number of Stations" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="133"/>
+                <RadioButton Name ="radFare" Content="Fare" HorizontalAlignment="Left" Margin="34.667,11,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <RadioButton Name="radTime" Content="Journey Time" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Width="99" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Fare Type" HorizontalAlignment="Left" Height="77" Margin="255,373,0,0" VerticalAlignment="Top" Width="230">

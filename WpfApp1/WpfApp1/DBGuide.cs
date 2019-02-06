@@ -191,7 +191,7 @@ namespace WpfApp1
                             }
                         }
 
-                        if(queryResult.Count == 0)
+                        if (queryResult.Count == 0)
                         {
                             queryResult.Clear();
                             queryResult.Add("10");
@@ -203,20 +203,58 @@ namespace WpfApp1
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        
+
                     }
                     finally
                     {
                         connection.Close();
                         Console.WriteLine("Connection closed");
-
                     }
                 }
-
-
             }
             return queryResult;
+        }
 
+        //INSERT Past Queries into DB
+        public static void InsertDataIntoHistory(string sSc, string eSc, List<string> queryResult)
+        {
+            using (SqlConnection conn = new SqlConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        conn.ConnectionString = connectionString;
+                        cmd.Connection = conn;
+                        conn.Open();
+                        Console.WriteLine("Connection open.");
+                        cmd.CommandText = "INSERT INTO History (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES(@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration)";
+                        cmd.Parameters.Add("@StartStatCd", SqlDbType.VarChar, 4);
+                        cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
+                        cmd.Parameters.Add("@CardFare", SqlDbType.Money);
+                        cmd.Parameters.Add("@TicketFare", SqlDbType.Money);
+                        cmd.Parameters.Add("@JourneyDuration", SqlDbType.Int);
+                        cmd.Parameters["@StartStatCd"].Value = sSc;
+                        cmd.Parameters["@EndStatCd"].Value = eSc;
+                        cmd.Parameters["@CardFare"].Value = queryResult[0];
+                        cmd.Parameters["@TicketFare"].Value = queryResult[1];
+                        cmd.Parameters["@JourneyDuration"].Value = queryResult[2];
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("Record successfully added.");
+                    }
+
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Record failed to add in as it already exists.");
+                    }
+
+                    finally
+                    {
+                        conn.Close();
+                        Console.WriteLine("Connection closed.");
+                    }
+                }
+            }
         }
     }
 }

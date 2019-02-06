@@ -13,7 +13,7 @@ namespace APPDCA1
     {
         //Make sure to check the connection string
         //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=CA2_Testing; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
 
         public static List<Line> RetrieveMRTDataFromDBtoList()
         {
@@ -209,6 +209,28 @@ namespace APPDCA1
             }
             return queryResult;
 
+        }
+
+        public static void InsertDataIntoHistory(string sSc, string eSc, List<string> queryResult)
+        {
+            SqlConnection conn = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
+            conn.ConnectionString = connectionString;
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.CommandText = "INSERT INTO History (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES(@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration)";
+            cmd.Parameters.Add("@StartStatCd", SqlDbType.VarChar, 4);
+            cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
+            cmd.Parameters.Add("@CardFare", SqlDbType.Money);
+            cmd.Parameters.Add("@TicketFare", SqlDbType.Money);
+            cmd.Parameters.Add("@JourneyDuration", SqlDbType.Int);
+            cmd.Parameters["@StartStatCd"].Value = sSc;
+            cmd.Parameters["@EndStatCd"].Value = eSc;
+            cmd.Parameters["@CardFare"].Value = queryResult[0];
+            cmd.Parameters["@TicketFare"].Value = queryResult[1];
+            cmd.Parameters["@JourneyDuration"].Value = queryResult[2];
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
     }
 }

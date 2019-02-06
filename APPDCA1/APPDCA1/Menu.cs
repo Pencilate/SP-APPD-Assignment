@@ -25,7 +25,9 @@ namespace APPDCA1
             //FileIO.textFareFileReaderToDB("..\\..\\resources\\fares.txt");
 
             Guide.initLineArray();
-            Guide.TestStationRoute();
+            //Guide.TestStationRoute();
+            List<string> mylist = new List<string>(new string[] { "1.50", "0.87", "69" });
+            DBGuide.InsertDataIntoHistory("EW22", "NS15", mylist);
 
 
 

@@ -54,28 +54,46 @@ namespace WpfApp1
             string timeTaken = "Time Taken -- " + DBGuide.QueryFareFromDatabase(bStatCode, aStatCode)[2] +" minutes";
             bool cardFareValue = radCardFare.IsChecked.Value;
             bool ticketFareValue = radTicketFare.IsChecked.Value;
+            bool time = radTime.IsChecked.Value;
+            bool fare = radFare.IsChecked.Value;
+            string output = string.Empty;
+            if (time)
+            {
+                output = Guide.FindPathV2(bStatCode, aStatCode, time,'T');
+            }
+            else if (fare)
+            {
+                output = Guide.FindPathV2(bStatCode, aStatCode, fare,'F');
+            }
+            else
+            {
+                output = "Error";
+            }
             DisplayResults Results = new DisplayResults(); //create new instance of Results form
-            if (cardFareValue == true)
+            if (cardFareValue)
             {
                 Results.Show(); //show Results form
-                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + Guide.FindPathV2(bStatCode, aStatCode, chkbxAdvFeature.IsChecked.Value); //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
+                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
             }
-            else if (ticketFareValue == true)
+            else if (ticketFareValue)
             {
                 Results.Show(); //show Results form
-                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + Guide.FindPathV2(bStatCode, aStatCode, chkbxAdvFeature.IsChecked.Value); //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
+                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + ticketFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
             }
             else
             {
                 Results.Show(); //show Results form
-                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + Guide.FindPathV2(bStatCode, aStatCode, chkbxAdvFeature.IsChecked.Value); //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
+                Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + ticketFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
             }
+
+            //Insert Query into database           
+            DBGuide.InsertDataIntoHistory(bStatCode, aStatCode, DBGuide.QueryFareFromDatabase(bStatCode, aStatCode));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
