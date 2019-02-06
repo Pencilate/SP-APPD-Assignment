@@ -46,5 +46,10 @@ namespace WpfApp1
             Display.Show();
             this.Close();
         }
+
+        private void btnFareInfo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

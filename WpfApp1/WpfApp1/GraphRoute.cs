@@ -30,8 +30,13 @@ namespace WpfApp1
             size = count; //assigns value of count to size variable
         }
 
-        public static void initGraph(char mode) //initializes the Graph
+        public static void initGraph(char mode = 'N') //initializes the Graph
         {
+            if (mode.Equals('N'))
+            {
+                mode = 'T';
+            }
+
             mrtGraph = new Graph(size); //creates the Graph with size found in initStationIndex()
 
             foreach (Line line in Guide.MRTLine) //foreach loop
@@ -55,16 +60,7 @@ namespace WpfApp1
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex));
-                        //switch (mode)
-                        //{
-                        //    case 'F':
-                        //        weight = 10;
-                        //        break;
-                        //    case 'T':
-                        //        weight = 80;
-                        //        break;
-                        //}
+                        MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex)); //SHows missing stations
                     }
                     Console.WriteLine("Weight:{0}",weight);
                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight);

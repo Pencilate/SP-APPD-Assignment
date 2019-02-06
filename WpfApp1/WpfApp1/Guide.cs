@@ -255,7 +255,7 @@ namespace WpfApp1
             return output;//returns output string
         }
 
-        public static string FindPathV2(string StartingStatCd, string EndingStatCd, bool useAdvFeature, char mode) //method to find route between 2 stations
+        public static string FindPathV2(string StartingStatCd, string EndingStatCd, bool useAdvFeature, char mode = 'N') //method to find route between 2 stations
         {
             Station StartStat = SearchByStationCd(StartingStatCd); //searches for station by Station Code, then returns and stores station object in StartStat object
             Station EndStat = SearchByStationCd(EndingStatCd); //searches for station by Station Code, then returns and stores station object in EndStat object

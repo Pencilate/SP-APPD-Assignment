@@ -27,6 +27,7 @@ namespace WpfApp1
 
         }
 
+
         private void btnSearch_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
         {
             string bStatCode;
@@ -57,18 +58,27 @@ namespace WpfApp1
             bool time = radTime.IsChecked.Value;
             bool fare = radFare.IsChecked.Value;
             string output = string.Empty;
-            if (time)
+            if (chkAdvFeature.IsChecked.Value)
             {
-                output = Guide.FindPathV2(bStatCode, aStatCode, time,'T');
-            }
-            else if (fare)
-            {
-                output = Guide.FindPathV2(bStatCode, aStatCode, fare,'F');
+                if (time)
+                {
+                    output = Guide.FindPathV2(bStatCode, aStatCode, chkAdvFeature.IsChecked.Value,'T');
+                }
+                else if (fare)
+                {
+                    output = Guide.FindPathV2(bStatCode, aStatCode, chkAdvFeature.IsChecked.Value,'F');
+                }
+                else
+                {
+                    output = "Error";
+                }
             }
             else
             {
-                output = "Error";
+                output = Guide.FindPathV2(bStatCode, aStatCode, chkAdvFeature.IsChecked.Value);
             }
+           
+            
             DisplayResults Results = new DisplayResults(); //create new instance of Results form
             if (cardFareValue)
             {
@@ -76,6 +86,7 @@ namespace WpfApp1
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
+                DBGuide.InsertDataIntoHistory(bStatCode, aStatCode,'C');//Insert Query into database
             }
             else if (ticketFareValue)
             {
@@ -83,17 +94,18 @@ namespace WpfApp1
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
                 Results.tripDetails.Text = "-- Fare Details and Time -- \n" + ticketFare + "\n" + timeTaken;
                 this.Hide(); //hides current window
+                DBGuide.InsertDataIntoHistory(bStatCode, aStatCode, 'T');//Insert Query into database
             }
             else
             {
                 Results.Show(); //show Results form
                 Results.txtBoxDisplay.Text = "Displaying Route : " + "\n" + output; //calls Guide.FindPathV2 and Displays Output in textbox in DirectionsResults window
-                Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + ticketFare + "\n" + timeTaken;
+                Results.tripDetails.Text = "-- Fare Details and Time -- \n" + cardFare + "\n" + ticketFare + "\n" + timeTaken+"\n This fare record will not be inserted into the database as Fare Type has not been selected";
                 this.Hide(); //hides current window
             }
 
-            //Insert Query into database           
-            DBGuide.InsertDataIntoHistory(bStatCode, aStatCode, DBGuide.QueryFareFromDatabase(bStatCode, aStatCode));
+                       
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) //event that happens when button is clicked
