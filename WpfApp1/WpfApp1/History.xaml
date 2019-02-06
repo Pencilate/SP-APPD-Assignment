@@ -1,0 +1,26 @@
+﻿<Window x:Class="WpfApp1.History"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="History" Height="450" Width="800">
+    <Grid>
+        <Label Content="Past Queries" HorizontalAlignment="Left" Margin="315,2,0,0" VerticalAlignment="Top" Width="156" Height="38" FontSize="24" FontWeight="Bold"/>
+        <Button Name ="btnHome" Content="Home" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="77" Height="24" Click="btnHome_Click"/>
+        <Grid>
+            <DataGrid Name="History" AutoGenerateColumns="False" ColumnWidth="*">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Start_Station_Code}" Header="Start Station Code"/>
+                    <DataGridTextColumn Binding="{Binding End_Station_Code}" Header="End Station Code"/>
+                    <DataGridTextColumn Binding="{Binding Card_Fare}" Header="Card Fare"/>
+                    <DataGridTextColumn Binding="{Binding Ticket_Fare}" Header="Ticket Fare"/>
+                    <DataGridTextColumn Binding="{Binding Journey_Duration}" Header="Journey Duration"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+       
+
+    </Grid>
+</Window>

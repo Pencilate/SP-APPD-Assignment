@@ -46,5 +46,12 @@ namespace WpfApp1
             Display.Show();
             this.Close();
         }
+
+        private void btnDisplayHistory_Click(object sender, RoutedEventArgs e)
+        {
+            History Display = new History();
+            Display.Show();
+            this.Close();
+        }
     }
 }
