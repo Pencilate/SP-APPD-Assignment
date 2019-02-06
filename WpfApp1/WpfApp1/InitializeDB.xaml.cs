@@ -63,8 +63,6 @@ namespace WpfApp1
             FileIO.textMRTFileReaderToDB(txtMRT.Text);
             
             MessageBox.Show("MRT database has been initialized");
-            this.Hide();
-
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
@@ -77,8 +75,7 @@ namespace WpfApp1
         private void FareButton_Click(object sender, RoutedEventArgs e)
         {
             FileIO.textFareFileReaderToDB(txtFare.Text);
-            MessageBox.Show("Fare database has been initialized");
-            this.Hide();
+            MessageBox.Show("Fare database has been initialized");            
         }
     }
 }
