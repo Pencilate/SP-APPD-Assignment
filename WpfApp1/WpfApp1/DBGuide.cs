@@ -11,8 +11,8 @@ namespace WpfApp1
     class DBGuide
     {
         //Make sure to check the connection string
-        //private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
-        private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        private const string connectionString = "Data Source=DIT-NB1828823\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
+        //private const string connectionString = "Data Source=DIT-NB1829233\\SQLEXPRESS; database=APPDCADB; integrated security = true;";
 
         public static List<Line> RetrieveMRTDataFromDBtoList()
         {
@@ -216,7 +216,7 @@ namespace WpfApp1
         }
 
         //INSERT Past Queries into DB
-        public static void InsertDataIntoHistory(string sSc, string eSc, List<string> queryResult)
+        public static void InsertDataIntoHistory(string sSc, string eSc, char type)
         {
             using (SqlConnection conn = new SqlConnection())
             {
@@ -224,28 +224,42 @@ namespace WpfApp1
                 {
                     try
                     {
+                        List<string> queryResult = QueryFareFromDatabase(sSc, eSc);
                         conn.ConnectionString = connectionString;
                         cmd.Connection = conn;
                         conn.Open();
                         Console.WriteLine("Connection open.");
-                        cmd.CommandText = "INSERT INTO History (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) VALUES(@StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration)";
+                        cmd.CommandText = "INSERT INTO FareHistory (Start_Station_Code,End_Station_Code,Fare_Type,Fare) VALUES (@StartStatCd,@EndStatCd,@FareType,@Fare)";
+
                         cmd.Parameters.Add("@StartStatCd", SqlDbType.VarChar, 4);
                         cmd.Parameters.Add("@EndStatCd", SqlDbType.VarChar, 4);
-                        cmd.Parameters.Add("@CardFare", SqlDbType.Money);
-                        cmd.Parameters.Add("@TicketFare", SqlDbType.Money);
-                        cmd.Parameters.Add("@JourneyDuration", SqlDbType.Int);
+                        cmd.Parameters.Add("@FareType", SqlDbType.Char,1);
+                        cmd.Parameters.Add("@Fare", SqlDbType.Money);
+
                         cmd.Parameters["@StartStatCd"].Value = sSc;
                         cmd.Parameters["@EndStatCd"].Value = eSc;
-                        cmd.Parameters["@CardFare"].Value = queryResult[0];
-                        cmd.Parameters["@TicketFare"].Value = queryResult[1];
-                        cmd.Parameters["@JourneyDuration"].Value = queryResult[2];
+
+                        switch (type)
+                        {
+                            case 'C':
+                                cmd.Parameters["@Fare"].Value = double.Parse(queryResult[0]);
+                                cmd.Parameters["@FareType"].Value = type;
+                                break;
+                            case 'T':
+                                cmd.Parameters["@Fare"].Value = double.Parse(queryResult[1]);
+                                cmd.Parameters["@FareType"].Value = type;
+                                break;
+                                
+                        }
+
                         cmd.ExecuteNonQuery();
                         Console.WriteLine("Record successfully added.");
                     }
 
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("Record failed to add in as it already exists.");
+                        Console.WriteLine("Record failed to add in as it already exists.\n"+ex);
+                     
                     }
 
                     finally

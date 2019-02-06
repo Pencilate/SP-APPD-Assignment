@@ -47,11 +47,9 @@ namespace WpfApp1
             this.Close();
         }
 
-        private void btnDisplayHistory_Click(object sender, RoutedEventArgs e)
+        private void btnFareInfo_Click(object sender, RoutedEventArgs e)
         {
-            History Display = new History();
-            Display.Show();
-            this.Close();
+
         }
     }
 }
