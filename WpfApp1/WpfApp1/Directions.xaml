@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Directions" Height="489" Width="414">
-    <Grid HorizontalAlignment="Left" Width="404" Margin="0,0,0,1">
-        <Label Content="Directions" HorizontalAlignment="Left" Margin="139,19,0,0" VerticalAlignment="Top" Height="40" Width="141" FontSize="24" FontWeight="Bold"/>
-        <Button Name ="btnSearch" Content="Submit" HorizontalAlignment="Left" Margin="158,405,0,0" VerticalAlignment="Top" Width="102" Click="btnSearch_Click" Height="36"/>
+        Title="Directions" Height="657.708" Width="510.667">
+    <Grid HorizontalAlignment="Left" Width="511" Margin="0,0,-7,0.667">
+        <Label Content="Directions" HorizontalAlignment="Left" Margin="195,19,0,0" VerticalAlignment="Top" Height="40" Width="141" FontSize="24" FontWeight="Bold"/>
+        <Button Name ="btnSearch" Content="Submit" HorizontalAlignment="Left" Margin="374,581,0,0" VerticalAlignment="Top" Width="102" Click="btnSearch_Click" Height="36"/>
         <Button Content="Home" HorizontalAlignment="Left" Margin="23,33,0,0" VerticalAlignment="Top" Width="77" Click="Button_Click" Height="24"/>
-        <GroupBox Header="Boarding Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="104,73,0,0" VerticalAlignment="Top" Width="220">
+        <GroupBox Header="Boarding Station Name/Code" HorizontalAlignment="Left" Height="134" Margin="145,73,0,0" VerticalAlignment="Top" Width="220">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -27,7 +27,7 @@
                 <Label Content="Station:" HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Alighting Station Name/Code" HorizontalAlignment="Left" Height="140" Margin="104,223,0,0" VerticalAlignment="Top" Width="220" RenderTransformOrigin="-1.613,0.413">
+        <GroupBox Header="Alighting Station Name/Code" HorizontalAlignment="Left" Height="140" Margin="145,228,0,0" VerticalAlignment="Top" Width="220" RenderTransformOrigin="-1.613,0.413">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -44,7 +44,37 @@
                 <Label Content="Station:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Margin="10,8,0,0" Grid.Row="1"/>
             </Grid>
         </GroupBox>
-        <CheckBox Name="chkbxAdvFeature" Content="Enable Advance Features (Graph Routing)" Margin="90,373,75,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <GroupBox Header="Prioritise" HorizontalAlignment="Left" Height="77" Margin="145,488,0,0" VerticalAlignment="Top" Width="220">
+            <Grid Margin="0,0,-2,3">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="109*"></ColumnDefinition>
+                    <ColumnDefinition Width="55*"></ColumnDefinition>
+                    <ColumnDefinition Width="54*"/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Name ="radFare" Content="Fare" HorizontalAlignment="Left" Margin="34.667,11,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <RadioButton Name="radTime" Content="Journey Time" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Width="99" Grid.ColumnSpan="2"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Fare Type" HorizontalAlignment="Left" Height="77" Margin="145,369,0,0" VerticalAlignment="Top" Width="220">
+            <Grid Margin="0,0,-2,4">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <RadioButton Name ="radCardFare" Content="Stored Value Card" HorizontalAlignment="Left" Height="16" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" Width="115"/>
+                <RadioButton Name ="radTicketFare" Content="Ticket" HorizontalAlignment="Left" Height="16" Margin="35.667,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.171,0.917" Grid.Column="1" Grid.RowSpan="2"/>
+            </Grid>
+        </GroupBox>
+        <CheckBox Name="chkAdvFeature" Content="Enable Advance Features &#xD;&#xA;(Graph Routing)" HorizontalAlignment="Center" Margin="145,451,146,0" VerticalAlignment="Top" Width="220" Height="32"/>
     </Grid>
 </Window>

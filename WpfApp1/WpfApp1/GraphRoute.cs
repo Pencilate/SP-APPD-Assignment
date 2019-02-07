@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfApp1
 {
@@ -19,7 +20,7 @@ namespace WpfApp1
             {
                 foreach (Station stat in line.StationList) //inner foreach loop
                 {
-                    if (stat.GraphIndex == -1)
+                    if (stat.GraphIndex == -1) //if
                     {
                         stat.GraphIndex = count;
                         count++;
@@ -29,16 +30,42 @@ namespace WpfApp1
             size = count; //assigns value of count to size variable
         }
 
-        public static void initGraph() //initializes the Graph
+        public static void initGraph(char mode = 'N') //initializes the Graph
         {
+            if (mode.Equals('N'))
+            {
+                mode = 'T';
+            }
+
             mrtGraph = new Graph(size); //creates the Graph with size found in initStationIndex()
 
             foreach (Line line in Guide.MRTLine) //foreach loop
             {
                 for (int i = 0; i < (line.StationList.Count - 1); i++) //for loop
                 {
-                    mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, 1);
+                    double weight = -1;
+                    try
+                    {
+                        List<string> queryResult = DBGuide.QueryFareFromDatabase(line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0]); //invoke method and store in list
+                        switch (mode)
+                        {
+                            case 'F': //case for fare
+                                weight = double.Parse(queryResult[0]);
+                                break;
+                            case 'T': //case for time
+                                weight = double.Parse(queryResult[2]);
+                                break;
+                        }
+                    }
+                    catch (Exception ex) //catch exception error
+                    {
+                        MessageBox.Show(string.Format("Start: {0} |End: {1}\n{2}", line.StationList[i].StationCode[0], line.StationList[i + 1].StationCode[0],ex)); //SHows missing stations
+                    }
+                    Console.WriteLine("Weight:{0}",weight);
+                   mrtGraph.addEdge(line.StationList[i].GraphIndex, line.StationList[i + 1].GraphIndex, weight); //add an edge
+
                     Console.WriteLine("{0}({1}) - {2}({3})", line.StationList[i].StationName, line.StationList[i].GraphIndex, line.StationList[i + 1].StationName, line.StationList[i + 1].GraphIndex);
+
                 }
             }
 
@@ -63,7 +90,7 @@ namespace WpfApp1
 
         public static string initTraverseDijkstra(int sourceGraphIndex, int destinationGraphIndex) //find route.  Dijikstra algorithm referenced from here: https://www.codingame.com/playgrounds/1608/shortest-paths-with-dijkstras-algorithm/dijkstras-algorithm
         {
-            int[,] distanceTable = new int[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
+            double[,] distanceTable = new double[size, 2];//the first column will have the distance of that node from the starting node, the second column is the index of the node that came before it.
             List<int> visitedIndex = new List<int>(); //new list
 
             for (int i = 0; i < size; i++) //for loop
@@ -74,10 +101,7 @@ namespace WpfApp1
             distanceTable[sourceGraphIndex, 0] = 0; //Distance from the starting station from the starting station is 0, thus setting it.
             int currentNodeIndex = sourceGraphIndex; //sets value of current node index to value of the source graph index
 
-            while (visitedIndex.Count < size) //while loop
-            {
-                currentNodeIndex = TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //invokes TraverseDijkstra method
-            }
+            TraverseDijkstra(distanceTable, visitedIndex, currentNodeIndex); //Calling Dijkstra method
 
             for (int i = 0; i < size; i++) //for loop
             {
@@ -88,7 +112,7 @@ namespace WpfApp1
             int currentIndex = destinationGraphIndex;
             while (currentIndex != sourceGraphIndex) //while loop
             {
-                currentIndex = distanceTable[currentIndex, 1];
+                currentIndex = (int) distanceTable[currentIndex, 1];
                 routeGraphIndex.Add(currentIndex); //add current index to routeGraphIndex list
             }
 
@@ -206,14 +230,14 @@ namespace WpfApp1
             outputRoute += "-- Start of Route --\r\n";
             foreach (string statCd in routeStationCd) //foreach loop
             {
-                outputRoute += string.Format("{0} - {1}\r\n", statCd, Guide.SearchByStationCd(statCd).StationName);
+                outputRoute += string.Format("{0} - {1}\r\n", statCd, Guide.SearchByStationCd(statCd).StationName); //output string
             }
-            outputRoute += "-- End of Route --";
+            outputRoute += "-- End of Route --"; //output string
 
-            return outputRoute;
+            return outputRoute; //return string
         }
 
-        public static int TraverseDijkstra(int[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
+        public static void TraverseDijkstra(double[,] distanceTable, List<int> visitedIndex, int currentNodeIndex)
         {
             List<int> currentNodeNeighbour = new List<int>(); //new list
 
@@ -231,7 +255,7 @@ namespace WpfApp1
 
             for (int i = 0; i < currentNodeNeighbour.Count; i++) //for loop
             {
-                int sumDistance = distanceTable[currentNodeIndex, 0] + mrtGraph.edgeDistance(currentNodeIndex, currentNodeNeighbour[i]);
+                double sumDistance = distanceTable[currentNodeIndex, 0] + mrtGraph.edgeDistance(currentNodeIndex, currentNodeNeighbour[i]);
 
                 if (distanceTable[currentNodeNeighbour[i], 0] > sumDistance) //if distance is greater than the sum of all the distances
                 {
@@ -244,7 +268,7 @@ namespace WpfApp1
             visitedIndex.Add(currentNodeIndex); //add currentNodeIndex to the visitedIndex list
 
             int nextNode = -1;
-            int shortestDist = int.MaxValue;
+            double shortestDist = double.MaxValue;
             for (int i = 0; i < size; i++) //for loop
             {
                 if (visitedIndex.Contains(i)) //if visitedIndex list contains int i
@@ -260,7 +284,11 @@ namespace WpfApp1
                     }
                 }
             }
-            return nextNode;
+            //return nextNode;
+            if (visitedIndex.Count < size)
+            {
+                TraverseDijkstra(distanceTable, visitedIndex, nextNode);
+            }
         }
     }
 }

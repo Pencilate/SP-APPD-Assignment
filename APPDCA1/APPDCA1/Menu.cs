@@ -10,16 +10,25 @@ namespace APPDCA1
     {
         public static void Main(string[] args)
         {
-            Guide.initLineArray();
+            
             //Guide.TestStationRoute();
             //Guide.TestingStationMtd();
             //Guide.Testing();
-            Console.WriteLine("INITIALISING GRAPH");
-            GraphRoute.initStationIndex();
-            GraphRoute.initGraph();
+            //Console.WriteLine("INITIALISING GRAPH");
+            //GraphRoute.initStationIndex();
+            //GraphRoute.initGraph();
             //GraphRoute.TestGraph   
 
-            GraphRoute.TestGraphRoute();
+            //GraphRoute.TestGraphRoute();
+
+            //FileIO.textMRTFileReaderToDB("..\\..\\resources\\MRT.txt");
+            //FileIO.textFareFileReaderToDB("..\\..\\resources\\fares.txt");
+
+            Guide.initLineArray();
+            //Guide.TestStationRoute();
+            List<string> mylist = new List<string>(new string[] { "1.50", "0.87", "69" });
+            DBGuide.InsertDataIntoHistory("EW22", "NS15", mylist);
+
 
 
             Console.ReadKey();

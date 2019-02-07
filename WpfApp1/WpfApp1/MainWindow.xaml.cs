@@ -39,5 +39,19 @@ namespace WpfApp1
             Display.Show(); //show Display window
             this.Close(); //close current window
         }
+
+        private void initDB_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeDB Display = new InitializeDB(); //create new instance of Display
+            Display.Show(); //show Display window
+            this.Close(); //close current window
+        }
+
+        private void btnFareInfo_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayFare Fare = new DisplayFare(); //create new instance of Display
+            Fare.Show(); //show Display window
+            this.Close(); //close current window
+        }
     }
 }

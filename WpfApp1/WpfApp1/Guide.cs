@@ -16,11 +16,12 @@ namespace WpfApp1
             get { return MRT; }
         }
 
-        public static void initLineArray() //Initializes LineArray
+        public static void initLineArray() //initialize line array
         {
-            string FilePath = "..\\..\\resources\\MRT.txt"; //original file path in resources folder under the project folder            
-            //FilePath Points to the MRT.txt file
-            MRT = FileIO.textFileReader(FilePath);
+
+            MRT = DBGuide.RetrieveMRTDataFromDBtoList(); //store in list
+            Console.WriteLine("Reading Done");
+
         }
 
         public static List<string> StationNameStringList()
@@ -254,7 +255,7 @@ namespace WpfApp1
             return output;//returns output string
         }
 
-        public static string FindPathV2(string StartingStatCd, string EndingStatCd, bool useAdvFeature) //method to find route between 2 stations
+        public static string FindPathV2(string StartingStatCd, string EndingStatCd, bool useAdvFeature, char mode = 'N') //method to find route between 2 stations
         {
             Station StartStat = SearchByStationCd(StartingStatCd); //searches for station by Station Code, then returns and stores station object in StartStat object
             Station EndStat = SearchByStationCd(EndingStatCd); //searches for station by Station Code, then returns and stores station object in EndStat object
@@ -344,7 +345,7 @@ namespace WpfApp1
                     if (!GraphInitialized) //if Graph is not initialized
                     {
                         GraphRoute.initStationIndex(); //initialize station index
-                        GraphRoute.initGraph(); //initialize Graph
+                        GraphRoute.initGraph(mode); //initialize Graph
                     }
                     output = GraphRoute.initTraverseDijkstra(StartStat.GraphIndex, EndStat.GraphIndex); //invokes GraphRoute.initTraverseDijkstra and stores return value to string output
                 }
@@ -360,7 +361,7 @@ namespace WpfApp1
                     int icsDeprtIndex = GetStationIndexFromLine(lineIndex2, interchangeName); //sets departing index to the Station Index of the Interchange
                     int esIndex = GetStationIndexFromLine(lineIndex2, EndStat.StationName); //sets Final ending Index to the Station Index of the Ending Station
 
-                    output = output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
+                    output = string.Format("Display Route from {0} to {1} - Taking {2} stations\r\n-- Start of Route --\r\n{3}-- End of Route --", StartStat.StationName, EndStat.StationName, (Math.Abs(icsArrvIndex - ssIndex) + Math.Abs(esIndex - icsDeprtIndex)), DisplayFindPath(lineIndex, ssIndex, icsArrvIndex) + DisplayFindPath(lineIndex2, icsDeprtIndex, esIndex)); //invokes DisplayFindPath and returns it
                 }
                 return output;
             }

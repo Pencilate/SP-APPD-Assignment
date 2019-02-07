@@ -8,11 +8,11 @@ namespace WpfApp1
 {
     class Graph
     {
-        private int[,] adjacentMatrix; //creates an int array  //adjacenctMatrix used to represent the graph references from here: http://ceadserv1.nku.edu/longa//classes/mat385_resources/docs/matrix.html
+        private double[,] adjacentMatrix; //creates an int array  //adjacenctMatrix used to represent the graph references from here: http://ceadserv1.nku.edu/longa//classes/mat385_resources/docs/matrix.html
 
         public Graph(int size) //Graph object
         {
-            adjacentMatrix = new int[size, size]; //create a new array
+            adjacentMatrix = new double[size, size]; //create a new array
             for (int i = 0; i < size; i++) //nested loop
             {
                 for (int j = 0; j < size; j++) //inner for loop
@@ -22,7 +22,7 @@ namespace WpfApp1
             }
         }
 
-        public void addEdge(int b, int a, int cost) //add an edge to the graph
+        public void addEdge(int b, int a, double cost) //add an edge to the graph
         {
             adjacentMatrix[b, a] = cost;
             adjacentMatrix[a, b] = cost;
@@ -43,7 +43,7 @@ namespace WpfApp1
             return isEdge; //return value
         }
 
-        public int edgeDistance(int b, int a) //determines an edge's distance from another edge
+        public double edgeDistance(int b, int a) //determines an edge's distance from another edge
         {
             return adjacentMatrix[b, a]; //return edge distance
         }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBGuide.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphRoute.cs" />
