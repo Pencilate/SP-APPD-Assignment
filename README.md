@@ -6,6 +6,7 @@ This was created for the module that my team is currently taking in school.
 ## About
 Enough of the introduction:
 This program allows you to display:
+
  - Train lines that a particular train stations is on
  - Route from one station to any other station on the train system.
 
@@ -14,9 +15,11 @@ It features:
  - Display the number of station that you need to take when the route is displayed
  - Option to use the shortest route to get from one train station to another
  - Integration with database systems
+ - Fare and Distance implementations
 
 Future feature:
-- Fare and Distance implementations
+
+- None :)
 
 >  Everything is written in C#.
 
