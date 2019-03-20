@@ -165,32 +165,32 @@ namespace WpfApp1
                                 string startStatCd = fareData.Substring(0, spaceIndex).Trim(); //substring from start to spaceindex and trim
                                 string endStatCd = fareData.Substring(spaceIndex).Trim(); //substring from spaceindex and trim
                                 int slashIndex;
-                                Console.Write("{0}-{1}|Space:{2}|", startStatCd, endStatCd, spaceIndex);
+                                //Console.Write("{0}-{1}|Space:{2}|", startStatCd, endStatCd, spaceIndex);
                                 slashIndex = startStatCd.IndexOf("/"); //set slash index to index of slash
-                                Console.Write("START:|{0}|", slashIndex);
+                                //Console.Write("START:|{0}|", slashIndex);
                                 while (slashIndex != -1) //while slashindex is not equals to -1 (while slashindex is still found)
                                 {
                                     startStatCdList.Add(startStatCd.Substring(0, slashIndex)); //add startstatcd to list
                                     startStatCd = startStatCd.Substring(slashIndex + 1); //substring startstatcd
                                     slashIndex = startStatCd.IndexOf("/"); //check for slashindex again
-                                    Console.Write("{0}|", slashIndex);
+                                    //Console.Write("{0}|", slashIndex);
                                 }
                                 startStatCdList.Add(startStatCd); //add startstatcd to list
 
                                 slashIndex = endStatCd.IndexOf("/"); //set slash index to index of slash
-                                Console.Write("END:|{0}|", slashIndex);
+                                //Console.Write("END:|{0}|", slashIndex);
                                 while (slashIndex != -1) //while slashindex is not equals to -1( while slashindex is still found)
                                 {
                                     endStatCdList.Add(endStatCd.Substring(0, slashIndex)); //add endstatcd to list
                                     endStatCd = endStatCd.Substring(slashIndex + 1); //substring endstatcd
                                     slashIndex = endStatCd.IndexOf("/"); //check for slashindex again
-                                    Console.Write("{0}|", slashIndex);
+                                    //Console.Write("{0}|", slashIndex);
                                 }
                                 endStatCdList.Add(endStatCd); //add endstatcd to list
                                 double cardFare = double.Parse(reader.ReadLine().TrimStart('$')); //extract cardfare
                                 double standardTicket = double.Parse(reader.ReadLine().TrimStart('$')); //extract standard ticket fare
                                 int timeTaken = int.Parse(reader.ReadLine()); //extract timetaken
-                                Console.WriteLine("{0},{1}", startStatCdList.Count, endStatCdList.Count);
+                               // Console.WriteLine("{0},{1}", startStatCdList.Count, endStatCdList.Count);
                                 foreach (string ssC in startStatCdList) //foreach loop
                                 {
                                     if (stationCdFareBlacklsit.Contains(ssC))
@@ -203,7 +203,7 @@ namespace WpfApp1
                                         {
                                             continue;
                                         }
-                                        Console.WriteLine("{0}-{1}-{2}-{3}-{4}", ssC, esC, cardFare, standardTicket, timeTaken);
+                                        //Console.WriteLine("{0}-{1}-{2}-{3}-{4}", ssC, esC, cardFare, standardTicket, timeTaken);
                                         //INSERT INSERT SQL STATEMENTS HERE                                        
                                         cmd.CommandText = "INSERT INTO Fare (Start_Station_Code,End_Station_Code,Card_Fare,Ticket_Fare,Journey_Duration) SELECT @StartStatCd,@EndStatCd,@CardFare,@TicketFare,@JourneyDuration WHERE NOT EXISTS ( SELECT * FROM Fare WHERE Start_Station_Code = @StartStatCd AND End_Station_Code = @EndStatCd)"; //sql insert statement
                                         //Forward Direction
@@ -224,7 +224,7 @@ namespace WpfApp1
                                     }
                                 }
 
-                                Console.WriteLine("End stat");
+                                //Console.WriteLine("End stat");
                                 startStatCdList.Clear(); //clear list
                                 endStatCdList.Clear(); //clear list
 
